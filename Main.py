@@ -112,6 +112,7 @@ __version__ = '0.7.2'
 higandir = ""
 
 titles = []
+#trackdatapath = os.path.join(".","resources","snes","metroid3","manifests","tracks.json")
 trackdatapath = os.path.join(".","resources","snes","zelda3","manifests","tracks.json")
 trackdata = {}
 if os.path.exists(trackdatapath):
@@ -121,6 +122,7 @@ if os.path.exists(trackdatapath):
 nonloopingtracks = []
 extendedmsutracks = []
 extendedbackupdict = {}
+longestTrackName = 30
 
 if "tracks" in trackdata:
   i = 1
@@ -163,6 +165,8 @@ if "tracks" in trackdata:
         extendedbackupdict[i] = track["fallback"]
 
       i += 1
+  if "longest" in trackdata["tracks"]:
+      longestTrackName = trackdata["tracks"]["longest"]
 
 # Globals used by the scheduled reshuffle in live mode (couldn't figure out
 # a better way to pass dicts/lists to shuffle_all_tracks when called by
@@ -209,19 +213,19 @@ def delete_old_msu(args, rompath):
             else:
                 shutil.rmtree(higandir)
         if args.dry_run:
-            logger.info("DRY RUN MODE: Would make " + higandir + "/msu1.rom")
+            logger.info("DRY RUN MODE: Would make " + os.path.join(higandir, "msu1.rom"))
         else:
             os.mkdir(higandir)
-            open(higandir + "/msu1.rom", 'a').close()
+            open(os.path.join(higandir, "msu1.rom"), 'a').close()
 
-    if foundsrcrom and rompath == './shuffled':
+    if foundsrcrom and rompath == os.path.join(".","shuffled"):
         if args.higan:
             if args.dry_run:
-                logger.info("DRY RUN MODE: Would copy " + os.path.basename(srcrom) + " to " + higandir + "/program.rom")
+                logger.info("DRY RUN MODE: Would copy " + os.path.basename(srcrom) + " to " + os.path.join(higandir, "program.rom"))
             else:
-                logger.info("Copying " + os.path.basename(srcrom) + " to " + higandir + "/program.rom")
-                shutil.copy(srcrom, higandir + "/program.rom")
-                shutil.copy(srcrom, higandir + "/program.sfc")
+                logger.info("Copying " + os.path.basename(srcrom) + " to " + os.path.join(higandir, "program.rom"))
+                shutil.copy(srcrom, os.path.join(higandir, "program.rom"))
+                shutil.copy(srcrom, os.path.join(higandir, "program.sfc"))
         else:
             replace = "Y"
             if foundshuffled:
@@ -231,7 +235,7 @@ def delete_old_msu(args, rompath):
                     logger.info("DRY RUN MODE: Would rename " + os.path.basename(srcrom) + " to shuffled.sfc.")
                 else:
                     logger.info("Renaming " + os.path.basename(srcrom) + " to shuffled.sfc.")
-                    shutil.move(srcrom, "./shuffled.sfc")
+                    shutil.move(srcrom, os.path.join(".", "shuffled.sfc"))
 
     if not args.higan:
         for path in glob.glob(f'{rompath}-*.pcm'):
@@ -245,13 +249,16 @@ def delete_old_msu(args, rompath):
 
 def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir):
     if higan:
-        dstpath = higandir + "/track-" + str(dst) + ".pcm"
+        dstpath = os.path.join(higandir, "track-" + str(dst) + ".pcm")
     else:
         dstpath = f"{rompath}-{dst}.pcm"
 
     for match in re.finditer(r'\d+', os.path.basename(srcpath)):
         pass
     srctrack = int(match.group(0))
+
+    if srctrack > len(titles):
+        return
 
     srctitle = titles[srctrack-1]
     shorttitle = ('(' + srctitle[srctitle.find('-')+2:] + ") ") if srctrack != dst else ""
@@ -263,7 +270,10 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
             shortsrcpath = shortsrcpath.replace(args.collection,"")
         if shortsrcpath[:1] == '\\':
             shortsrcpath = shortsrcpath[1:]
-        logger.info((dsttitle + ': ' + shorttitle).ljust(55, ' ') + shortsrcpath + " -> " + dstpath)
+        msg = (dsttitle + ': ' + shorttitle).ljust(longestTrackName + 6, ' ') + shortsrcpath
+        if args.verbose:
+            msg += " -> " + dstpath
+        logger.info(msg)
 
     if not dry_run:
         try:
@@ -301,8 +311,9 @@ def build_index(args):
     elif args.collection:
         searchdir = args.collection
     else:
-        searchdir = '../'
+        searchdir = os.path.join("..")
 
+    print("Using manifest at: " + trackdatapath)
     print("Using collection at: " + searchdir)
 
     if args.higan:
@@ -361,7 +372,7 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
         logger.info("")
         logger.info("Non-looping tracks:")
 
-    with TemporaryDirectory(dir='.') as tmpdir:
+    with TemporaryDirectory(dir=os.path.join(".")) as tmpdir:
         for i in nonloopingfoundtracks:
             winner = random.choice(trackindex[i])
             copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
@@ -454,8 +465,8 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--loglevel', default='info', const='info', nargs='?', choices=['error', 'info', 'warning', 'debug'], help='Select level of logging for output.')
-    parser.add_argument('--collection', default='../', help='Point script at another directory to find root of MSU packs.')
-    parser.add_argument('--outputpath', default='./', help='Output path.')
+    parser.add_argument('--collection', default=os.path.join(".."), help='Point script at another directory to find root of MSU packs.')
+    parser.add_argument('--outputpath', default=os.path.join("."), help='Output path.')
     parser.add_argument('--outputprefix', default='shuffled', help='Output prefix.')
     parser.add_argument('--fullshuffle', help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.", action='store_true', default=False)
     parser.add_argument('--basicshuffle', help='Choose each track with the same track from a random pack.  If you have any extended packs, the dungeon/boss themes from non-extended packs will never be chosen in this mode.  If you only have non-extended packs, this preserves the ability to tell crystal/pendant dungeons by music.', action='store_true', default=False)
@@ -463,6 +474,7 @@ if __name__ == '__main__':
     parser.add_argument('--higan', help='Creates files in higan-friendly directory structure.', action='store_true', default=False)
     parser.add_argument('--realcopy', help='Creates real copies of the source tracks instead of hardlinks', action='store_true', default=False)
     parser.add_argument('--dry-run', help='Makes script print all filesystem commands that would be executed instead of actually executing them.', action='store_true', default=False)
+    parser.add_argument('--verbose', help='Verbose output.', action='store_true', default=False)
     parser.add_argument('--live', help='The interval at which to re-shuffle the entire pack, in seconds; will skip tracks currently in use.')
     parser.add_argument('--version', help='Print version number and exit.', action='store_true', default=False)
 

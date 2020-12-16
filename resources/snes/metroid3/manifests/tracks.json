@@ -1,0 +1,117 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "File Start",
+        "name": "Samus Aran's Appearance Fanfare"
+      },
+      {
+        "title": "Item Acquisition Fanfare"
+      },
+      {
+        "title": "Item room"
+      },
+      {
+        "title": "Opening with intro"
+      },
+      {
+        "title": "Opening without intro"
+      },
+      {
+        "title": "Crateria (First Landing Thunder)",
+        "name": "Arrival on Crateria (with thunder FX)"
+      },
+      {
+        "title": "Crateria (First Landing No Thunder)",
+        "name": "Arrival on Crateria (without thunder FX)"
+      },
+      {
+        "title": "Crateria",
+        "name": "The Space Pirates Appear",
+        "notes": [
+          "Post Zebes Awake"
+        ]
+      },
+      {
+        "title": "Crateria Statue Room",
+        "name": "Statue Room"
+      },
+      {
+        "title": "Samus' Ship"
+      },
+      {
+        "title": "Brinstar with vegetation",
+        "notes": [
+          "Green Brinstar"
+        ]
+      },
+      {
+        "title": "Brinstar Red Soil",
+        "notes": [
+          "Red Brinstar"
+        ]
+      },
+      {
+        "title": "Upper Norfair"
+      },
+      {
+        "title": "Lower Norfair"
+      },
+      {
+        "title": "Upper Maridia"
+      },
+      {
+        "title": "Lower Maridia"
+      },
+      {
+        "title": "Tourian"
+      },
+      {
+        "title": "Mother Brain Battle"
+      },
+      {
+        "title": "Big Boss Battle 1"
+      },
+      {
+        "title": "Mysterious Statue Chamber"
+      },
+      {
+        "title": "Evacuation"
+      },
+      {
+        "title": "Big Boss Battle 2"
+      },
+      {
+        "title": "Tension / Hostile Incoming"
+      },
+      {
+        "title": "Plant Miniboss",
+        "notes": [
+          "Sporespawn"
+        ]
+      },
+      {
+        "title": "Ceres Station"
+      },
+      {
+        "title": "Wrecked Ship Power Off"
+      },
+      {
+        "title": "Wrecked Ship Power On",
+        "notes": [
+          "After defeating Phantoon"
+        ]
+      },
+      {
+        "title": "Theme of Super Metroid"
+      },
+      {
+        "title": "Death Cry"
+      },
+      {
+        "title": "Ending"
+      }
+    ],
+    "longest": 37
+  }
+}
