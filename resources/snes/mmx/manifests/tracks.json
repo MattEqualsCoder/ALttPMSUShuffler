@@ -1,0 +1,108 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Intro Stage"
+      },
+      {
+        "title": "Sting Chameleon"
+      },
+      {
+        "title": "Launch Octopus"
+      },
+      {
+        "title": "Armored Armadillo"
+      },
+      {
+        "title": "Flame Mammoth"
+      },
+      {
+        "title": "Boomer Kuwanger"
+      },
+      {
+        "title": "Chill Penguin"
+      },
+      {
+        "title": "Spark Mandrill"
+      },
+      {
+        "title": "Storm Eagle"
+      },
+      {
+        "title": "Sigma Stage 1"
+      },
+      {
+        "title": "Sigma Stage 2"
+      },
+      {
+        "title": "Sigma Stage 3"
+      },
+      {
+        "title": "Sigma Stage 4"
+      },
+      {
+        "title": "Boss Battle 1"
+      },
+      {
+        "title": "Title Screen",
+        "nonlooping": true
+      },
+      {
+        "title": "Stage Select"
+      },
+      {
+        "title": "Victory Jingle!",
+        "nonlooping": true
+      },
+      {
+        "title": "Stage Selected Jingle",
+        "nonlooping": true
+      },
+      {
+        "title": "Boss Battle 2 Intro Tension"
+      },
+      {
+        "title": "Boss Battle 2"
+      },
+      {
+        "title": "Zero Appears"
+      },
+      {
+        "title": "Zero Talks"
+      },
+      {
+        "title": "Got a Weapon",
+        "nonlooping": true
+      },
+      {
+        "title": "Password"
+      },
+      {
+        "title": "Sigma Stage Select"
+      },
+      {
+        "title": "Sigma Battle 1"
+      },
+      {
+        "title": "Sigma Battle 2"
+      },
+      {
+        "title": "Ending Theme 1"
+      },
+      {
+        "title": "Ending Theme 2"
+      },
+      {
+        "title": "Boss Battle 1 Intro Tension"
+      },
+      {
+        "title": "Sigma Battle 2 Intro"
+      },
+      {
+        "title": "Game Credits"
+      }
+    ],
+    "longest": 30,
+    "src": "https://www.romhacking.net/hacks/2274/"
+  }
+}
