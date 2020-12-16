@@ -128,8 +128,12 @@ if "tracks" in trackdata:
   i = trackdata["tracks"]["index"] if "index" in trackdata["tracks"] else 1
   if "basic" in trackdata["tracks"]:
     for track in trackdata["tracks"]["basic"]:
-      if "title" in track:
-        titles.append(str(i).rjust(3, '0') + " - " + track["title"])
+      title = ""
+      if "unused" in track or "title" not in track:
+          title = "<Unused>"
+      elif "title" in track:
+          title = track["title"]
+      titles.append(str(i).rjust(3, '0') + " - " + title)
       #Tracks that don't loop; this is used to prevent a non-looping track from
       #being shuffled with a looping track (nobody wants the boss fanfare as
       #light world overworld music)
@@ -139,8 +143,12 @@ if "tracks" in trackdata:
       i += 1
   if "extended" in trackdata["tracks"]:
     for track in trackdata["tracks"]["extended"]:
-      if "title" in track:
-        titles.append(str(i).rjust(3, '0') + " - " + track["title"])
+      title = ""
+      if "unused" in track or "title" not in track:
+          title = "<Unused>"
+      elif "title" in track:
+          title = track["title"]
+      titles.append(str(i).rjust(3, '0') + " - " + title)
       #List of extended MSU dungeon-specific and boss-specific tracks.
       extendedmsutracks.append(i)
 
@@ -261,6 +269,10 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
         return
 
     srctitle = titles[srctrack-1]
+
+    if "<Unused>" in srctitle:
+        return
+
     shorttitle = ('(' + srctitle[srctitle.find('-')+2:] + ") ") if srctrack != dst else ""
     dsttitle = titles[dst-1]
 
@@ -345,7 +357,7 @@ def build_index(args):
 
             #For extended MSU packs, use the backups
             if not args.basicshuffle and not args.fullshuffle:
-                if not foundtracks and track in extendedmsutracks:
+                if not foundtracks and track in extendedmsutracks and track in extendedbackupdict:
                     backuptrack = extendedbackupdict[track]
                     for path in Path(pack).rglob(f"*-{backuptrack}.pcm"):
                         trackname = os.path.basename(str(path))

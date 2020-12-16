@@ -1,0 +1,255 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Athletic"
+      },
+      {
+        "title": "Overworld"
+      },
+      {
+        "title": "Swimming"
+      },
+      {
+        "title": "The Evil King Bowser",
+        "num": 4,
+        "unused": true
+      },
+      {
+        "title": "Boss Battle"
+      },
+      {
+        "title": "Underground"
+      },
+      {
+        "title": "Haunted House"
+      },
+      {
+        "title": "Fortress"
+      },
+
+      {
+        "title": "Player Down"
+      },
+      {
+        "title": "Game Over"
+      },
+      {
+        "title": "Fortress Clear"
+      },
+      {
+        "title": "Course Clear"
+      },
+      {
+        "title": "Invincible / Starman"
+      },
+      {
+        "title": "P-Switch"
+      },
+      {
+        "title": "Secret Exit! / Into Keyhole - Unused",
+        "num": 15,
+        "unused": true
+      },
+      {
+        "title": "Secret Exit! / Into Keyhole"
+      },
+      {
+        "title": "Fade Out! / Zoom In"
+      },
+      {
+        "title": "Bonus Game"
+      },
+      {
+        "title": "World Clear / Welcome!"
+      },
+      {
+        "title": "Bonus Game Clear"
+      },
+      {
+        "title": "Egg is Rescued"
+      },
+      {
+        "title": "The Evil King Bowser"
+      },
+      {
+        "title": "Bowser Zoom Out"
+      },
+      {
+        "title": "Bowser Zoom"
+      },
+      {
+        "title": "Bowser's Last Attack"
+      },
+      {
+        "title": "Bowser's Last Attack (Faster)"
+      },
+      {
+        "title": "Bowser Defeated"
+      },
+      {
+        "title": "Princess Peach is Rescued"
+      },
+      {
+        "title": "The Evil King Bowser (Intro)"
+      },
+      {
+        "title": "Title Screen"
+      },
+      {
+        "title": "Wandering the Plains"
+      },
+      {
+        "title": "Yoshi's Island"
+      },
+      {
+        "title": "Vanilla Dome"
+      },
+      {
+        "title": "Star Road"
+      },
+      {
+        "title": "Forest of Illusion"
+      },
+      {
+        "title": "Valley of Bowser"
+      },
+      {
+        "title": "Bowser's Castle Emerges"
+      },
+      {
+        "title": "Special World / SMB Remix"
+      },
+      {
+        "title": "Staff Roll"
+      },
+      {
+        "title": "The Yoshis are Home"
+      },
+      {
+        "title": "Card List"
+      }
+    ],
+    "extended": [
+      {
+        "title": "Player Down (Luigi)"
+      },
+      {
+        "title": "Game Over (Luigi)"
+      },
+      {
+        "title": "Fortress Clear (Luigi)"
+      },
+      {
+        "title": "Course Clear (Luigi)"
+      },
+      {
+        "title": "Invincible / Starman (Luigi)"
+      },
+      {
+        "title": "Butter Bridge (OW Music)"
+      },
+      {
+        "title": "Soda Lake (OW Music)"
+      },
+      {
+        "title": "Secret Exit! / Into Keyhole (Luigi)"
+      },
+      {
+        "title": "Fade Out! / Zoom In"
+      },
+      {
+        "title": "Cookie Mountain (OW Music)"
+      },
+      {
+        "title": "Chocolate Island (OW Music)"
+      },
+      {
+        "title": "Bonus Game Clear (Luigi)"
+      },
+      {
+        "num": 54,
+        "unused": true
+      },
+      {
+        "num": 55,
+        "unused": true
+      },
+      {
+        "num": 56,
+        "unused": true
+      },
+      {
+        "num": 57,
+        "unused": true
+      },
+      {
+        "num": 58,
+        "unused": true
+      },
+      {
+        "num": 59,
+        "unused": true
+      },
+      {
+        "title": "Bowser Defeated (Luigi)"
+      },
+      {
+        "title": "Princess Peach is Rescued (Luigi)"
+      },
+      {
+        "num": 62,
+        "unused": true
+      },
+      {
+        "num": 63,
+        "unused": true
+      },
+      {
+        "num": 64,
+        "unused": true
+      },
+      {
+        "num": 65,
+        "unused": true
+      },
+      {
+        "num": 66,
+        "unused": true
+      },
+      {
+        "num": 67,
+        "unused": true
+      },
+      {
+        "num": 68,
+        "unused": true
+      },
+      {
+        "num": 69,
+        "unused": true
+      },
+      {
+        "num": 70,
+        "unused": true
+      },
+      {
+        "num": 71,
+        "unused": true
+      },
+      {
+        "num": 72,
+        "unused": true
+      },
+      {
+        "num": 73,
+        "unused": true
+      },
+      {
+        "title": "Card List (Luigi)"
+      }
+    ],
+    "longest": 35,
+    "src": "https://www.romhacking.net/hacks/2472/"
+  }
+}
