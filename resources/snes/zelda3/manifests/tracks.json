@@ -5,7 +5,8 @@
         "title": "Opening Theme",
         "name": "Link to the Past",
         "notes": [
-          "Game Startup"
+          "Game Startup",
+          "Should be 16 seconds"
         ],
         "nonlooping": true,
         "num": 1
@@ -49,7 +50,8 @@
         "title": "Pedestal Pull Sequence",
         "name": "Unsealing the Master Sword",
         "notes": [
-          "Pulling the Pedestal with 3 pendants"
+          "Pulling the Pedestal with 3 pendants",
+          "Should be 11 seconds"
         ],
         "nonlooping": true
       },
@@ -99,7 +101,10 @@
       {
         "title": "Boss Victory",
         "name": "Great Victory!",
-        "nonlooping": true
+        "nonlooping": true,
+        "notes": [
+          "Should be 10 seconds"
+        ]
       },
       {
         "title": "Sanctuary",
@@ -178,13 +183,19 @@
       {
         "title": "Triumphant Return",
         "name": "Epilogue ~ Beautiful Hyrule",
-        "nonlooping": true
+        "nonlooping": true,
+        "notes": [
+          "Should be 3:49"
+        ]
       },
       {
         "title": "Credits",
         "name": "Staff Roll",
         "nonlooping": true,
-        "num": 34
+        "num": 34,
+        "notes": [
+          "Should be 3:53"
+        ]
       }
     ],
     "extended": [
