@@ -1,0 +1,3 @@
+Import program.sfc using Icarus
+Copy shuffled folder contents into imported folder contents
+Drag & Drop imported folder onto emulator

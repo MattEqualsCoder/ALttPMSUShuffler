@@ -1,15 +1,16 @@
 import argparse
+import datetime
 import logging
+import glob
+import json
 import os
-from pathlib import Path
+import pprint
 import random
 import re
-import shutil
-import glob
-import sys
-import pprint
 import sched, time
-import datetime
+import shutil
+import sys
+from pathlib import Path
 from tempfile import TemporaryDirectory
 
 __version__ = '0.7.2'
@@ -46,7 +47,7 @@ __version__ = '0.7.2'
 #        directory and generate a new one.  Track names picked will be saved in
 #        "shuffled-msushuffleroutput.log" (cleared on reruns)
 #
-#     3) LIVE RESHUFFLE METHOD (EXPERIMENTAL): Instead of simply running 
+#     3) LIVE RESHUFFLE METHOD (EXPERIMENTAL): Instead of simply running
 #        **Main.py**, run **LiveReshuffle.py** or run in the command line as
 #        "python Main.py --live 10" (or any other positive integer) to
 #        generate a new shuffled MSU pack every few seconds.  Will skip
@@ -108,135 +109,60 @@ __version__ = '0.7.2'
 #   commands (deleting, creating, renaming files) it would have executed
 #   instead of executing them.
 
-# Tracklist from https://pastebin.com/zjqQZu5M
-titles = [
-"1 - Opening Theme",
-"2 - Light World Overworld",
-"3 - Rain State Overworld",
-"4 - Bunny Overworld",
-"5 - Lost Woods",
-"6 - Prologue",
-"7 - Kakariko",
-"8 - Portal",
-"9 - Dark World Overworld",
-"10 - Pull Pedestal",
-"11 - File Select/Game Over",
-"12 - Guards Summoned",
-"13 - Dark Death Mountain",
-"14 - Minigame",
-"15 - Skull Woods Overworld",
-"16 - Castle",
-"17 - Generic Light World Dungeon",
-"18 - Cave",
-"19 - Boss Victory",
-"20 - Sanctuary",
-"21 - Generic Boss",
-"22 - Generic Dark World Dungeon",
-"23 - Shop/Fortune Teller",
-"24 - Cave 2",
-"25 - Zelda's Rescue (unused in rando)",
-"26 - Crystal Cutscene (only the beginning is heard in rando)",
-"27 - Fairy Fountain",
-"28 - Agahnim's Theme (top floor of Castle Tower)",
-"29 - Ganon Reveals Himself (after Agahnim 2)",
-"30 - Agahnim's Theme (drop in to Ganon)",
-"31 - Ganon Fight",
-"32 - Triforce Room",
-"33 - Ending Sequence",
-"34 - Credits",
+higandir = ""
 
-#Dungeon-specific tracks
+titles = []
+trackdatapath = os.path.join(".","resources","snes","zelda3","manifests","tracks.json")
+trackdata = {}
+if os.path.exists(trackdatapath):
+  with open(trackdatapath) as json_file:
+    trackdata = json.load(json_file)
 
-"35 - Eastern Palace",
-"36 - Desert Palace",
-"37 - Agahnim's Tower",
-"38 - Swamp Palace",
-"39 - Palace of Darkness",
-"40 - Misery Mire",
-"41 - Skull Woods",
-"42 - Ice Palace",
-"43 - Tower of Hera",
-"44 - Thieves' Town",
-"45 - Turtle Rock",
-"46 - Ganon's Tower",
+nonloopingtracks = []
+extendedmsutracks = []
+extendedbackupdict = {}
 
-#Bosses
+if "tracks" in trackdata:
+  i = 1
+  if "basic" in trackdata["tracks"]:
+    for track in trackdata["tracks"]["basic"]:
+      if "title" in track:
+        titles.append(str(i).rjust(3, '0') + " - " + track["title"])
+      #Tracks that don't loop; this is used to prevent a non-looping track from
+      #being shuffled with a looping track (nobody wants the boss fanfare as
+      #light world overworld music)
+      if "nonlooping" in track:
+        if track["nonlooping"]:
+          nonloopingtracks.append(i)
+      i += 1
+  if "extended" in trackdata["tracks"]:
+    for track in trackdata["tracks"]["extended"]:
+      if "title" in track:
+        titles.append(str(i).rjust(3, '0') + " - " + track["title"])
+      #List of extended MSU dungeon-specific and boss-specific tracks.
+      extendedmsutracks.append(i)
 
-"47 - Boss Eastern Palace",
-"48 - Boss Desert Palace",
-"49 - Boss Agahnim's Tower",
-"50 - Boss Swamp Palace",
-"51 - Boss Palace of Darkness",
-"52 - Boss Misery Mire",
-"53 - Boss Skull Woods",
-"54 - Boss Ice Palace",
-"55 - Boss Tower of Hera",
-"56 - Boss Thieves' Town",
-"57 - Boss Turtle Rock",
-"58 - Boss Ganon's Tower",
+      #Since the presence of any dungeon/boss-specific track from an extended MSU
+      #pack overrides the generic pendant/crystal dungeon or generic boss music,
+      #a basic shuffle always picking track N as that same track N from a random
+      #pack will result in no boss/dungeon music from a non-extended pack ever
+      #being chosen if the user has a single extended pack.
+      #
+      #To allow dungeon/boss music to be played, the dungeon/boss-specific
+      #extended MSU tracks are shuffled differently; for each extended
+      #dungeon/boss-specific track, a pack is chosen randomly, then its
+      #corresponding dungeon/boss-specific track is chosen if present,
+      #otherwise, the generic dungeon/boss music from that pack is chosen.
+      #
+      #This means that a user that ONLY has non-extended packs won't be able to
+      #listen to dungeon music to determine crystal/pendant status in modes where
+      #that applies (since EP/DP/TH would always play light world music from a
+      #random pack regardless of pendant/crystal status).  To preserve that
+      #behavior, --basicshuffle can be used.
+      if "fallback" in track:
+        extendedbackupdict[i] = track["fallback"]
 
-#Extra Tracks
-
-"59 - Ganon's Tower 2 (Plays in upstairs GT instead of the normal GT music once you've found the Big Key)",
-"60 - Light World 2 (Replaces track 2 after the pedestal item has been obtained)",
-"61 - Dark World 2 (Replaces tracks 9, 13 and 15 after obtaining all 7 crystals)"]
-
-#Tracks that don't loop; this is used to prevent a non-looping track from
-#being shuffled with a looping track (nobody wants the boss fanfare as
-#light world overworld music)
-nonloopingtracks = [1, 8, 10, 19, 29, 33, 34]
-
-#List of extended MSU dungeon-specific and boss-specific tracks.
-extendedmsutracks = list(range(35,62))
-
-#Since the presence of any dungeon/boss-specific track from an extended MSU
-#pack overrides the generic pendant/crystal dungeon or generic boss music,
-#a basic shuffle always picking track N as that same track N from a random
-#pack will result in no boss/dungeon music from a non-extended pack ever
-#being chosen if the user has a single extended pack.
-#
-#To allow dungeon/boss music to be played, the dungeon/boss-specific
-#extended MSU tracks are shuffled differently; for each extended
-#dungeon/boss-specific track, a pack is chosen randomly, then its
-#corresponding dungeon/boss-specific track is chosen if present,
-#otherwise, the generic dungeon/boss music from that pack is chosen.
-#
-#This means that a user that ONLY has non-extended packs won't be able to
-#listen to dungeon music to determine crystal/pendant status in modes where
-#that applies (since EP/DP/TH would always play light world music from a
-#random pack regardless of pendant/crystal status).  To preserve that
-#behavior, --basicshuffle can be used.
-
-extendedbackupdict = {
-  35: 17, #EP
-  36: 17, #DP
-  37: 16, #AT
-  38: 22, #SP
-  39: 22, #PD
-  40: 22, #MM
-  41: 22, #SW
-  42: 22, #IP
-  43: 17, #TH
-  44: 22, #TT
-  45: 22, #TR
-  46: 22, #GT
-  47: 21, #EP Boss
-  48: 21, #DP Boss
-  49: 21, #AT Boss
-  50: 21, #SP Boss
-  51: 21, #PD Boss
-  52: 21, #MM Boss
-  53: 21, #SW Boss
-  54: 21, #IP Boss
-  55: 21, #TH Boss
-  56: 21, #TT Boss
-  57: 21, #TR Boss
-  58: 21, #GT Boss
-  59: 22, #GT2
-  60: 2,  #LW2
-  61: 9}  #DW2
-
-higandir = "./higan.sfc"
+      i += 1
 
 # Globals used by the scheduled reshuffle in live mode (couldn't figure out
 # a better way to pass dicts/lists to shuffle_all_tracks when called by
@@ -264,12 +190,13 @@ def delete_old_msu(args, rompath):
 
     if (args.dry_run):
         logger.info("DRY RUN MODE: Printing instead of executing.")
+        logger.info("")
 
     foundsrcrom = False
     foundshuffled = False
     for path in glob.glob('*.sfc'):
         romname = os.path.basename(str(path))
-        if romname != "shuffled.sfc" and romname != "higan.sfc":
+        if romname != "shuffled.sfc" and "higan" not in romname:
             srcrom = path
             foundsrcrom = True
         else:
@@ -294,13 +221,14 @@ def delete_old_msu(args, rompath):
             else:
                 logger.info("Copying " + os.path.basename(srcrom) + " to " + higandir + "/program.rom")
                 shutil.copy(srcrom, higandir + "/program.rom")
+                shutil.copy(srcrom, higandir + "/program.sfc")
         else:
             replace = "Y"
             if foundshuffled:
                 replace = str(input("Replace shuffled.sfc with " + os.path.basename(srcrom) + "? [Y/n]") or "Y")
             if (replace == "Y") or (replace == "y"):
                 if (args.dry_run):
-                    logger.info("DRY RUN: Would rename " + os.path.basename(srcrom) + " to shuffled.sfc.")
+                    logger.info("DRY RUN MODE: Would rename " + os.path.basename(srcrom) + " to shuffled.sfc.")
                 else:
                     logger.info("Renaming " + os.path.basename(srcrom) + " to shuffled.sfc.")
                     shutil.move(srcrom, "./shuffled.sfc")
@@ -308,7 +236,7 @@ def delete_old_msu(args, rompath):
     if not args.higan:
         for path in glob.glob(f'{rompath}-*.pcm'):
             if (args.dry_run):
-                logger.info("DRY RUN: Would remove " + str(path))        
+                logger.info("DRY RUN MODE: Would remove " + str(path))
             else:
                 try:
                     os.remove(str(path))
@@ -325,21 +253,24 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
         pass
     srctrack = int(match.group(0))
 
-    if srctrack != dst:
-        srctitle = titles[srctrack-1]
-        shorttitle = srctitle[4:]
-        if not live:
-            logger.info(titles[dst-1] + ': (' + shorttitle.strip() + ') ' + srcpath)
-    else:
-        if not live:
-            logger.info(titles[dst-1] + ': ' + srcpath)
+    srctitle = titles[srctrack-1]
+    shorttitle = ('(' + srctitle[srctitle.find('-')+2:] + ") ") if srctrack != dst else ""
+    dsttitle = titles[dst-1]
+
+    if not live:
+        shortsrcpath = srcpath
+        if args.collection:
+            shortsrcpath = shortsrcpath.replace(args.collection,"")
+        if shortsrcpath[:1] == '\\':
+            shortsrcpath = shortsrcpath[1:]
+        logger.info((dsttitle + ': ' + shorttitle).ljust(55, ' ') + shortsrcpath + " -> " + dstpath)
 
     if not dry_run:
         try:
             # Use a temporary file and os.replace to get around the fact that
             # python doesn't have an atomic copy/hardlink with overwrite.
             tmpname = os.path.join(tmpdir, f"tmp{os.path.basename(dstpath)}")
-            
+
             if (forcerealcopy):
                 shutil.copy(srcpath, tmpname)
             else:
@@ -367,8 +298,18 @@ def build_index(args):
 
     if (args.singleshuffle):
         searchdir = args.singleshuffle
+    elif args.collection:
+        searchdir = args.collection
     else:
         searchdir = '../'
+
+    print("Using collection at: " + searchdir)
+
+    if args.higan:
+        args.outputprefix = "track"
+        print("Outputting to: " + os.path.join(higandir,args.outputprefix) + '*')
+    else:
+        print("Outputting to: " + os.path.join(args.outputpath,args.outputprefix) + '*')
 
     #For all packs in the target directory, make a list of found track numbers.
     allpacks = list()
@@ -408,6 +349,7 @@ def build_index(args):
 
     buildtime = datetime.datetime.now() - buildstarttime
     print(f"Index build took {buildtime.seconds}.{buildtime.microseconds} seconds")
+    print("")
 
 def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live):
     logger = logging.getLogger('')
@@ -416,6 +358,7 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
     shufflestarttime = datetime.datetime.now()
 
     if not live:
+        logger.info("")
         logger.info("Non-looping tracks:")
 
     with TemporaryDirectory(dir='.') as tmpdir:
@@ -428,6 +371,7 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
         #a shuffled different looping track number if fullshuffle or
         #singleshuffle are enabled.
         if not live:
+            logger.info("")
             logger.info("Looping tracks:")
         for i in loopingfoundtracks:
             if (args.fullshuffle or args.singleshuffle):
@@ -446,9 +390,11 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
 def generate_shuffled_msu(args, rompath):
     logger = logging.getLogger('')
 
-    if (not os.path.exists(f'{rompath}.msu')):
-        logger.info(f"'{rompath}.msu' doesn't exist, creating it.")
-        if (not args.dry_run):
+    if (not os.path.exists(f'{rompath}.msu')) and not args.higan:
+        if args.dry_run:
+            logger.info(f"DRY RUN MODE: Would create '{rompath}.msu'")
+        else:
+            logger.info(f"'{rompath}.msu' doesn't exist, creating it.")
             with open(f'{rompath}.msu', 'w'):
                 pass
 
@@ -470,11 +416,18 @@ def generate_shuffled_msu(args, rompath):
     random.shuffle(shuffledloopingfoundtracks)
     nonloopingfoundtracks = [i for i in foundtracks if i in nonloopingtracks]
 
+    if args.higan:
+        readmepath = os.path.join(higandir,"readme")
+        if not os.path.exists(readmepath):
+            os.makedirs(readmepath)
+        shutil.copy(os.path.join(".","resources","meta","manifests","higan","higan-msu.txt"), readmepath)
+
     if args.live:
         s.enter(1, 1, shuffle_all_tracks, argument=(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live))
         s.run()
     else:
         shuffle_all_tracks(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live)
+        logger.info("")
         logger.info('Done.')
 
 def main(args):
@@ -501,6 +454,9 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--loglevel', default='info', const='info', nargs='?', choices=['error', 'info', 'warning', 'debug'], help='Select level of logging for output.')
+    parser.add_argument('--collection', default='../', help='Point script at another directory to find root of MSU packs.')
+    parser.add_argument('--outputpath', default='./', help='Output path.')
+    parser.add_argument('--outputprefix', default='shuffled', help='Output prefix.')
     parser.add_argument('--fullshuffle', help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.", action='store_true', default=False)
     parser.add_argument('--basicshuffle', help='Choose each track with the same track from a random pack.  If you have any extended packs, the dungeon/boss themes from non-extended packs will never be chosen in this mode.  If you only have non-extended packs, this preserves the ability to tell crystal/pendant dungeons by music.', action='store_true', default=False)
     parser.add_argument('--singleshuffle', help='Choose each looping track randomly from all looping tracks from a single MSU pack.  Enter the path to a subfolder in the parent directory containing a single MSU pack.')
@@ -521,7 +477,17 @@ if __name__ == '__main__':
         romlist.append(os.path.splitext(rom)[0])
 
     if not romlist:
-        romlist.append('./shuffled')
+        if args.outputpath and args.outputprefix:
+            if args.higan:
+                rompath = os.path.join(args.outputpath,"higan-" + args.outputprefix + ".sfc")
+                higandir = rompath
+            else:
+                rompath = os.path.join(args.outputpath,args.outputprefix)
+            romlist.append(rompath)
+            if not os.path.exists(rompath):
+                # this makes an extra folder that we don't need
+                # too lazy to string split
+                os.makedirs(rompath)
 
     args.roms = romlist
 
@@ -542,4 +508,3 @@ if __name__ == '__main__':
     logging.basicConfig(format='%(message)s', level=loglevel)
 
     main(args)
-

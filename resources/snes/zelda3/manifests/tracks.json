@@ -1,0 +1,321 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Opening Theme",
+        "name": "Link to the Past",
+        "notes": [
+          "Game Startup"
+        ],
+        "nonlooping": true,
+        "num": 1
+      },
+      {
+        "title": "Light World Overworld",
+        "name": "Hyrule Field"
+      },
+      {
+        "title": "Rain State Overworld",
+        "name": "Time of Falling Rain",
+        "notes": [
+          "Rain SFX is overlaid by game engine"
+        ]
+      },
+      {
+        "title": "Bunny Overworld",
+        "name": "The Silly Pink Rabbit"
+      },
+      {
+        "title": "Light World Lost Woods",
+        "name": "Forest of Mystery"
+      },
+      {
+        "title": "Opening Story Credits",
+        "name": "Seal of Seven Maidens"
+      },
+      {
+        "title": "Kakariko Village"
+      },
+      {
+        "title": "Mirror Portal",
+        "name": "Dimensional Shift",
+        "nonlooping": true
+      },
+      {
+        "title": "Dark World Overworld",
+        "name": "Dark Golden Land"
+      },
+      {
+        "title": "Pedestal Pull Sequence",
+        "name": "Unsealing the Master Sword",
+        "notes": [
+          "Pulling the Pedestal with 3 pendants"
+        ],
+        "nonlooping": true
+      },
+      {
+        "title": "File Select/Game Over",
+        "name": "Beginning of the Journey"
+      },
+      {
+        "title": "Kakariko Guards Summoned",
+        "name": "Soldiers of Kakariko Village"
+      },
+      {
+        "title": "Dark Death Mountain",
+        "name": "Black Mist"
+      },
+      {
+        "title": "Money Making Game"
+      },
+      {
+        "title": "Dark World Lost Woods",
+        "notes": [
+          "Skeleton Forest"
+        ],
+        "num": 15
+      },
+      {
+        "title": "Hyrule Castle",
+        "name": "Majestic Castle",
+        "notes": [
+          "Hyrule Castle",
+          "Hyrule Castle Escape"
+        ]
+      },
+      {
+        "title": "Generic Light World Dungeon",
+        "name": "Lost Ancient Ruins",
+        "notes": [
+          "ALttPR uses this for Pendant dungeons",
+          "Keysanity randomizes between this and #22",
+          "Expanded Soundtrack takes priority"
+        ]
+      },
+      {
+        "title": "Cave",
+        "name": "Dank Dungeons"
+      },
+      {
+        "title": "Boss Victory",
+        "name": "Great Victory!",
+        "nonlooping": true
+      },
+      {
+        "title": "Sanctuary",
+        "name": "Safety in the Sanctuary"
+      },
+      {
+        "title": "Generic Boss Battle",
+        "name": "Anger of the Guardians",
+        "notes": [
+          "Can be superceded by Expanded Soundtrack (47-58)"
+        ]
+      },
+      {
+        "title": "Generic Dark World Dungeon",
+        "name": "Dungeon of Shadows",
+        "notes": [
+          "ALttPR uses this for Crystal dungeons",
+          "Keysanity randomizes between this and #17",
+          "Expanded Soundtrack takes priority"
+        ]
+      },
+      {
+        "title": "Shop/Fortune Teller"
+      },
+      {
+        "title": "Cave 2"
+      },
+      {
+        "title": "Princess Zelda's Rescue",
+        "notes": [
+          "Unused in ALttPR"
+        ]
+      },
+      {
+        "title": "Crystal Get",
+        "name": "Meeting the Maidens",
+        "notes": [
+          "Full length plays in non-race ROMs",
+          "About 1s plays in race ROMs"
+        ]
+      },
+      {
+        "title": "Fairy Fountain",
+        "name": "The Goddess Appears"
+      },
+      {
+        "title": "Agahnim's Theme",
+        "name": "Priest of the Dark Order",
+        "notes": [
+          "Agahnim Theme in Hyrule Castle Tower during 'cutscene' prior to boss fight arena"
+        ]
+      },
+      {
+        "title": "Ganon Appears",
+        "name": "Release of Ganon",
+        "nonlooping": true,
+        "notes": [
+          "After Agahnim 2"
+        ]
+      },
+      {
+        "title": "Ganon's Theme",
+        "name": "Ganon's Message",
+        "notes": [
+          "Ganon's Monologue"
+        ]
+      },
+      {
+        "title": "Ganon Fight",
+        "name": "The Prince of Darkness"
+      },
+      {
+        "title": "Triforce Room",
+        "name": "Power of the Gods"
+      },
+      {
+        "title": "Triumphant Return",
+        "name": "Epilogue ~ Beautiful Hyrule",
+        "nonlooping": true
+      },
+      {
+        "title": "Credits",
+        "name": "Staff Roll",
+        "nonlooping": true,
+        "num": 34
+      }
+    ],
+    "extended": [
+      {
+        "title": "Eastern Palace",
+        "num": 35,
+        "fallback": 17
+      },
+      {
+        "title": "Desert Palace",
+        "fallback": 17
+      },
+      {
+        "title": "Agahnim's Tower",
+        "fallback": 16
+      },
+      {
+        "title": "Swamp Palace",
+        "fallback": 22
+      },
+      {
+        "title": "Palace of Darkness",
+        "fallback": 22
+      },
+      {
+        "title": "Misery Mire",
+        "fallback": 22
+      },
+      {
+        "title": "Skull Woods",
+        "fallback": 22
+      },
+      {
+        "title": "Ice Palace",
+        "fallback": 22
+      },
+      {
+        "title": "Tower of Hera",
+        "fallback": 17
+      },
+      {
+        "title": "Thieves' Town",
+        "fallback": 22
+      },
+      {
+        "title": "Turtle Rock",
+        "fallback": 22
+      },
+      {
+        "title": "Ganon's Tower",
+        "fallback": 22,
+        "num": 46
+      },
+      {
+        "title": "Eastern Palace Boss",
+        "fallback": 21,
+        "num": 47
+      },
+      {
+        "title": "Desert Palace Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Agahnim's Tower Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Swamp Palace Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Palace of Darkness Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Misery Mire Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Skull Woods Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Ice Palace Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Tower of Hera Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Thieves' Town Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Turtle Rock Boss",
+        "fallback": 21
+      },
+      {
+        "title": "Ganon's Tower Boss",
+        "fallback": 21,
+        "num": 58
+      },
+      {
+        "title": "Ganon's Tower 2",
+        "fallback": 22,
+        "num": 59,
+        "notes": [
+          "Replaces track 46 for upstairs GT"
+        ]
+      },
+      {
+        "title": "Light World 2",
+        "fallback": 2,
+        "num": 60,
+        "notes": [
+          "Replaces track 2 after the pedestal item has been collected",
+          "2: Light World Overworld"
+        ]
+      },
+      {
+        "title": "Dark World 2",
+        "fallback": 9,
+        "num": 61,
+        "notes": [
+          "Replaces tracks 9, 13, 15 after obtaining all crystals",
+          "9: Dark World Overworld",
+          "13: Dark Death Mountain",
+          "15: Skull Woods Overworld"
+        ]
+      }
+    ]
+  }
+}

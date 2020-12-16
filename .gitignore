@@ -1,5 +1,6 @@
+*.log
 *.msu
-*.sfc
 *.pcm
-*~
+*.sfc
 *.swp
+*~
