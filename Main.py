@@ -125,7 +125,7 @@ extendedbackupdict = {}
 longestTrackName = 30
 
 if "tracks" in trackdata:
-  i = 1
+  i = trackdata["tracks"]["index"] if "index" in trackdata["tracks"] else 1
   if "basic" in trackdata["tracks"]:
     for track in trackdata["tracks"]["basic"]:
       if "title" in track:
@@ -270,7 +270,7 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
             shortsrcpath = shortsrcpath.replace(args.collection,"")
         if shortsrcpath[:1] == '\\':
             shortsrcpath = shortsrcpath[1:]
-        msg = (dsttitle + ': ' + shorttitle).ljust(longestTrackName + 6, ' ') + shortsrcpath
+        msg = (dsttitle + ': ' + shorttitle).ljust(longestTrackName + 8, ' ') + shortsrcpath
         if args.verbose:
             msg += " -> " + dstpath
         logger.info(msg)

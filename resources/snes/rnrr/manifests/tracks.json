@@ -1,0 +1,24 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Highway Star"
+      },
+      {
+        "title": "Peter Gunn"
+      },
+      {
+        "title": "Born to be Wild"
+      },
+      {
+        "title": "Bad to the Bone"
+      },
+      {
+        "title": "Paranoid"
+      }
+    ],
+    "longest": 15,
+    "src": "https://www.romhacking.net/hacks/2311/",
+    "index": 0
+  }
+}
