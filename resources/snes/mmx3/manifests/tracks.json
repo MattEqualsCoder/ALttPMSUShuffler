@@ -1,0 +1,98 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Intro Stage"
+      },
+      {
+        "title": "Blast Hornet"
+      },
+      {
+        "title": "Frost Buffalo"
+      },
+      {
+        "title": "Gravity Beetle"
+      },
+      {
+        "title": "Toxic Seahorse"
+      },
+      {
+        "title": "Doppler Stage 1"
+      },
+      {
+        "title": "Crush Crawfish"
+      },
+      {
+        "title": "Neon Tiger"
+      },
+      {
+        "title": "Boss Battle 1"
+      },
+      {
+        "title": "Doppler Stage 4"
+      },
+      {
+        "title": "Title Screen"
+      },
+      {
+        "title": "Stage Select"
+      },
+      {
+        "title": "Password"
+      },
+      {
+        "title": "Tunnel Rhino"
+      },
+      {
+        "title": "Boss Selected Jingle"
+      },
+      {
+        "title": "Talking to Dr. Cain"
+      },
+      {
+        "title": "Doppler Boss Battle"
+      },
+      {
+        "title": "Dopper Stage Select"
+      },
+      {
+        "title": "Victory Jingle"
+      },
+      {
+        "title": "Intro Cutscene"
+      },
+      {
+        "title": "Ending Theme 1"
+      },
+      {
+        "title": "Boss Intro 1"
+      },
+      {
+        "title": "Doppler Stage 3"
+      },
+      {
+        "title": "Volt Catfish"
+      },
+      {
+        "title": "Vile Secret Stage"
+      },
+      {
+        "title": "Sigma Battle 1"
+      },
+      {
+        "title": "Sigma Battle 2"
+      },
+      {
+        "title": "Cast Roll (Ending Theme 2)"
+      },
+      {
+        "title": "Got a Weapon Jingle"
+      },
+      {
+        "title": "Zero Theme"
+      }
+    ],
+    "longest": 30,
+    "src": "https://www.romhacking.net/hacks/2342/"
+  }
+}
