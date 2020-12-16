@@ -1,0 +1,35 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Auckland",
+        "notes": [
+          "First Race"
+        ]
+      },
+      {
+        "title": "Ayers Rock",
+        "notes": [
+          "Second Race"
+        ]
+      },
+      {
+        "title": "Cantebury Plains",
+        "notes": [
+          "Third Race"
+        ]
+      },
+      {
+        "title": "Title Screen"
+      },
+      {
+        "title": "Ending Theme / Results"
+      },
+      {
+        "title": "Qualified Jingle"
+      }
+    ],
+    "longest": 25,
+    "src": "https://www.romhacking.net/hacks/2389/"
+  }
+}
