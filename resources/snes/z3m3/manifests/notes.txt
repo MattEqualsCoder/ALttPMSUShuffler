@@ -1,0 +1,13 @@
+/-----------------\
+| M3 | Z3 | Z3M3  |
+|-----------------|
+|  1 |    |    1  |
+| 29 |    |   29  |
+|    |  1 |  101  |
+|    | 33 |  133  |
+\-----------------/
+
+Z3M3 Track 30: Super Metroid mission report and ending
+Z3M3 Track 99: Combo end credits
+
+https://www.zeldix.net/t2067-super-metroid-and-a-link-to-the-past-crossover-randomizer
