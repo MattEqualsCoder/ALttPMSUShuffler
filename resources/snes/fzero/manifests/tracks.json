@@ -1,0 +1,73 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Start"
+      },
+      {
+        "title": "Zoom"
+      },
+      {
+        "title": "Lost Life"
+      },
+      {
+        "title": "Opening Theme"
+      },
+      {
+        "title": "Select Time Theme"
+      },
+      {
+        "title": "Big Blue"
+      },
+      {
+        "title": "Ending Theme"
+      },
+      {
+        "title": "Red Canyon 1"
+      },
+      {
+        "title": "Fire Field"
+      },
+      {
+        "title": "Silence"
+      },
+      {
+        "title": "White Land 1"
+      },
+      {
+        "title": "White Land 2"
+      },
+      {
+        "title": "Port Town 1"
+      },
+      {
+        "title": "Mute City 1"
+      },
+      {
+        "title": "Sand Ocean"
+      },
+      {
+        "title": "Death Wind 1"
+      }
+    ],
+    "extended": [
+      {
+        "title": "Mute City 2"
+      },
+      {
+        "title": "Port Town 2"
+      },
+      {
+        "title": "Mute City 3"
+      },
+      {
+        "title": "Death Wind 2"
+      },
+      {
+        "title": "Red Canyon 2"
+      }
+    ],
+    "longest": 20,
+    "src": "https://www.romhacking.net/hacks/2447/"
+  }
+}
