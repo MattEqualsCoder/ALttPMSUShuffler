@@ -1,0 +1,101 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Morph Moth"
+      },
+      {
+        "title": "Magna Centipede"
+      },
+      {
+        "title": "Wire Sponge"
+      },
+      {
+        "title": "Bubble Crab"
+      },
+      {
+        "title": "Flame Stag"
+      },
+      {
+        "title": "Overdrive Ostrich"
+      },
+      {
+        "title": "Wheel Gator"
+      },
+      {
+        "title": "Intro Stage (Opening)"
+      },
+      {
+        "title": "Boss 1 (Boss Fight)"
+      },
+      {
+        "title": "Boss 2 (Another Boss 2)"
+      },
+      {
+        "title": "Title"
+      },
+      {
+        "title": "Stage Select 1"
+      },
+      {
+        "title": "Password"
+      },
+      {
+        "title": "Crystal Snail"
+      },
+      {
+        "title": "Stage Start"
+      },
+      {
+        "title": "Zero"
+      },
+      {
+        "title": "X Hunter Stage 2"
+      },
+      {
+        "title": "Stage Select 2"
+      },
+      {
+        "title": "Boss Defeated (Stage Cleared)"
+      },
+      {
+        "title": "Story (Opening)"
+      },
+      {
+        "title": "Boss Intro 2 (Another Boss 1)"
+      },
+      {
+        "title": "Boss Intro 1"
+      },
+      {
+        "title": "Get a Weapon"
+      },
+      {
+        "title": "X Hunter Stage 1"
+      },
+      {
+        "title": "Intro Stage, Again (Opening)"
+      },
+      {
+        "title": "Cutscene (Demo)"
+      },
+      {
+        "title": "Sigma 1"
+      },
+      {
+        "title": "Sigma 2"
+      },
+      {
+        "title": "Ending"
+      },
+      {
+        "title": "Staff Roll"
+      },
+      {
+        "title": "Laboratory"
+      }
+    ],
+    "longest": 30,
+    "src": "https://www.romhacking.net/hacks/2672/"
+  }
+}
