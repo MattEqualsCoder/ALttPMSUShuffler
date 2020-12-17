@@ -1,0 +1,9 @@
+The following skip track IDs and aren't fully-supported yet
+Gotta add logic to Random PCM selector to choose same track number
+
+ActRaiser
+Cold Shadow
+Donkey Kong Country 2
+Rockman & Forte
+Super Mario World
+TMNT IV
