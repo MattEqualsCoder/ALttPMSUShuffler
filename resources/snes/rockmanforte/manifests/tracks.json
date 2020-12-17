@@ -1,0 +1,90 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Title Screen"
+      },
+      {
+        "title": "File Select"
+      },
+      {
+        "num": 4,
+        "title": "Player Select"
+      },
+      {
+        "title": "Stage Select"
+      },
+      {
+        "title": "Stage Selected"
+      },
+      {
+        "title": "Museum"
+      },
+      {
+        "title": "Dynamo Man"
+      },
+      {
+        "title": "Cold Man"
+      },
+      {
+        "title": "Ground Man"
+      },
+      {
+        "title": "Tengu Man"
+      },
+      {
+        "title": "Astro Man"
+      },
+      {
+        "title": "Pirate Man"
+      },
+      {
+        "title": "Burner Man"
+      },
+      {
+        "title": "Magic Man"
+      },
+      {
+        "title": "King Castle"
+      },
+      {
+        "title": "Wily Castle"
+      },
+      {
+        "title": "Seals"
+      },
+      {
+        "title": "King Castle Intro",
+        "nonlooping": true
+      },
+      {
+        "title": "New Weapon Presentation"
+      },
+      {
+        "title": "Victory",
+        "nonlooping": true
+      },
+      {
+        "title": "Rightot's Shop"
+      },
+      {
+        "title": "Data Base"
+      },
+      {
+        "title": "Game Over"
+      },
+      {
+        "title": "Credits"
+      },
+      {
+        "num": 27,
+        "title": "Boss"
+      },
+      {
+        "title": "Last Boss"
+      }
+    ],
+    "longest": 30,
+    "src": "https://www.zeldix.net/t1481-rockman-forte"
+  }
+}
