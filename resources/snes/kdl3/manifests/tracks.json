@@ -1,0 +1,151 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Killed Kirby first time",
+        "nonlooping": true
+      },
+      {
+        "title": "Whispy Willow Boss Fight"
+      },
+      {
+        "title": "Invincible 2"
+      },
+      {
+        "title": "4-4 Door 2 Interior"
+      },
+      {
+        "title": "Level Clear"
+      },
+      {
+        "title": "Whispy Willow Defeat",
+        "nonlooping": true
+      },
+      {
+        "title": "King Dedede (Final Boss Battle)"
+      },
+      {
+        "title": "End of Level 2-3 Door 1"
+      },
+      {
+        "title": "1-4 Door 2 Interior"
+      },
+      {
+        "title": "1-4, 2-2"
+      },
+      {
+        "title": "1-2, 1-5"
+      },
+      {
+        "title": "5-6"
+      },
+      {
+        "title": "3-1, 3-5"
+      },
+      {
+        "title": "3-6"
+      },
+      {
+        "title": "2-1"
+      },
+      {
+        "title": "2-5, 3-3"
+      },
+      {
+        "title": "4-1"
+      },
+      {
+        "title": "2-3, 3-4"
+      },
+      {
+        "title": "1-3, 4-2"
+      },
+      {
+        "title": "1-1"
+      },
+      {
+        "title": "3-2, 4-4, Start"
+      },
+      {
+        "title": "Kirby Death",
+        "nonlooping": true
+      },
+      {
+        "title": "Dark Matter Intro"
+      },
+      {
+        "title": "Dark Matter Boss Fight / Defeated"
+      },
+      {
+        "title": "Start New Game",
+        "notes": [
+          "Level 1 World Map",
+          "Minigame"
+        ]
+      },
+      {
+        "title": "Level 2 World Map"
+      },
+      {
+        "title": "Level 4 World Map"
+      },
+      {
+        "title": "Level 3 World Map"
+      },
+      {
+        "title": "1-1 Door 2 Interior"
+      },
+      {
+        "title": "Level 5 Cut Screen"
+      },
+      {
+        "title": "Midway Minigame"
+      },
+      {
+        "title": "Level Hyper Candy"
+      },
+      {
+        "title": "Kirby Intro",
+        "nonlooping": true
+      },
+      {
+        "title": "Title Screen",
+        "nonlooping": true
+      },
+      {
+        "title": "Game Demo Screen"
+      },
+      {
+        "title": "Start New Game 2"
+      },
+      {
+        "title": "Save Menu"
+      },
+      {
+        "title": "1-1 Door 1 Interior"
+      },
+      {
+        "title": "1-2 Door 1 Interior, 1-5 Door 1 Interior"
+      },
+      {
+        "title": "1-3 Door 1 Interior, 2-1 Door 1 Interior"
+      },
+      {
+        "title": "Kirby Rides Star"
+      },
+      {
+        "title": "End Credits",
+        "notes": [
+          "Zero Boss Fight",
+          "Zero Defeated",
+          "Kirby Cut Screen"
+        ]
+      },
+      {
+        "title": "King Dedede Defeated"
+      }
+    ],
+    "longest": 40,
+    "src": "https://www.zeldix.net/t1736-kirby-s-dreamland-3"
+  }
+}
