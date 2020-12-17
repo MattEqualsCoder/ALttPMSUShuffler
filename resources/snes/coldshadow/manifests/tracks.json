@@ -1,0 +1,52 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "num": 2,
+        "title": "Level 1 - Mojo Mansion"
+      },
+      {
+        "num": 4,
+        "title": "Level 2 - The Ninja Training Grounds"
+      },
+      {
+        "num": 6,
+        "title": "Level 3 - Muddrake Mayhem"
+      },
+      {
+        "num": 8,
+        "title": "Level 5 - The Test of Duckhood"
+      },
+      {
+        "num": 10,
+        "title": "Level 4 - Sacrifice of Maui"
+      },
+      {
+        "num": 12,
+        "title": "Level 6 - The Flying Duckman"
+      },
+      {
+        "num": 14,
+        "title": "Level 7 - The Realm of the Dead"
+      },
+      {
+        "num": 16,
+        "title": "Level 8 - The Mojo Stronghold"
+      },
+      {
+        "num": 18,
+        "title": "Disney Interactive Intro"
+      },
+      {
+        "num": 20,
+        "title": "Ending"
+      },
+      {
+        "num": 22,
+        "title": "Level Intro Theme"
+      }
+    ],
+    "longest": 40,
+    "src": "https://www.zeldix.net/t1744-maui-mallard-in-cold-shadow"
+  }
+}
