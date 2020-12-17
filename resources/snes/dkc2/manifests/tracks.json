@@ -1,0 +1,402 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Welcome to Crocodile Isle",
+        "notes": [
+          "Island Map"
+        ]
+      },
+      {
+        "tltle": "K. Rool Returns",
+        "notes": [
+          "Main Theme"
+        ]
+      },
+      {
+        "title": "Bayou Boogie"
+      },
+      {
+        "title": "Swanky's Swing"
+      },
+      {
+        "title": "Forest Interlude"
+      },
+      {
+        "title": "Klomp's Romp"
+      },
+      {
+        "title": "Kannon's Klaim"
+      },
+      {
+        "title": "Funky the Main Monkey"
+      },
+      {
+        "title": "Stickerbush Symphony"
+      },
+      {
+        "title": "Klubba's Reveille"
+      },
+      {
+        "title": "Flight of the Zinger"
+      },
+      {
+        "title": "School House Harmony"
+      },
+      {
+        "title": "Hot-Head Bop"
+      },
+      {
+        "title": "Disco Train"
+      },
+      {
+        "title": "Objective Screen"
+      },
+      {
+        "title": "Lockjaw's Saga"
+      },
+      {
+        "title": "Opening Fanfare"
+      },
+      {
+        "title": "Snakey Chantey"
+      },
+      {
+        "title": "Stronghold Showdown"
+      },
+      {
+        "title": "Game Over"
+      },
+      {
+        "title": "Boss Bossanova"
+      },
+      {
+        "title": "Krook's March"
+      },
+      {
+        "title": "Haunted Chase"
+      },
+      {
+        "title": "Steel Drum Rhumba"
+      },
+      {
+        "title": "Cranky's Conga"
+      },
+      {
+        "title": "In a Snow-Bound Land"
+      },
+      {
+        "title": "Primal Rave"
+      },
+      {
+        "title": "Lost World Anthem"
+      },
+      {
+        "title": "Jib Jig"
+      },
+      {
+        "title": "Donkey Kong Rescued"
+      },
+      {
+        "title": "Crocodile Cacophony"
+      },
+      {
+        "num": 36,
+        "title": "Wind/water sounds"
+      },
+      {
+        "num": 43,
+        "title": "Lost Life (Swamp)"
+      },
+      {
+        "num": 45,
+        "title": "Lost Life (Enchanted Wood)"
+      },
+      {
+        "num": 46,
+        "title": "Lost Life (Ship Deck)"
+      },
+      {
+        "num": 47,
+        "title": "Lost Life (Mine)"
+      },
+      {
+        "num": 49,
+        "title": "Lost Life (Brambles)"
+      },
+      {
+        "num": 51,
+        "title": "Lost Life (Wasp Hive)"
+      },
+      {
+        "num": 53,
+        "title": "Lost Life (Lava)"
+      },
+      {
+        "num": 54,
+        "title": "Lost Life (Roller Coaster)"
+      },
+      {
+        "num": 55,
+        "title": "Win (Bonus)"
+      },
+      {
+        "num": 56,
+        "title": "Lost Life (Ship Hold)"
+      },
+      {
+        "num": 58,
+        "title": "Lost Life (Ship Deck 2)"
+      },
+      {
+        "num": 59,
+        "title": "The Flying Krock (Rescue Kong)"
+      },
+      {
+        "num": 61,
+        "title": "Lost Life (Big Boss)"
+      },
+      {
+        "num": 62,
+        "title": "Lost Life (Castle)"
+      },
+      {
+        "num": 63,
+        "title": "Lost Life (Haunted)"
+      },
+      {
+        "num": 66,
+        "title": "Lost Life (Ice)"
+      },
+      {
+        "num": 67,
+        "title": "Lost Life (Jungle)"
+      },
+      {
+        "num": 69,
+        "title": "Lost Life (Rigging)"
+      },
+      {
+        "num": 71,
+        "title": "Lost Life (K. Rool)",
+        "unused": true
+      },
+      {
+        "num": 83,
+        "title": "Diddy Victory (Swamp)"
+      },
+      {
+        "num": 85,
+        "title": "Diddy Victory (Enchanted Wood)"
+      },
+      {
+        "num": 86,
+        "title": "Diddy Victory (Ship Deck)"
+      },
+      {
+        "num": 87,
+        "title": "Diddy Victory (Mine)"
+      },
+      {
+        "num": 89,
+        "title": "Diddy Victory (Brambles)"
+      },
+      {
+        "num": 91,
+        "title": "Diddy Victory (Wasp Hive)"
+      },
+      {
+        "num": 93,
+        "title": "Diddy Victory (Lava)"
+      },
+      {
+        "num": 94,
+        "title": "Diddy Victory (Roller Coaster)"
+      },
+      {
+        "num": 95,
+        "title": "Loss (Bonus)"
+      },
+      {
+        "num": 96,
+        "title": "Diddy Victory (Ship Hold)"
+      },
+      {
+        "num": 98,
+        "title": "Diddy Victory (Ship Deck 2)"
+      },
+      {
+        "num": 101,
+        "title": "Diddy Victory (Big Boss)"
+      },
+      {
+        "num": 102,
+        "title": "Diddy Victory (Castle)"
+      },
+      {
+        "num": 103,
+        "title": "Diddy Victory (Haunted)"
+      },
+      {
+        "num": 106,
+        "title": "Diddy Victory (Ice)"
+      },
+      {
+        "num": 107,
+        "title": "Diddy Victory (Jungle)"
+      },
+      {
+        "num": 109,
+        "title": "Diddy Victory (Rigging)"
+      },
+      {
+        "num": 111,
+        "title": "Diddy Victory (K. Rool)",
+        "unused": true
+      },
+      {
+        "num": 123,
+        "title": "Dixie Victory (Swamp)"
+      },
+      {
+        "num": 125,
+        "title": "Dixie Victory (Enchanted Wood)"
+      },
+      {
+        "num": 126,
+        "title": "Dixie Victory (Ship Deck)"
+      },
+      {
+        "num": 127,
+        "title": "Dixie Victory (Mine)"
+      },
+      {
+        "num": 129,
+        "title": "Dixie Victory (Brambles)"
+      },
+      {
+        "num": 131,
+        "title": "Dixie Victory (Wasp Hive)"
+      },
+      {
+        "num": 133,
+        "title": "Dixie Victory (Lava)"
+      },
+      {
+        "num": 134,
+        "title": "Dixie Victory (Roller Coaster)"
+      },
+      {
+        "num": 135,
+        "title": "Token Tango (Bonus)"
+      },
+      {
+        "num": 136,
+        "title": "Dixie Victory (Ship Hold)"
+      },
+      {
+        "num": 138,
+        "title": "Dixie Victory (Ship Deck 2)"
+      },
+      {
+        "num": 141,
+        "title": "Dixie Victory (Big Boss)"
+      },
+      {
+        "num": 142,
+        "title": "Dixie Victory (Castle)"
+      },
+      {
+        "num": 143,
+        "title": "Dixie Victory (Haunted)"
+      },
+      {
+        "num": 146,
+        "title": "Dixie Victory (Ice)"
+      },
+      {
+        "num": 147,
+        "title": "Dixie Victory (Jungle)"
+      },
+      {
+        "num": 149,
+        "title": "Dixie Victory (Rigging)"
+      },
+      {
+        "num": 151,
+        "title": "Dixie Victory (K. Rool)",
+        "unused": true
+      },
+      {
+        "num": 163,
+        "title": "Hit Target (Swamp)"
+      },
+      {
+        "num": 165,
+        "title": "Hit Target (Enchanted Wood)"
+      },
+      {
+        "num": 166,
+        "title": "Hit Target (Ship Deck)"
+      },
+      {
+        "num": 167,
+        "title": "Hit Target (Mine)"
+      },
+      {
+        "num": 169,
+        "title": "Hit Target (Brambles)"
+      },
+      {
+        "num": 171,
+        "title": "Hit Target (Wasp Hive)"
+      },
+      {
+        "num": 173,
+        "title": "Hit Target (Lava)"
+      },
+      {
+        "num": 174,
+        "title": "Hit Target (Roller Coaster)"
+      },
+      {
+        "num": 176,
+        "title": "Hit Target (Ship Hold)"
+      },
+      {
+        "num": 178,
+        "title": "Hit Target (Ship Deck 2)"
+      },
+      {
+        "num": 182,
+        "title": "Hit Target (Castle)"
+      },
+      {
+        "num": 183,
+        "title": "Hit Target (Haunted)"
+      },
+      {
+        "num": 186,
+        "title": "Hit Target (Ice)"
+      },
+      {
+        "num": 187,
+        "title": "Hit Target (Jungle)"
+      },
+      {
+        "num": 189,
+        "title": "Hit Target (Rigging)"
+      },
+      {
+        "num": 209,
+        "title": "Bad Bird Rag (Brambles)"
+      },
+      {
+        "num": 211,
+        "title": "Run, Rambi! Run! (Wasp Hive)"
+      }
+    ],
+    "longest": 30,
+    "src": "https://www.zeldix.net/t1445-donkey-kong-country-2"
+  }
+}
