@@ -133,6 +133,8 @@ if "tracks" in trackdata:
           title = "<Unused>"
       elif "title" in track:
           title = track["title"]
+      if "num" in track:
+          i = track["num"]
       titles.append(str(i).rjust(3, '0') + " - " + title)
       #Tracks that don't loop; this is used to prevent a non-looping track from
       #being shuffled with a looping track (nobody wants the boss fanfare as
@@ -148,6 +150,8 @@ if "tracks" in trackdata:
           title = "<Unused>"
       elif "title" in track:
           title = track["title"]
+      if "num" in track:
+          i = track["num"]
       titles.append(str(i).rjust(3, '0') + " - " + title)
       #List of extended MSU dungeon-specific and boss-specific tracks.
       extendedmsutracks.append(i)

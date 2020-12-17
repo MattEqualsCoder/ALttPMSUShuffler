@@ -1,0 +1,76 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Sewarage",
+        "num": 3
+      },
+      {
+        "title": "Dinosaur",
+        "num": 9
+      },
+      {
+        "title": "Pirate",
+        "num": 12
+      },
+      {
+        "title": "Train",
+        "num": 15
+      },
+      {
+        "title": "Highway",
+        "num": 18
+      },
+      {
+        "title": "Starbase",
+        "num": 21
+      },
+      {
+        "title": "Lastboss",
+        "num": 27
+      },
+      {
+        "title": "Staff",
+        "num": 42
+      },
+      {
+        "title": "Fortress",
+        "num": 45
+      },
+      {
+        "title": "Elevator",
+        "num": 57
+      },
+      {
+        "title": "Memory",
+        "num": 60
+      },
+      {
+        "title": "Winner",
+        "num": 69
+      },
+      {
+        "title": "Roof",
+        "num": 232
+      },
+      {
+        "title": "Battle",
+        "num": 235
+      },
+      {
+        "title": "Downtown",
+        "num": 244
+      },
+      {
+        "title": "Open",
+        "num": 250
+      },
+      {
+        "title": "Training",
+        "num": 253
+      }
+    ],
+    "longest": 8,
+    "src": "https://www.romhacking.net/hacks/2705/"
+  }
+}
