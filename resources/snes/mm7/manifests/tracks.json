@@ -1,0 +1,126 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "title": "Opening Part 1",
+        "nonlooping": true
+      },
+      {
+        "title": "Title Screen",
+        "nonlooping": true
+      },
+      {
+        "title": "Intro Stage"
+      },
+      {
+        "title": "Stage Select"
+      },
+      {
+        "title": "Freeze Man"
+      },
+      {
+        "title": "Cloud Man"
+      },
+      {
+        "title": "Junk Man"
+      },
+      {
+        "title": "Turbo Man"
+      },
+      {
+        "title": "Slash Man"
+      },
+      {
+        "title": "Spring Man"
+      },
+      {
+        "title": "Shade Man"
+      },
+      {
+        "title": "Burst Man"
+      },
+      {
+        "title": "Robot Museum Stage"
+      },
+      {
+        "title": "Boss Battle 1"
+      },
+      {
+        "title": "Wily Stage 1"
+      },
+      {
+        "title": "Wily Stage 2"
+      },
+      {
+        "title": "Wily Stage 3"
+      },
+      {
+        "title": "Wily Stage 4"
+      },
+      {
+        "title": "Boss Battle 2"
+      },
+      {
+        "title": "Wily Boss Battle"
+      },
+      {
+        "title": "Mega Man Jingle / Stage Selected Jingle",
+        "nonlooping": true
+      },
+      {
+        "title": "Bass' Theme"
+      },
+      {
+        "title": "Protoman's Whistle",
+        "nonlooping": true
+      },
+      {
+        "title": "Dr. Light Lab 1"
+      },
+      {
+        "title": "Dr. Light Lab 2 (Destroyed)"
+      },
+      {
+        "title": "You Get a Weapon"
+      },
+      {
+        "title": "Auto Shop"
+      },
+      {
+        "title": "Boss Defeated Jingle",
+        "nonlooping": true
+      },
+      {
+        "title": "Dr. Wily Defeated",
+        "nonlooping": true
+      },
+      {
+        "title": "Password Screen"
+      },
+      {
+        "title": "End Credits"
+      },
+      {
+        "title": "Dr. Wily Castle Jingle",
+        "nonlooping": true
+      },
+      {
+        "title": "Bad Helmet",
+        "nonlooping": true
+      },
+      {
+        "title": "Opening Part 2",
+        "nonlooping": true
+      },
+      {
+        "title": "Shade Man Alternate (Ghost 'n Goblins)"
+      },
+      {
+        "title": "Shade Man Alternate Stage Selected",
+        "nonlooping": true
+      }
+    ],
+    "longest": 40,
+    "src": "https://www.romhacking.net/hacks/3088/"
+  }
+}
