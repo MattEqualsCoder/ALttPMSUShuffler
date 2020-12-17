@@ -1,0 +1,84 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "num": 0,
+        "title": "Fillmore"
+      },
+      {
+        "num": 1,
+        "title": "Sky Palace"
+      },
+      {
+        "num": 2,
+        "title": "Bloodpool ~ Casandora"
+      },
+      {
+        "num": 3,
+        "title": "The Beast Appears (Boss Battle 1)"
+      },
+      {
+        "num": 5,
+        "title": "Aitos ~ Temple"
+      },
+      {
+        "num": 6,
+        "title": "Powerful Enemy (Boss Battle 2)"
+      },
+      {
+        "num": 7,
+        "title": "Opening"
+      },
+      {
+        "num": 8,
+        "title": "Descent"
+      },
+      {
+        "num": 9,
+        "title": "Piramid ~ Marana"
+      },
+      {
+        "num": 10,
+        "title": "Birth of the People"
+      },
+      {
+        "num": 12,
+        "title": "North Wall"
+      },
+      {
+        "num": 13,
+        "title": "All Over the World"
+      },
+      {
+        "num": 14,
+        "title": "Satan"
+      },
+      {
+        "num": 15,
+        "title": "Silence",
+        "notes": [
+          "Name of the track, not actual silence"
+        ],
+        "nonlooping": true
+      },
+      {
+        "num": 16,
+        "title": "Sacrifices"
+      },
+      {
+        "num": 19,
+        "title": "Peaceful World"
+      },
+      {
+        "num": 21,
+        "title": "Ending",
+        "notes": [
+          "Long track"
+        ]
+      }
+    ],
+    "index": 0,
+    "longest": 35,
+    "src": "https://www.romhacking.net/hacks/3754/"
+  }
+}
