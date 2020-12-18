@@ -218,10 +218,17 @@ def delete_old_msu(args, rompath):
 
     foundsrcrom = False
     foundshuffled = False
-    for path in glob.glob('*.sfc'):
-        romname = os.path.basename(str(path))
+    gamefiles = []
+    romname = args.gamefile
+    if romname != "":
+        gamefiles.append((os.path.dirname(romname), os.path.basename(romname)))
+    else:
+        for path in glob.glob('*.sfc'):
+            gamefiles.append((os.path.dirname(path), os.path.basename(path)))
+
+    for path,romname in gamefiles:
         if romname != "shuffled.sfc" and "higan" not in romname:
-            srcrom = path
+            srcrom = romname
             foundsrcrom = True
         else:
             foundshuffled = True
@@ -238,7 +245,7 @@ def delete_old_msu(args, rompath):
             os.mkdir(higandir)
             open(os.path.join(higandir, "msu1.rom"), 'a').close()
 
-    if foundsrcrom and rompath == os.path.join(".","shuffled"):
+    if foundsrcrom:
         if args.higan:
             if args.dry_run:
                 logger.info("DRY RUN MODE: Would copy " + os.path.basename(srcrom) + " to " + os.path.join(higandir, "program.rom"))
@@ -249,13 +256,17 @@ def delete_old_msu(args, rompath):
         else:
             replace = "Y"
             if foundshuffled:
-                replace = str(input("Replace shuffled.sfc with " + os.path.basename(srcrom) + "? [Y/n]") or "Y")
+                replace = str(input("Replace " + rompath + ".sfc with " + os.path.basename(srcrom) + "? [Y/n]") or "Y")
             if (replace == "Y") or (replace == "y"):
                 if (args.dry_run):
-                    logger.info("DRY RUN MODE: Would rename " + os.path.basename(srcrom) + " to shuffled.sfc.")
+                    logger.info("DRY RUN MODE: Would " + ("copy" if args.copy else "rename") + " '" + os.path.basename(srcrom) + "' to '" + rompath + ".sfc" + "'")
                 else:
-                    logger.info("Renaming " + os.path.basename(srcrom) + " to shuffled.sfc.")
-                    shutil.move(srcrom, os.path.join(".", "shuffled.sfc"))
+                    if args.copy:
+                        logger.info("Copying '" + os.path.basename(srcrom) + "' to '" + rompath + ".sfc" + "'")
+                        shutil.copy(srcrom, rompath + ".sfc")
+                    else:
+                        logger.info("Renaming '" + os.path.basename(srcrom) + "' to '" + rompath + ".sfc" + "'")
+                        shutil.move(srcrom, rompath + ".sfc")
 
     if not args.higan:
         for path in glob.glob(f'{rompath}-*.pcm'):
@@ -360,7 +371,7 @@ def build_index(args):
         return
 
     for pack in allpacks:
-        for track in list(range(1, 62)):
+        for track in list(range(0, int(list(titles.keys())[-1]) + 1)):
             foundtracks = list()
             for path in Path(pack).rglob(f"*-{track}.pcm"):
                 trackname = os.path.basename(str(path))
@@ -496,8 +507,10 @@ if __name__ == '__main__':
     parser.add_argument('--loglevel', default='info', const='info', nargs='?', choices=['error', 'info', 'warning', 'debug'], help='Select level of logging for output.')
     parser.add_argument('--collection', default=os.path.join(".."), help='Point script at another directory to find root of MSU packs.')
     parser.add_argument('--game', default="snes/zelda3", help='Game Track List to load.')
+    parser.add_argument('--gamefile', default="", help='Game File to load. Leave blank to auto-locate.')
     parser.add_argument('--outputpath', default=os.path.join("."), help='Output path.')
     parser.add_argument('--outputprefix', default='shuffled', help='Output prefix.')
+    parser.add_argument('--copy', action='store_true', default=False)
     parser.add_argument('--fullshuffle', help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.", action='store_true', default=False)
     parser.add_argument('--basicshuffle', help='Choose each track with the same track from a random pack.  If you have any extended packs, the dungeon/boss themes from non-extended packs will never be chosen in this mode.  If you only have non-extended packs, this preserves the ability to tell crystal/pendant dungeons by music.', action='store_true', default=False)
     parser.add_argument('--singleshuffle', help='Choose each looping track randomly from all looping tracks from a single MSU pack.  Enter the path to a subfolder in the parent directory containing a single MSU pack.')
@@ -531,6 +544,9 @@ if __name__ == '__main__':
                 # this makes an extra folder that we don't need
                 # too lazy to string split
                 os.makedirs(rompath)
+
+    if args.gamefile != "":
+        romlist.append(args.gamefile)
 
     args.roms = romlist
 

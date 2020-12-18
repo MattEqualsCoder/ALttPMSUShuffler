@@ -79,6 +79,14 @@
     ],
     "index": 0,
     "longest": 35,
-    "src": "https://www.romhacking.net/hacks/3754/"
+    "src": "https://www.romhacking.net/hacks/3754/",
+    "crc": {
+      "vanilla": {
+        "unheadered": "EAC3358D"
+      },
+      "patched": {
+        "unheadered": "8881FC75"
+      }
+    }
   }
 }
