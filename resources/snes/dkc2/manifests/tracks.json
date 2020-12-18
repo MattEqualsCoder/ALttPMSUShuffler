@@ -397,6 +397,14 @@
       }
     ],
     "longest": 30,
-    "src": "https://www.zeldix.net/t1445-donkey-kong-country-2"
+    "src": "https://www.zeldix.net/t1445-donkey-kong-country-2",
+    "crc": {
+      "vanilla": {
+        "unheadered": "4E2D90F4"
+      },
+      "patched": {
+        "unheadered": "79C7F30F"
+      }
+    }
   }
 }
