@@ -2,51 +2,48 @@
   "tracks": {
     "basic": [
       {
-        "num": 2,
-        "title": "Level 1 - Mojo Mansion"
-      },
-      {
-        "num": 4,
-        "title": "Level 2 - The Ninja Training Grounds"
-      },
-      {
-        "num": 6,
-        "title": "Level 3 - Muddrake Mayhem"
-      },
-      {
-        "num": 8,
-        "title": "Level 5 - The Test of Duckhood"
-      },
-      {
-        "num": 10,
-        "title": "Level 4 - Sacrifice of Maui"
-      },
-      {
-        "num": 12,
-        "title": "Level 6 - The Flying Duckman"
-      },
-      {
-        "num": 14,
-        "title": "Level 7 - The Realm of the Dead"
-      },
-      {
-        "num": 16,
-        "title": "Level 8 - The Mojo Stronghold"
-      },
-      {
-        "num": 18,
         "title": "Disney Interactive Intro"
       },
       {
-        "num": 20,
-        "title": "Ending"
+        "title": "Level Intro Theme"
       },
       {
-        "num": 22,
-        "title": "Level Intro Theme"
+        "title": "Level 1 - Mojo Mansion"
+      },
+      {
+        "title": "Level 2 - The Ninja Training Grounds"
+      },
+      {
+        "title": "Level 3 - Muddrake Mayhem"
+      },
+      {
+        "title": "Level 4 - Sacrifice of Maui"
+      },
+      {
+        "title": "Level 5 - The Test of Duckhood"
+      },
+      {
+        "title": "Level 6 - The Flying Duckman"
+      },
+      {
+        "title": "Level 7 - The Realm of the Dead"
+      },
+      {
+        "title": "Level 8 - The Mojo Stronghold"
+      },
+      {
+        "title": "Ending"
       }
     ],
     "longest": 40,
-    "src": "https://www.zeldix.net/t1744-maui-mallard-in-cold-shadow"
+    "src": "https://www.zeldix.net/t1744-maui-mallard-in-cold-shadow",
+    "crc": {
+      "vanilla": {
+        "unheadered": "2D3B9662"
+      },
+      "patched": {
+        "unheadered": "BC62F612"
+      }
+    }
   }
 }
