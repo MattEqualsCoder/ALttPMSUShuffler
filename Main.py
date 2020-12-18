@@ -109,89 +109,97 @@ __version__ = '0.7.2'
 #   commands (deleting, creating, renaming files) it would have executed
 #   instead of executing them.
 
+titles = {}
 higandir = ""
-
-titles = []
-#trackdatapath = os.path.join(".","resources","snes","metroid3","manifests","tracks.json")
-trackdatapath = os.path.join(".","resources","snes","zelda3","manifests","tracks.json")
-trackdata = {}
-if os.path.exists(trackdatapath):
-  with open(trackdatapath) as json_file:
-    trackdata = json.load(json_file)
-
+trackdatapath = ""
+longestTrackName = 30
 nonloopingtracks = []
 extendedmsutracks = []
 extendedbackupdict = {}
-longestTrackName = 30
 
-if "tracks" in trackdata:
-  i = trackdata["tracks"]["index"] if "index" in trackdata["tracks"] else 1
-  if "basic" in trackdata["tracks"]:
-    for track in trackdata["tracks"]["basic"]:
-      title = ""
-      if "unused" in track or "title" not in track:
-          title = "<Unused>"
-      elif "title" in track:
-          title = track["title"]
-      if "num" in track:
-          i = track["num"]
-      titles.append(str(i).rjust(3, '0') + " - " + title)
-      #Tracks that don't loop; this is used to prevent a non-looping track from
-      #being shuffled with a looping track (nobody wants the boss fanfare as
-      #light world overworld music)
-      if "nonlooping" in track:
-        if track["nonlooping"]:
-          nonloopingtracks.append(i)
-      i += 1
-  if "extended" in trackdata["tracks"]:
-    for track in trackdata["tracks"]["extended"]:
-      title = ""
-      if "unused" in track or "title" not in track:
-          title = "<Unused>"
-      elif "title" in track:
-          title = track["title"]
-      if "num" in track:
-          i = track["num"]
-      titles.append(str(i).rjust(3, '0') + " - " + title)
-      #List of extended MSU dungeon-specific and boss-specific tracks.
-      extendedmsutracks.append(i)
+def load_game(gamepath):
+    global titles
+    global trackdatapath
+    global longestTrackName
+    global nonloopingtracks
+    global extendedmsutracks
+    global extendedbackupdict
 
-      #Since the presence of any dungeon/boss-specific track from an extended MSU
-      #pack overrides the generic pendant/crystal dungeon or generic boss music,
-      #a basic shuffle always picking track N as that same track N from a random
-      #pack will result in no boss/dungeon music from a non-extended pack ever
-      #being chosen if the user has a single extended pack.
-      #
-      #To allow dungeon/boss music to be played, the dungeon/boss-specific
-      #extended MSU tracks are shuffled differently; for each extended
-      #dungeon/boss-specific track, a pack is chosen randomly, then its
-      #corresponding dungeon/boss-specific track is chosen if present,
-      #otherwise, the generic dungeon/boss music from that pack is chosen.
-      #
-      #This means that a user that ONLY has non-extended packs won't be able to
-      #listen to dungeon music to determine crystal/pendant status in modes where
-      #that applies (since EP/DP/TH would always play light world music from a
-      #random pack regardless of pendant/crystal status).  To preserve that
-      #behavior, --basicshuffle can be used.
-      if "fallback" in track:
-        extendedbackupdict[i] = track["fallback"]
+    console,game = gamepath.split('/')
+    trackdatapath = os.path.join(".","resources",console,game,"manifests","tracks.json")
+    trackdata = {}
+    if os.path.exists(trackdatapath):
+      with open(trackdatapath) as json_file:
+        trackdata = json.load(json_file)
 
-      i += 1
-  if "longest" in trackdata["tracks"]:
-      longestTrackName = trackdata["tracks"]["longest"]
+    if "tracks" in trackdata:
+      i = trackdata["tracks"]["index"] if "index" in trackdata["tracks"] else 1
+      if "basic" in trackdata["tracks"]:
+        for track in trackdata["tracks"]["basic"]:
+          title = ""
+          if "unused" in track or "title" not in track:
+              title = "<Unused>"
+          elif "title" in track:
+              title = track["title"]
+          if "num" in track:
+              i = track["num"]
+          titles[str(i)] = title
+          #Tracks that don't loop; this is used to prevent a non-looping track from
+          #being shuffled with a looping track (nobody wants the boss fanfare as
+          #light world overworld music)
+          if "nonlooping" in track:
+            if track["nonlooping"]:
+              nonloopingtracks.append(str(i))
+          i += 1
+      if "extended" in trackdata["tracks"]:
+        for track in trackdata["tracks"]["extended"]:
+          title = ""
+          if "unused" in track or "title" not in track:
+              title = "<Unused>"
+          elif "title" in track:
+              title = track["title"]
+          if "num" in track:
+              i = track["num"]
+          titles[str(i)] = title
+          #List of extended MSU dungeon-specific and boss-specific tracks.
+          extendedmsutracks.append(str(i))
 
-# Globals used by the scheduled reshuffle in live mode (couldn't figure out
-# a better way to pass dicts/lists to shuffle_all_tracks when called by
-# the scheduler)
-global trackindex
-trackindex = {}
-global nonloopingfoundtracks
-nonloopingfoundtracks = list()
-global loopingfoundtracks
-loopingfoundtracks = list()
-global shuffledloopingfoundtracks
-shuffledloopingfoundtracks = list()
-s = sched.scheduler(time.time, time.sleep)
+          #Since the presence of any dungeon/boss-specific track from an extended MSU
+          #pack overrides the generic pendant/crystal dungeon or generic boss music,
+          #a basic shuffle always picking track N as that same track N from a random
+          #pack will result in no boss/dungeon music from a non-extended pack ever
+          #being chosen if the user has a single extended pack.
+          #
+          #To allow dungeon/boss music to be played, the dungeon/boss-specific
+          #extended MSU tracks are shuffled differently; for each extended
+          #dungeon/boss-specific track, a pack is chosen randomly, then its
+          #corresponding dungeon/boss-specific track is chosen if present,
+          #otherwise, the generic dungeon/boss music from that pack is chosen.
+          #
+          #This means that a user that ONLY has non-extended packs won't be able to
+          #listen to dungeon music to determine crystal/pendant status in modes where
+          #that applies (since EP/DP/TH would always play light world music from a
+          #random pack regardless of pendant/crystal status).  To preserve that
+          #behavior, --basicshuffle can be used.
+          if "fallback" in track:
+            extendedbackupdict[i] = track["fallback"]
+
+          i += 1
+      if "longest" in trackdata["tracks"]:
+          longestTrackName = trackdata["tracks"]["longest"]
+
+    # Globals used by the scheduled reshuffle in live mode (couldn't figure out
+    # a better way to pass dicts/lists to shuffle_all_tracks when called by
+    # the scheduler)
+    global trackindex
+    trackindex = {}
+    global nonloopingfoundtracks
+    nonloopingfoundtracks = []
+    global loopingfoundtracks
+    loopingfoundtracks = []
+    global shuffledloopingfoundtracks
+    shuffledloopingfoundtracks = {}
+    s = sched.scheduler(time.time, time.sleep)
 
 def delete_old_msu(args, rompath):
     try:
@@ -272,13 +280,13 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
     if srctrack > len(titles):
         return
 
-    srctitle = titles[srctrack-1]
+    srctitle = titles[str(srctrack)]
 
     if "<Unused>" in srctitle:
         return
 
-    shorttitle = ('(' + srctitle[srctitle.find('-')+2:] + ") ") if srctrack != dst else ""
-    dsttitle = titles[dst-1]
+    shorttitle = ('(' + srctitle[srctitle.find('-')+2:] + ") ") if int(srctrack) != int(dst) else ""
+    dsttitle = titles[str(dst)]
 
     if not live:
         shortsrcpath = srcpath
@@ -286,7 +294,7 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
             shortsrcpath = shortsrcpath.replace(args.collection,"")
         if shortsrcpath[:1] == '\\':
             shortsrcpath = shortsrcpath[1:]
-        msg = (dsttitle + ': ' + shorttitle).ljust(longestTrackName + 8, ' ') + shortsrcpath
+        msg = str(srctrack).rjust(3, '0') + " - " + (dsttitle + ': ' + shorttitle).ljust(longestTrackName + 8, ' ') + shortsrcpath
         if args.verbose:
             msg += " -> " + dstpath
         logger.info(msg)
@@ -390,7 +398,7 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
 
     with TemporaryDirectory(dir=os.path.join(".")) as tmpdir:
         for i in nonloopingfoundtracks:
-            winner = random.choice(trackindex[i])
+            winner = random.choice(trackindex[int(i)])
             copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
 
         #For all found looping tracks, pick a random track from a random pack
@@ -407,7 +415,7 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
             else:
                 dst = i
                 src = i
-            winner = random.choice(trackindex[src])
+            winner = random.choice(trackindex[int(src)])
             copy_track(logger, winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
     if live:
         shuffletime = datetime.datetime.now() - shufflestarttime
@@ -437,11 +445,15 @@ def generate_shuffled_msu(args, rompath):
 
     #Separate this list into looping tracks and non-looping tracks, and make a
     #shuffled list of the found looping tracks.
-    loopingfoundtracks = [i for i in foundtracks if i not in nonloopingtracks]
+    for i in titles:
+        if int(i) in foundtracks:
+            if i in nonloopingtracks:
+                nonloopingfoundtracks.append(i)
+            else:
+                loopingfoundtracks.append(i)
 
     shuffledloopingfoundtracks = loopingfoundtracks.copy()
     random.shuffle(shuffledloopingfoundtracks)
-    nonloopingfoundtracks = [i for i in foundtracks if i in nonloopingtracks]
 
     if args.higan:
         readmepath = os.path.join(higandir,"readme")
@@ -462,6 +474,7 @@ def main(args):
         print("ALttPMSUShuffler version " + __version__)
         return
 
+    load_game(args.game)
     build_index(args)
 
     for rom in args.roms:
@@ -482,6 +495,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--loglevel', default='info', const='info', nargs='?', choices=['error', 'info', 'warning', 'debug'], help='Select level of logging for output.')
     parser.add_argument('--collection', default=os.path.join(".."), help='Point script at another directory to find root of MSU packs.')
+    parser.add_argument('--game', default="snes/zelda3", help='Game Track List to load.')
     parser.add_argument('--outputpath', default=os.path.join("."), help='Output path.')
     parser.add_argument('--outputprefix', default='shuffled', help='Output prefix.')
     parser.add_argument('--fullshuffle', help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.", action='store_true', default=False)
@@ -496,6 +510,7 @@ if __name__ == '__main__':
 
     romlist = list()
     args, roms = parser.parse_known_args()
+
     for rom in roms:
         if not os.path.exists(rom):
             print(f"ERROR: Unknown argument {rom}")
