@@ -52,22 +52,40 @@
     ],
     "extended": [
       {
-        "title": "Mute City 2"
+        "title": "Mute City 2",
+        "fallback": 14
       },
       {
-        "title": "Port Town 2"
+        "title": "Port Town 2",
+        "fallback": 13
       },
       {
-        "title": "Mute City 3"
+        "title": "Mute City 3",
+        "fallback": 17
       },
       {
-        "title": "Death Wind 2"
+        "title": "Death Wind 2",
+        "fallback": 16
       },
       {
-        "title": "Red Canyon 2"
+        "title": "Red Canyon 2",
+        "fallback": 8
       }
     ],
     "longest": 20,
-    "src": "https://www.romhacking.net/hacks/2447/"
+    "src": "https://www.romhacking.net/hacks/2447/",
+    "crc": {
+      "vanilla": {
+        "unheadered": "AA0E31DE"
+      },
+      "patched": {
+        "basic": {
+          "unheadered" : "82F22D13"
+        },
+        "extended": {
+          "unheadered" : "DD60457F"
+        }
+      }
+    }
   }
 }

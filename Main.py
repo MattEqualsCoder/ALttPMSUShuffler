@@ -546,7 +546,7 @@ if __name__ == '__main__':
                 os.makedirs(rompath)
 
     if args.gamefile != "":
-        romlist.append(args.gamefile)
+        romlist = [args.gamefile]
 
     args.roms = romlist
 
