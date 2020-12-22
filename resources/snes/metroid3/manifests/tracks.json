@@ -113,6 +113,14 @@
       }
     ],
     "longest": 37,
-    "src": "https://www.zeldix.net/t1444-super-metroid"
+    "src": "https://www.zeldix.net/t1444-super-metroid",
+    "crc": {
+      "vanilla": {
+        "unheadered": "D63ED5F8"
+      },
+      "patched": {
+        "unheadered": "2AB63C8"
+      }
+    }
   }
 }
