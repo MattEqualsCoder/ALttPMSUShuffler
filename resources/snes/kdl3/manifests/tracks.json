@@ -221,6 +221,14 @@
       }
     ],
     "longest": 40,
-    "src": "https://www.zeldix.net/t1736-kirby-s-dreamland-3"
+    "src": "https://www.zeldix.net/t1736-kirby-s-dreamland-3",
+    "crc": {
+      "vanilla": {
+        "unheadered": "EC8A48F6"
+      },
+      "patched": {
+        "unheadered": "CDA510AF"
+      }
+    }
   }
 }
