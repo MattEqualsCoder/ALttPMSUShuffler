@@ -348,14 +348,15 @@ def build_index(args):
     else:
         searchdir = os.path.join("..")
 
-    print("Using manifest at: " + trackdatapath)
+    print("Using manifest at:   " + trackdatapath)
+    print("Using gamefile at:   " + (args.gamefile if args.gamefile else "*.sfc"))
     print("Using collection at: " + searchdir)
 
     if args.higan:
         args.outputprefix = "track"
-        print("Outputting to: " + os.path.join(higandir,args.outputprefix) + '*')
+        print("Outputting to:       " + os.path.join(higandir,args.outputprefix) + '*')
     else:
-        print("Outputting to: " + os.path.join(args.outputpath,args.outputprefix) + '*')
+        print("Outputting to:       " + os.path.join(args.outputpath,args.outputprefix) + '*')
 
     #For all packs in the target directory, make a list of found track numbers.
     allpacks = list()
@@ -540,13 +541,12 @@ if __name__ == '__main__':
             else:
                 rompath = os.path.join(args.outputpath,args.outputprefix)
             romlist.append(rompath)
-            if not os.path.exists(rompath):
-                # this makes an extra folder that we don't need
-                # too lazy to string split
-                os.makedirs(rompath)
+            parpath = os.path.dirname(rompath)
+            if not os.path.exists(parpath):
+                os.makedirs(parpath)
 
-    if args.gamefile != "":
-        romlist = [args.gamefile]
+    if not romlist and args.gamefile != "":
+        romlist.append(os.path.splitext(args.gamefile)[0])
 
     args.roms = romlist
 
