@@ -1,7 +1,6 @@
 {
   "tracks": {
-    "basic": [
-      {
+    "basic": [{
         "title": "Opening Part 1",
         "nonlooping": true
       },
@@ -121,6 +120,24 @@
       }
     ],
     "longest": 40,
-    "src": "https://www.romhacking.net/hacks/3088/"
+    "src": "https://www.romhacking.net/hacks/3088/",
+    "crc": {
+      "mm7": {
+        "vanilla": {
+          "unheadered": "2D947536"
+        },
+        "patched": {
+          "unheadered": "653A587D"
+        }
+      },
+      "rm7": {
+        "vanilla": {
+          "unheadered": "31F18DDA"
+        },
+        "patched": {
+          "unheadered": ""
+        }
+      }
+    }
   }
 }

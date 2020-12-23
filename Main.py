@@ -219,7 +219,8 @@ def delete_old_msu(args, rompath):
     foundsrcrom = False
     foundshuffled = False
     gamefiles = []
-    romname = args.gamefile
+    romname = args.gamefile if args.gamefile != "" else ""
+
     if romname != "":
         gamefiles.append((os.path.dirname(romname), os.path.basename(romname)))
     else:
@@ -227,11 +228,12 @@ def delete_old_msu(args, rompath):
             gamefiles.append((os.path.dirname(path), os.path.basename(path)))
 
     for path,romname in gamefiles:
-        if romname != "shuffled.sfc" and "higan" not in romname:
-            srcrom = romname
-            foundsrcrom = True
-        else:
-            foundshuffled = True
+        if romname != "":
+            if romname != "shuffled.sfc" and "higan" not in romname:
+                srcrom = romname
+                foundsrcrom = True
+            else:
+                foundshuffled = True
 
     if args.higan:
         if os.path.isdir(higandir):
@@ -257,7 +259,7 @@ def delete_old_msu(args, rompath):
             replace = "Y"
             if foundshuffled:
                 replace = str(input("Replace " + rompath + ".sfc with " + os.path.basename(srcrom) + "? [Y/n]") or "Y")
-            if (replace == "Y") or (replace == "y"):
+            if replace.upper() == "Y":
                 if (args.dry_run):
                     logger.info("DRY RUN MODE: Would " + ("copy" if args.copy else "rename") + " '" + os.path.basename(srcrom) + "' to '" + rompath + ".sfc" + "'")
                 else:
@@ -267,6 +269,11 @@ def delete_old_msu(args, rompath):
                     else:
                         logger.info("Renaming '" + os.path.basename(srcrom) + "' to '" + rompath + ".sfc" + "'")
                         shutil.move(srcrom, rompath + ".sfc")
+    else:
+        make_romless = str(input("No gamefile found at: " + rompath + ".sfc . Continue making pack? [Y/n]") or "Y")
+        if make_romless.upper() != "Y":
+            print("User selected to exit without making pack without gamefile.")
+            sys.exit(1)
 
     if not args.higan:
         for path in glob.glob(f'{rompath}-*.pcm'):
@@ -545,8 +552,12 @@ if __name__ == '__main__':
             if not os.path.exists(parpath):
                 os.makedirs(parpath)
 
-    if not romlist and args.gamefile != "":
-        romlist.append(os.path.splitext(args.gamefile)[0])
+    if args.gamefile != "":
+        if not os.path.exists(args.gamefile):
+            print(os.path.join(args.gamefile) + " not found!")
+            sys.exit()
+        elif not romlist:
+            romlist.append(os.path.splitext(args.gamefile)[0])
 
     args.roms = romlist
 
