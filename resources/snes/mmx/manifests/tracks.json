@@ -103,6 +103,14 @@
       }
     ],
     "longest": 30,
-    "src": "https://www.romhacking.net/hacks/2274/"
+    "src": "https://www.romhacking.net/hacks/2274/",
+    "crc": {
+      "vanilla": {
+        "unheadered": "DED53C64"
+      },
+      "patched": {
+        "unheadered": "342A542"
+      }
+    }
   }
 }
