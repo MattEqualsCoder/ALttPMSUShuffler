@@ -85,6 +85,30 @@
       }
     ],
     "longest": 30,
-    "src": "https://www.zeldix.net/t1481-rockman-forte"
+    "src": "https://www.zeldix.net/t1481-rockman-forte",
+    "crc": {
+      "jp": {
+        "vanilla": {
+          "unheadered": "5047E0D4",
+          "headered": "FA009392"
+        },
+        "patched": {
+          "unheadered": "ED74CACF"
+        }
+      },
+      "en": {
+        "vanilla": {
+          "unheadered": "5047E0D4",
+          "headered": "FA009392"
+        },
+        "translated": {
+          "unheadered": "9EFAF9B7",
+          "headered": "112EF781"
+        },
+        "patched": {
+          "unheadered": "17887460"
+        }
+      }
+    }
   }
 }
