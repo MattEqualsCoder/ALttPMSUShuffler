@@ -295,7 +295,7 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
         pass
     srctrack = int(match.group(0))
 
-    if srctrack > len(titles):
+    if str(srctrack) not in list(titles.keys()):
         return
 
     srctitle = titles[str(srctrack)]
