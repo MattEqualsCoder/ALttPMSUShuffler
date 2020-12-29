@@ -109,13 +109,13 @@ __version__ = '0.7.2'
 #   commands (deleting, creating, renaming files) it would have executed
 #   instead of executing them.
 
-titles = {}
+titles = {} # hash
 higandir = ""
-trackdatapath = ""
-longestTrackName = 30
-nonloopingtracks = []
-extendedmsutracks = []
-extendedbackupdict = {}
+trackdatapath = {} # string
+longestTrackName = {} # int
+nonloopingtracks = {} # array
+extendedmsutracks = {} # array
+extendedbackupdict = {} # hash
 
 def load_game(gamepath):
     global titles
@@ -126,16 +126,23 @@ def load_game(gamepath):
     global extendedbackupdict
 
     console,game = gamepath.split('/')
-    trackdatapath = os.path.join(".","resources",console,game,"manifests","tracks.json")
+    trackdatapath[gamepath] = os.path.join(".","resources",console,game,"manifests","tracks.json")
     trackdata = {}
-    if os.path.exists(trackdatapath):
-      with open(trackdatapath) as json_file:
-        trackdata = json.load(json_file)
+    trackdata[gamepath] = {}
+    if gamepath not in titles:
+      titles[gamepath] = {}
+    if gamepath not in nonloopingtracks:
+      nonloopingtracks[gamepath] = []
+    if gamepath not in extendedmsutracks:
+      extendedmsutracks[gamepath] = []
+    if os.path.exists(trackdatapath[gamepath]):
+      with open(trackdatapath[gamepath]) as json_file:
+        trackdata[gamepath] = json.load(json_file)
 
-    if "tracks" in trackdata:
-      i = trackdata["tracks"]["index"] if "index" in trackdata["tracks"] else 1
-      if "basic" in trackdata["tracks"]:
-        for track in trackdata["tracks"]["basic"]:
+    if "tracks" in trackdata[gamepath]:
+      i = trackdata[gamepath]["tracks"]["index"] if "index" in trackdata[gamepath]["tracks"] else 1
+      if "basic" in trackdata[gamepath]["tracks"]:
+        for track in trackdata[gamepath]["tracks"]["basic"]:
           title = ""
           if "unused" in track or "title" not in track:
               title = "<Unused>"
@@ -143,16 +150,16 @@ def load_game(gamepath):
               title = track["title"]
           if "num" in track:
               i = track["num"]
-          titles[str(i)] = title
+          titles[gamepath][str(i)] = title
           #Tracks that don't loop; this is used to prevent a non-looping track from
           #being shuffled with a looping track (nobody wants the boss fanfare as
           #light world overworld music)
           if "nonlooping" in track:
             if track["nonlooping"]:
-              nonloopingtracks.append(str(i))
+              nonloopingtracks[gamepath].append(str(i))
           i += 1
-      if "extended" in trackdata["tracks"]:
-        for track in trackdata["tracks"]["extended"]:
+      if "extended" in trackdata[gamepath]["tracks"]:
+        for track in trackdata[gamepath]["tracks"]["extended"]:
           title = ""
           if "unused" in track or "title" not in track:
               title = "<Unused>"
@@ -160,9 +167,9 @@ def load_game(gamepath):
               title = track["title"]
           if "num" in track:
               i = track["num"]
-          titles[str(i)] = title
+          titles[gamepath][str(i)] = title
           #List of extended MSU dungeon-specific and boss-specific tracks.
-          extendedmsutracks.append(str(i))
+          extendedmsutracks[gamepath].append(str(i))
 
           #Since the presence of any dungeon/boss-specific track from an extended MSU
           #pack overrides the generic pendant/crystal dungeon or generic boss music,
@@ -181,24 +188,32 @@ def load_game(gamepath):
           #that applies (since EP/DP/TH would always play light world music from a
           #random pack regardless of pendant/crystal status).  To preserve that
           #behavior, --basicshuffle can be used.
+          if gamepath not in extendedbackupdict:
+            extendedbackupdict[gamepath] = {}
           if "fallback" in track:
-            extendedbackupdict[i] = track["fallback"]
+            extendedbackupdict[gamepath][i] = track["fallback"]
 
           i += 1
-      if "longest" in trackdata["tracks"]:
-          longestTrackName = trackdata["tracks"]["longest"]
+      if "longest" in trackdata[gamepath]["tracks"]:
+          if gamepath not in longestTrackName:
+            longestTrackName[gamepath] = ""
+          longestTrackName[gamepath] = trackdata[gamepath]["tracks"]["longest"]
 
     # Globals used by the scheduled reshuffle in live mode (couldn't figure out
     # a better way to pass dicts/lists to shuffle_all_tracks when called by
     # the scheduler)
     global trackindex
     trackindex = {}
+    trackindex[gamepath] = {}
     global nonloopingfoundtracks
-    nonloopingfoundtracks = []
+    nonloopingfoundtracks = {}
+    nonloopingfoundtracks[gamepath] = []
     global loopingfoundtracks
-    loopingfoundtracks = []
+    loopingfoundtracks = {}
+    loopingfoundtracks[gamepath] = []
     global shuffledloopingfoundtracks
     shuffledloopingfoundtracks = {}
+    shuffledloopingfoundtracks[gamepath] = {}
     s = sched.scheduler(time.time, time.sleep)
 
 def delete_old_msu(args, rompath):
@@ -285,7 +300,7 @@ def delete_old_msu(args, rompath):
                 except PermissionError:
                     logger.info(f"WARNING: Failed to remove {path}")
 
-def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir):
+def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath):
     if higan:
         dstpath = os.path.join(higandir, "track-" + str(dst) + ".pcm")
     else:
@@ -295,16 +310,16 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
         pass
     srctrack = int(match.group(0))
 
-    if str(srctrack) not in list(titles.keys()):
+    if str(srctrack) not in list(titles[gamepath].keys()):
         return
 
-    srctitle = titles[str(srctrack)]
+    srctitle = titles[gamepath][str(srctrack)]
 
     if "<Unused>" in srctitle:
         return
 
     shorttitle = ('(' + srctitle[srctitle.find('-')+2:] + ") ") if int(srctrack) != int(dst) else ""
-    dsttitle = titles[str(dst)]
+    dsttitle = titles[gamepath][str(dst)]
 
     if not live:
         shortsrcpath = srcpath
@@ -312,7 +327,7 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
             shortsrcpath = shortsrcpath.replace(args.collection,"")
         if shortsrcpath[:1] == '\\':
             shortsrcpath = shortsrcpath[1:]
-        msg = str(srctrack).rjust(3, '0') + " - " + (dsttitle + ': ' + shorttitle).ljust(longestTrackName + 8, ' ') + shortsrcpath
+        msg = str(srctrack).rjust(3, '0') + " - " + (dsttitle + ': ' + shorttitle).ljust(longestTrackName[gamepath] + 8, ' ') + shortsrcpath
         if args.verbose:
             msg += " -> " + dstpath
         logger.info(msg)
@@ -355,7 +370,8 @@ def build_index(args):
     else:
         searchdir = os.path.join("..")
 
-    print("Using manifest at:   " + trackdatapath)
+    gamepath = args.game
+    print("Using manifest at:   " + trackdatapath[gamepath])
     print("Using gamefile at:   " + (args.gamefile if args.gamefile else "*.sfc"))
     print("Using collection at: " + searchdir)
 
@@ -379,7 +395,7 @@ def build_index(args):
         return
 
     for pack in allpacks:
-        for track in list(range(0, int(list(titles.keys())[-1]) + 1)):
+        for track in list(range(0, int(list(titles[gamepath].keys())[-1]) + 1)):
             foundtracks = list()
             for path in Path(pack).rglob(f"*-{track}.pcm"):
                 trackname = os.path.basename(str(path))
@@ -388,14 +404,14 @@ def build_index(args):
 
             #For extended MSU packs, use the backups
             if not args.basicshuffle and not args.fullshuffle:
-                if not foundtracks and track in extendedmsutracks and track in extendedbackupdict:
-                    backuptrack = extendedbackupdict[track]
+                if not foundtracks and track in extendedmsutracks[gamepath] and track in extendedbackupdict[gamepath]:
+                    backuptrack = extendedbackupdict[gamepath][track]
                     for path in Path(pack).rglob(f"*-{backuptrack}.pcm"):
                         trackname = os.path.basename(str(path))
                         if 'disabled' not in trackname.lower():
                             foundtracks.append(str(path))
 
-            trackindex.setdefault(track, []).extend(foundtracks)
+            trackindex[gamepath].setdefault(track, []).extend(foundtracks)
 
     #Uncomment to print index for debugging
     #pp = pprint.PrettyPrinter()
@@ -405,7 +421,7 @@ def build_index(args):
     print(f"Index build took {buildtime.seconds}.{buildtime.microseconds} seconds")
     print("")
 
-def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live):
+def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, gamepath):
     logger = logging.getLogger('')
     #For all found non-looping tracks, pick a random track with a matching
     #track number from a random pack in the target directory.
@@ -416,9 +432,9 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
         logger.info("Non-looping tracks:")
 
     with TemporaryDirectory(dir=os.path.join(".")) as tmpdir:
-        for i in nonloopingfoundtracks:
-            winner = random.choice(trackindex[int(i)])
-            copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
+        for i in nonloopingfoundtracks[gamepath]:
+            winner = random.choice(trackindex[gamepath][int(i)])
+            copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath)
 
         #For all found looping tracks, pick a random track from a random pack
         #in the target directory, with a matching track number by default, or
@@ -427,15 +443,15 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
         if not live:
             logger.info("")
             logger.info("Looping tracks:")
-        for i in loopingfoundtracks:
+        for i in loopingfoundtracks[gamepath]:
             if (args.fullshuffle or args.singleshuffle):
                 dst = i
-                src = shuffledloopingfoundtracks[loopingfoundtracks.index(i)]
+                src = shuffledloopingfoundtracks[gamepath][loopingfoundtracks[gamepath].index(i)]
             else:
                 dst = i
                 src = i
-            winner = random.choice(trackindex[int(src)])
-            copy_track(logger, winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
+            winner = random.choice(trackindex[gamepath][int(src)])
+            copy_track(logger, winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath)
     if live:
         shuffletime = datetime.datetime.now() - shufflestarttime
         print("Reshuffling MSU pack every%s second%s, press ctrl+c or close the window to stop reshuffling. (shuffled in %d.%ds)" %(" " + str(int(live)) if int(live) != 1 else "", "s" if int(live) != 1 else "", shuffletime.seconds, shuffletime.microseconds))
@@ -452,27 +468,30 @@ def generate_shuffled_msu(args, rompath):
             with open(f'{rompath}.msu', 'w'):
                 pass
 
+    gamepath = args.game
+
     global nonloopingfoundtracks
     global loopingfoundtracks
     global shuffledloopingfoundtracks
 
-    foundtracks = list()
-    for key in trackindex:
-        if trackindex[key]:
-            foundtracks.append(key)
-    foundtracks = sorted(foundtracks)
+    foundtracks = {}
+    foundtracks[gamepath] = list()
+    for key in trackindex[gamepath]:
+        if trackindex[gamepath][key]:
+            foundtracks[gamepath].append(key)
+    foundtracks[gamepath] = sorted(foundtracks[gamepath])
 
     #Separate this list into looping tracks and non-looping tracks, and make a
     #shuffled list of the found looping tracks.
-    for i in titles:
-        if int(i) in foundtracks:
-            if i in nonloopingtracks:
-                nonloopingfoundtracks.append(i)
+    for i in list(titles[gamepath].keys()):
+        if int(i) in foundtracks[gamepath]:
+            if str(i) in nonloopingtracks[gamepath]:
+                nonloopingfoundtracks[gamepath].append(i)
             else:
-                loopingfoundtracks.append(i)
+                loopingfoundtracks[gamepath].append(i)
 
-    shuffledloopingfoundtracks = loopingfoundtracks.copy()
-    random.shuffle(shuffledloopingfoundtracks)
+    shuffledloopingfoundtracks[gamepath] = loopingfoundtracks[gamepath].copy()
+    random.shuffle(shuffledloopingfoundtracks[gamepath])
 
     if args.higan:
         readmepath = os.path.join(higandir,"readme")
@@ -484,7 +503,7 @@ def generate_shuffled_msu(args, rompath):
         s.enter(1, 1, shuffle_all_tracks, argument=(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live))
         s.run()
     else:
-        shuffle_all_tracks(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live)
+        shuffle_all_tracks(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live, args.game)
         logger.info("")
         logger.info('Done.')
 

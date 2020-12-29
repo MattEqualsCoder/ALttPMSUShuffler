@@ -5,3 +5,5 @@
 *.sfc
 *.swp
 *~
+
+resources/user/manifests/settings.json
