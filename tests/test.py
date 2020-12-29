@@ -6,7 +6,7 @@ import sys
 
 def save_settings(args):
   settings = args.copy()
-  for key in ["game","dry-run", "dry_run"]:
+  for key in ["game","dry-run", "dry_run", "verbose"]:
     if key in settings:
       settings.pop(key, None)
   user_resources_path = os.path.join(".","resources","user")
@@ -37,6 +37,7 @@ settings = parse_settings()
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--game', default=settings["game"], help='Game Track List to load.')
 parser.add_argument('--dry-run', help='Makes script print all filesystem commands that would be executed instead of actually executing them.', action='store_true', default=False)
+parser.add_argument('--verbose', help='Verbose output.', action='store_true', default=False)
 parser.add_argument('--collection', default=settings["collection"], help='Point script at another directory to find root of MSU packs.')
 parser.add_argument('--collectiondrive', default=settings["collectiondrive"], help='Point script at another drive to find root of MSU packs.')
 args, _ = parser.parse_known_args()
@@ -62,8 +63,10 @@ switches = [
   "--copy"
 ]
 
-if "dry-run" in list(vars(args).keys()) or "dry_run" in list(vars(args).keys()):
+if ("dry-run" in list(vars(args).keys()) and args.dry-run) or ("dry_run" in list(vars(args).keys()) and args.dry_run):
   switches.append("--dry-run")
+if "verbose" in list(vars(args).keys()) and args.verbose:
+  switches.append("--verbose")
 
 subprocess.check_call([
   PYTHON_EXECUTABLE,

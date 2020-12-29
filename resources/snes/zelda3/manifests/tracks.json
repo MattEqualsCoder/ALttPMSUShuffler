@@ -8,8 +8,7 @@
           "Game Startup",
           "Should be 16 seconds"
         ],
-        "nonlooping": true,
-        "num": 1
+        "nonlooping": true
       },
       {
         "title": "Light World Overworld",
@@ -74,8 +73,7 @@
         "title": "Dark World Lost Woods",
         "notes": [
           "Skeleton Forest"
-        ],
-        "num": 15
+        ]
       },
       {
         "title": "Hyrule Castle",
@@ -192,7 +190,6 @@
         "title": "Credits",
         "name": "Staff Roll",
         "nonlooping": true,
-        "num": 34,
         "notes": [
           "Should be 3:53"
         ]
@@ -201,7 +198,6 @@
     "extended": [
       {
         "title": "Eastern Palace",
-        "num": 35,
         "fallback": 17
       },
       {
@@ -246,13 +242,11 @@
       },
       {
         "title": "Ganon's Tower",
-        "fallback": 22,
-        "num": 46
+        "fallback": 22
       },
       {
         "title": "Eastern Palace Boss",
-        "fallback": 21,
-        "num": 47
+        "fallback": 21
       },
       {
         "title": "Desert Palace Boss",
@@ -296,13 +290,11 @@
       },
       {
         "title": "Ganon's Tower Boss",
-        "fallback": 21,
-        "num": 58
+        "fallback": 21
       },
       {
         "title": "Ganon's Tower 2",
         "fallback": 22,
-        "num": 59,
         "notes": [
           "Replaces track 46 for upstairs GT"
         ]
@@ -310,7 +302,6 @@
       {
         "title": "Light World 2",
         "fallback": 2,
-        "num": 60,
         "notes": [
           "Replaces track 2 after the pedestal item has been collected",
           "2: Light World Overworld"
@@ -319,7 +310,6 @@
       {
         "title": "Dark World 2",
         "fallback": 9,
-        "num": 61,
         "notes": [
           "Replaces tracks 9, 13, 15 after obtaining all crystals",
           "9: Dark World Overworld",

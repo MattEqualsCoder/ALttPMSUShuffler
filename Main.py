@@ -117,7 +117,12 @@ nonloopingtracks = {} # array
 extendedmsutracks = {} # array
 extendedbackupdict = {} # hash
 
-def load_game(gamepath):
+# get track list
+# get track titles
+# sort non/looping tracks
+# get extended tracks
+# get extended backup tracks
+def load_game(gamepath, gameID):
     global titles
     global trackdatapath
     global longestTrackName
@@ -216,6 +221,10 @@ def load_game(gamepath):
     shuffledloopingfoundtracks[gamepath] = {}
     s = sched.scheduler(time.time, time.sleep)
 
+# delete old log
+# delete old higan dir
+# copy new game file
+# delete old pcms
 def delete_old_msu(args, rompath):
     try:
         if os.path.exists(f"{rompath}-msushuffleroutput.log"):
@@ -300,11 +309,16 @@ def delete_old_msu(args, rompath):
                 except PermissionError:
                     logger.info(f"WARNING: Failed to remove {path}")
 
-def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath):
+# copy track
+def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID):
     if higan:
         dstpath = os.path.join(higandir, "track-" + str(dst) + ".pcm")
+        if "z3m3" in gameID:
+            dstpath = os.path.join(higandir, "track-" + str(dst + 100) + ".pcm")
     else:
         dstpath = f"{rompath}-{dst}.pcm"
+        if "z3m3" in gameID and "zelda3" in gamepath:
+            dstpath = ("%s-%s.pcm" % (rompath, int(dst) + 100))
 
     for match in re.finditer(r'\d+', os.path.basename(srcpath)):
         pass
@@ -357,7 +371,7 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
 #
 # Index format:
 # index[2] = ['../msu1/track-2.pcm', '../msu2/track-2.pcm']
-def build_index(args):
+def build_index(args, game):
     print("Building index, this should take a few seconds.")
     buildstarttime = datetime.datetime.now()
 
@@ -365,12 +379,14 @@ def build_index(args):
 
     if (args.singleshuffle):
         searchdir = args.singleshuffle
+    elif "z3m3" in args.game:
+        searchdir = args.collection.replace("snes\z3m3", game)
     elif args.collection:
         searchdir = args.collection
     else:
         searchdir = os.path.join("..")
 
-    gamepath = args.game
+    gamepath = game
     print("Using manifest at:   " + trackdatapath[gamepath])
     print("Using gamefile at:   " + (args.gamefile if args.gamefile else "*.sfc"))
     print("Using collection at: " + searchdir)
@@ -421,7 +437,8 @@ def build_index(args):
     print(f"Index build took {buildtime.seconds}.{buildtime.microseconds} seconds")
     print("")
 
-def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, gamepath):
+# do the shuffle and write pcms
+def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, gamepath, gameID):
     logger = logging.getLogger('')
     #For all found non-looping tracks, pick a random track with a matching
     #track number from a random pack in the target directory.
@@ -434,7 +451,7 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
     with TemporaryDirectory(dir=os.path.join(".")) as tmpdir:
         for i in nonloopingfoundtracks[gamepath]:
             winner = random.choice(trackindex[gamepath][int(i)])
-            copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath)
+            copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID)
 
         #For all found looping tracks, pick a random track from a random pack
         #in the target directory, with a matching track number by default, or
@@ -451,13 +468,14 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
                 dst = i
                 src = i
             winner = random.choice(trackindex[gamepath][int(src)])
-            copy_track(logger, winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath)
+            copy_track(logger, winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID)
     if live:
         shuffletime = datetime.datetime.now() - shufflestarttime
         print("Reshuffling MSU pack every%s second%s, press ctrl+c or close the window to stop reshuffling. (shuffled in %d.%ds)" %(" " + str(int(live)) if int(live) != 1 else "", "s" if int(live) != 1 else "", shuffletime.seconds, shuffletime.microseconds))
-        s.enter(int(live), 1, shuffle_all_tracks, argument=(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live))
+        s.enter(int(live), 1, shuffle_all_tracks, argument=(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, game))
 
-def generate_shuffled_msu(args, rompath):
+# create .msu
+def generate_shuffled_msu(args, rompath, gameID):
     logger = logging.getLogger('')
 
     if (not os.path.exists(f'{rompath}.msu')) and not args.higan:
@@ -468,7 +486,7 @@ def generate_shuffled_msu(args, rompath):
             with open(f'{rompath}.msu', 'w'):
                 pass
 
-    gamepath = args.game
+    gamepath = gameID
 
     global nonloopingfoundtracks
     global loopingfoundtracks
@@ -503,7 +521,7 @@ def generate_shuffled_msu(args, rompath):
         s.enter(1, 1, shuffle_all_tracks, argument=(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live))
         s.run()
     else:
-        shuffle_all_tracks(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live, args.game)
+        shuffle_all_tracks(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live, gamepath, args.game)
         logger.info("")
         logger.info('Done.')
 
@@ -512,22 +530,28 @@ def main(args):
         print("ALttPMSUShuffler version " + __version__)
         return
 
-    load_game(args.game)
-    build_index(args)
+    games = [ args.game ]
+    if args.game == "snes/z3m3":
+      games = [ "snes/metroid3", "snes/zelda3" ]
 
-    for rom in args.roms:
-        args.forcerealcopy = args.realcopy
-        try:
-            # determine if the supplied rom is ON the same drive as the script. If not, realcopy is mandatory.
-            os.path.commonpath([os.path.abspath(rom), __file__])
-        except:
-            args.forcerealcopy = True
+    for gameID in games:
+      load_game(gameID, args.game)
+      build_index(args, gameID)
 
-        if args.live and args.forcerealcopy:
-            print("WARNING: live updates with real copies will cause a LOT of disk usage.")
+      for rom in args.roms:
+          args.forcerealcopy = args.realcopy
+          try:
+              # determine if the supplied rom is ON the same drive as the script. If not, realcopy is mandatory.
+              os.path.commonpath([os.path.abspath(rom), __file__])
+          except:
+              args.forcerealcopy = True
 
-        delete_old_msu(args, rom)
-        generate_shuffled_msu(args, rom)
+          if args.live and args.forcerealcopy:
+              print("WARNING: live updates with real copies will cause a LOT of disk usage.")
+
+          if gameID == games[0]:
+              delete_old_msu(args, rom)
+          generate_shuffled_msu(args, rom, gameID)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
