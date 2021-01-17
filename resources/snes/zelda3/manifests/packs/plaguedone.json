@@ -1,0 +1,18 @@
+{
+  "author": "plaguedone",
+  "packs": [
+    {
+      "name": "Fire Emblem: Three Houses",
+      "description": "Fire Emblem: Three Houses OST w/ English and Japanese options for tracks with vocals.",
+      "credit": {
+        "name": "Takeru Kanazaki, Hiroki Morishita, & Rei Kondoh"
+      },
+      "url": "https://drive.google.com/file/d/17ioQ3Mr3ZK-CNFoQLVVm3CvRgHUt8DjD",
+      "expanded": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58 ],
+      "alternates": {
+        "6": [ "alttp_feth_msu-6 [J].pcm" ],
+        "34": [ "alttp_feth_msu-34 [J].pcm" ]
+      }
+    }
+  ]
+}

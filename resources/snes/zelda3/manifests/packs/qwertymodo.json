@@ -1,0 +1,73 @@
+{
+  "author": "qwertymodo",
+  "packs": [
+    {
+      "name": "aLttP Arranged",
+      "description": "aLttP Arranged",
+      "credit": {
+        "name": "Dracula9AntiChapel",
+        "url": "https://www.youtube.com/watch?v=gRaaNsY3vzA&list=PLBdL0iJj-imYJjPZuE0AS0GN1QE2DjXHC"
+      },
+      "url": "http://www.mediafire.com/?4zzgnr2si0b60z5",
+      "expanded": [ 0 ]
+    },
+    {
+      "name": "Zelda 3 FM Project",
+      "description": "FM Synth OST Cover",
+      "credit": {
+        "name": "Felikitty",
+        "url": "https://twitter.com/Feli_Dragon"
+      },
+      "url": "https://mega.nz/#!CSwSkAYR!IVWuLUQ0jin-NRAdWNG3NcI4yQQDayb4Oep68xOi1V4",
+      "expanded": [ 0 ]
+    },
+    {
+      "name": "Zelda Metal",
+      "description": "Metal Guitar Covers",
+      "credit": {
+        "name": "Various Artists",
+        "url": "https://www.youtube.com/watch?v=GxI7vHn_rmg&index=2&list=PLCnXNxndQh_CFoLGbMVYA1TflNGqaP3BK"
+      },
+      "url": "http://www.mediafire.com/?pgh4ga76o29elhl",
+      "expanded": [ 0 ]
+    },
+    {
+      "name": "ALBW OST",
+      "description": "A Link Between Worlds OST Rip",
+      "credit": {
+        "name": "Nintendo"
+      },
+      "url": "https://www.mediafire.com/?kggx1xt9pp23y3k",
+      "expanded": [ 0 ]
+    },
+    {
+      "name": "ZReO",
+      "description": "Zelda ReOrchestrated",
+      "credit": {
+        "name": "Zelda ReOrchestrated",
+        "url": "http://www.zreomusic.com/"
+      },
+      "url": "http://www.mediafire.com/?ofs277fdwfo8fp3",
+      "expanded": [ 0 ]
+    },
+    {
+      "name": "aLttP DeMastered",
+      "description": "8-bit GameBoy Remix",
+      "credit": {
+        "name": "thepsynergist",
+        "url": "https://www.youtube.com/watch?v=hWTbmoJ0H0U&list=PLC06A25C3E00DCD7A"
+      },
+      "url": "http://www.mediafire.com/?hn0k5bwatb5drds",
+      "expanded": [ 0 ]
+    },
+    {
+      "name": "Ocarina of Time/Majora's Mask",
+      "description": "Ocarina of Time/Majora's Mask OST",
+      "credit": {
+        "name": "Nintendo"
+      },
+      "url": "https://www.mediafire.com/?m4qetnybkdwot7e",
+      "expanded": [ 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 49, 58, 59, 60, 61 ]
+    }
+  ]
+}
