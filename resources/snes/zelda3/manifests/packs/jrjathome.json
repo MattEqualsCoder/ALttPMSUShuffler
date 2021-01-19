@@ -1,0 +1,72 @@
+{
+  "author": "jrjathome",
+  "packs": [
+    {
+      "name": "Twilight Princess OST",
+      "description": "Twilight Princess Soundtrack",
+      "credit": {
+        "name": "Nintendo"
+      },
+      "url": "https://drive.google.com/file/d/1eeeN0fAD5eI6oJOzett7lL0ekXAdOARk",
+      "expanded": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61 ],
+      "alternates": {
+        "2": [ "Alternate Tracks/Overworld (No Intro).pcm" ],
+        "23": [
+          "Alternate Tracks/Celebrity Shop.pcm",
+          "Alternate Tracks/Malo Mart.pcm"
+        ]
+      }
+    },
+    {
+      "name": "GBC Zelda",
+      "description": "Songs from Link's Awakening DX, Oracle of Ages and Oracle of Seasons",
+      "credit": {
+        "name": "Nintendo"
+      },
+      "url": "https://drive.google.com/file/d/1AyPhrrKbUIBIAqmlYCqMOLtVYHO_lC_b",
+      "expanded": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 ],
+      "alternates": {
+        "8": [
+          "Alternate Tracks/Mirror Sounds/Falling Asleep.pcm",
+          "Alternate Tracks/Mirror Sounds/LADX Teleport Out.pcm"
+        ],
+        "23": [
+          "Alternate Tracks/A Date with Rosa.pcm",
+          "Alternate Tracks/Cucco House.pcm",
+          "Alternate Tracks/Dungeons/Goron Mountain.pcm",
+          "Alternate Tracks/Dungeons/Horon Village.pcm",
+          "Alternate Tracks/Dungeons/House By The Bay.pcm",
+          "Alternate Tracks/Dungeons/Lynna City.pcm",
+          "Alternate Tracks/Dungeons/Lynna Village.pcm",
+          "Alternate Tracks/Dungeons/Symmetry City.pcm",
+          "Alternate Tracks/Dungeons/Symmetry Village.pcm",
+          "Alternate Tracks/Dungeons/Welcome To Subrosia!.pcm",
+          "Alternate Tracks/Dungeons/Zora Village.pcm"
+        ],
+        "Dungeons": [
+          "Alternate Tracks/Dungeons/Ancient Ruins.pcm",
+          "Alternate Tracks/Dungeons/Ancient Tomb.pcm",
+          "Alternate Tracks/Dungeons/Angler's Tunnel.pcm",
+          "Alternate Tracks/Dungeons/Color Dungeon.pcm",
+          "Alternate Tracks/Dungeons/Crown Dungeon.pcm",
+          "Alternate Tracks/Dungeons/Dream Shrine.pcm",
+          "Alternate Tracks/Dungeons/Eagle's Tower.pcm",
+          "Alternate Tracks/Dungeons/Face Shrine.pcm",
+          "Alternate Tracks/Dungeons/Great Moblin's Keep.pcm",
+          "Alternate Tracks/Dungeons/Kanalet Castle.pcm",
+          "Alternate Tracks/Dungeons/Key Cavern.pcm",
+          "Alternate Tracks/Dungeons/Maku Road.pcm",
+          "Alternate Tracks/Dungeons/Mermaid's Cave.pcm",
+          "Alternate Tracks/Dungeons/Moonlit Grotto.pcm",
+          "Alternate Tracks/Dungeons/Poison Moth's Lair.pcm",
+          "Alternate Tracks/Dungeons/Samasa Desert.pcm",
+          "Alternate Tracks/Dungeons/Snake's Remains.pcm",
+          "Alternate Tracks/Dungeons/Southern Face Shrine.pcm",
+          "Alternate Tracks/Dungeons/Sword and Shield Maze.pcm",
+          "Alternate Tracks/Dungeons/Wind Fish's Egg.pcm",
+          "Alternate Tracks/Dungeons/Wing Dungeon.pcm"
+        ]
+      }
+    }
+  ]
+}
