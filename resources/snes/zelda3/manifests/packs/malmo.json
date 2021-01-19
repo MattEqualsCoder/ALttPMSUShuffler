@@ -8,8 +8,10 @@
         "name": "David Wise"
       },
       "url": "https://drive.google.com/file/d/1-v30I46053Hdo7jmJi7JZfkPuiuaNbAT",
-      "expanded": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 ],
+      "extended": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 ],
       "alternates": {
+        "13": [ "Alts/alttp_msu-13.pcm" ],
+        "15": [ "Alts/alttp_msu-15.pcm" ],
         "35": [ "Alts/alttp_msu-35.pcm" ],
         "36": [ "Alts/alttp_msu-36.pcm" ],
         "37": [ "Alts/alttp_msu-37.pcm" ],
@@ -20,9 +22,7 @@
         "42": [ "Alts/alttp_msu-42.pcm" ],
         "43": [ "Alts/alttp_msu-43.pcm" ],
         "44": [ "Alts/alttp_msu-44.pcm" ],
-        "45": [ "Alts/alttp_msu-45.pcm" ],
-        "46": [ "Alts/alttp_msu-46.pcm" ],
-        "59": [ "Alts/alttp_msu-59.pcm" ]
+        "45": [ "Alts/alttp_msu-45.pcm" ]
       }
     }
   ]
