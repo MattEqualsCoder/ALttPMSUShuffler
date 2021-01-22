@@ -1,0 +1,29 @@
+{
+  "author": "salem",
+  "packs": [
+    {
+      "name": "Link's Awakening 2019 (Switch)",
+      "description": "",
+      "credit": {
+        "name": "Nintendo"
+      },
+      "url": "",
+      "extended": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 49, 55, 57, 58, 59, 60, 61 ],
+      "alternates": {
+        "4": [
+          "Alternate tracks - Remove prefix and swap/Bunny Overworld/ANIMALVILLAGE_alttp_la2019-4.pcm",
+          "Alternate tracks - Remove prefix and swap/Bunny Overworld/TOTAKA_alttp_la2019-4.pcm"
+        ],
+        "11": [
+          "Alternate tracks - Remove prefix and swap/File Select/GAMEOVER_alttp_la2019-11.pcm",
+          "Alternate tracks - Remove prefix and swap/File Select/MARIN_alttp_la2019-11.pcm",
+          "Alternate tracks - Remove prefix and swap/File Select/TOTAKA_alttp_la2019-11.pcm",
+          "Alternate tracks - Remove prefix and swap/File Select/ZELDA_alttp_la2019-11.pcm"
+        ],
+        "57": [
+          "Alternate tracks - Remove prefix and swap/Turtle Rock Boss/NOTRINEXXSYNC_alttp_la2019-57.pcm"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "author": "codemann8",
+  "packs": [
+    {
+      "name": "Final Fantasy 7 Remake",
+      "description": "Final Fantasy 7 Remake",
+      "credit": {
+        "name": "Nintendo"
+      },
+      "url": "",
+      "extended": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61 ],
+      "alternates": {
+        "7": [
+          "alttp_msu-301.pcm",
+          "alttp_msu-302.pcm",
+          "alttp_msu-303.pcm"
+        ],
+        "8": [
+          "alttp_msu-309.pcm"
+        ],
+        "14": [
+          "alttp_msu-304.pcm",
+          "alttp_msu-305.pcm",
+          "alttp_msu-306.pcm"
+        ],
+        "23": [
+          "alttp_msu-307.pcm",
+          "alttp_msu-308.pcm"
+        ],
+        "Dungeons": [
+          "alttp_msu-101.pcm",
+          "alttp_msu-102.pcm"
+        ],
+        "Boss Fights": [
+          "alttp_msu-201.pcm",
+          "alttp_msu-202.pcm",
+          "alttp_msu-203.pcm",
+          "alttp_msu-204.pcm",
+          "alttp_msu-205.pcm",
+          "alttp_msu-207.pcm",
+          "alttp_msu-208.pcm"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "author": "inthenameofdt",
+  "packs": [
+    {
+      "name": "Golden Sun",
+      "description": "Golden Sun",
+      "credit": {
+        "name": "Nintendo"
+      },
+      "url": "",
+      "extended": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58 ],
+      "alternates": {
+        "Dungeon Bosses": [
+          "Alternate Battle Themes/Agatio & Karts's Battle Theme.pcm",
+          "Alternate Battle Themes/Colosso Battle Theme.pcm",
+          "Alternate Battle Themes/Doom Dragon Theme.pcm",
+          "Alternate Battle Themes/Felix's Battle Theme.pcm",
+          "Alternate Battle Themes/Fusion Dragon Theme.pcm",
+          "Alternate Battle Themes/Golden Sun 1 Boss Theme.pcm",
+          "Alternate Battle Themes/Golden Sun 2 Boss Theme.pcm",
+          "Alternate Battle Themes/Golden Sun 2 Human Boss Theme.pcm",
+          "Alternate Battle Themes/Isaac's Battle Theme.pcm",
+          "Alternate Battle Themes/Sailng Battle Theme.pcm",
+          "Alternate Battle Themes/Saturos & Menardi Battle Theme.pcm",
+          "Alternate Battle Themes/Saturos Battle Theme.pcm"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "author": "zelgadissan",
+  "packs": [
+    {
+      "name": "Final Fantasy 8",
+      "description": "Final Fantasy 8",
+      "credit": {
+        "name": "Nintendo"
+      },
+      "url": "",
+      "extended": [ 15, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61 ],
+      "alternates": {
+        "Misc": [
+          "Alternate Tracks/Blue Fields with Intro (currently track 2).pcm",
+          "Alternate Tracks/Compression of Time.pcm",
+          "Alternate Tracks/Don't be Afraid with Intro.pcm",
+          "Alternate Tracks/Don't be Afraid without Intro.pcm",
+          "Alternate Tracks/FF Main Theme (from the Ending Theme).pcm",
+          "Alternate Tracks/Fisherman's Horizon with Intro (currently track 7).pcm",
+          "Alternate Tracks/Fragments of Memories.pcm",
+          "Alternate Tracks/Premonition with Intro (currently tracks 49 and 58).pcm",
+          "Alternate Tracks/Ride On with Intro (currently track 32).pcm",
+          "Alternate Tracks/Shuffle or Boogie with Intro (currently track 14).pcm",
+          "Alternate Tracks/The Castle without Intro (currently track 46).pcm"
+        ]
+      }
+    }
+  ]
+}
