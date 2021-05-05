@@ -1,0 +1,458 @@
+{
+  "$schema": "https://raw.githubusercontent.com/qwertymodo/msupcmplusplus/master/configs/schema#",
+  "game": "The Legend of Zelda: A Link to the Past",
+  "pack": "<PACK NAME>",
+  "artist": "<ARTIST OF SOURCE MATERIAL>",
+  "author": "<AUTHOR OF PACK>",
+  "url": "http://example.com",
+  "output_prefix": "alttp_msu",
+  "tracks": [
+    {
+      "track_number": 1,
+      "title": "Opening Theme",
+      "file": "track1.wav",
+      "#ost_title": "Link to the Past",
+      "#nonlooping": true,
+      "#notes": [
+        "Game Startup",
+        "Should be 16 seconds",
+        "No loop"
+      ]
+    },
+    {
+      "track_number": 2,
+      "title": "Light World Overworld",
+      "file": "track2.wav",
+      "#ost_title": "Hyrule Field"
+    },
+    {
+      "track_number": 3,
+      "title": "Rain State Overworld",
+      "file": "track3.wav",
+      "#ost_title": "Time of Falling Rain",
+      "#notes": [
+        "Rain SFX is overlaid by game engine"
+      ]
+    },
+    {
+      "track_number": 4,
+      "title": "Bunny Overworld",
+      "file": "track4.wav",
+      "#ost_title": "The Silly Pink Rabbit"
+    },
+    {
+      "track_number": 5,
+      "title": "Light World Lost Woods",
+      "file": "track5.wav",
+      "#ost_title": "Forest of Mystery"
+    },
+    {
+      "track_number": 6,
+      "title": "Opening Story Credits",
+      "file": "track6.wav",
+      "#ost_title": "Seal of Seven Maidens"
+    },
+    {
+      "track_number": 7,
+      "title": "Kakariko Village",
+      "file": "track7.wav"
+    },
+    {
+      "track_number": 8,
+      "title": "Mirror Portal",
+      "file": "track8.wav",
+      "#ost_title": "Dimensional Shift",
+      "#nonlooping": true,
+      "#notes": [
+        "No loop"
+      ]
+    },
+    {
+      "track_number": 9,
+      "title": "Dark World Overworld",
+      "file": "track9.wav",
+      "#ost_title": "Dark Golden Land"
+    },
+    {
+      "track_number": 10,
+      "title": "Pedestal Pull Sequence",
+      "file": "track10.wav",
+      "#ost_title": "Unsealing the Master Sword",
+      "#nonlooping": true,
+      "#notes": [
+        "Pulling the Pedestal with 3 pendants",
+        "Should be 11 seconds",
+        "No loop"
+      ]
+    },
+    {
+      "track_number": 11,
+      "title": "File Select/Game Over",
+      "file": "track11.wav",
+      "#ost_title": "Beginning of the Journey"
+    },
+    {
+      "track_number": 12,
+      "title": "Kakariko Guards Summoned",
+      "file": "track12.wav",
+      "#ost_title": "Soldiers of Kakariko Village"
+    },
+    {
+      "track_number": 13,
+      "title": "Dark Death Mountain",
+      "file": "track13.wav",
+      "#ost_title": "Black Mist"
+    },
+    {
+      "track_number": 14,
+      "title": "Money Making Game",
+      "file": "track14.wav"
+    },
+    {
+      "track_number": 15,
+      "title": "Dark World Lost Woods",
+      "file": "track15.wav",
+      "#notes": [
+        "Skeleton Forest",
+        "Not supported by initial vanilla patch which uses this for an intro video"
+      ]
+    },
+    {
+      "track_number": 16,
+      "title": "Hyrule Castle",
+      "file": "track16.wav",
+      "#ost_title": "Majestic Castle",
+      "#notes": [
+        "Hyrule Castle",
+        "Hyrule Castle Escape"
+      ]
+    },
+    {
+      "track_number": 17,
+      "title": "Generic Light World Dungeon",
+      "file": "track17.wav",
+      "#ost_title": "Lost Ancient Ruins",
+      "#notes": [
+        "ALttPR uses this for Pendant dungeons",
+        "Keysanity randomizes between this and #22",
+        "Expanded Soundtrack takes priority"
+      ]
+    },
+    {
+      "track_number": 18,
+      "title": "Cave",
+      "file": "track18.wav",
+      "#ost_title": "Dank Dungeons"
+    },
+    {
+      "track_number": 19,
+      "title": "Boss Victory",
+      "file": "track19.wav",
+      "#ost_title": "Great Victory!",
+      "#nonlooping": true,
+      "#notes": [
+        "Should be 10 seconds",
+        "No loop"
+      ]
+    },
+    {
+      "track_number": 20,
+      "title": "Sanctuary",
+      "file": "track20.wav",
+      "#ost_title": "Safety in the Sanctuary"
+    },
+    {
+      "track_number": 21,
+      "title": "Generic Boss Battle",
+      "file": "track21.wav",
+      "#ost_title": "Anger of the Guardians",
+      "#notes": [
+        "Can be superceded by Expanded Soundtrack (47-58)"
+      ]
+    },
+    {
+      "track_number": 22,
+      "title": "Generic Dark World Dungeon",
+      "file": "track22.wav",
+      "#ost_title": "Dungeon of Shadows",
+      "#notes": [
+        "ALttPR uses this for Crystal dungeons",
+        "Keysanity randomizes between this and #17",
+        "Expanded Soundtrack takes priority"
+      ]
+    },
+    {
+      "track_number": 23,
+      "title": "Shop/Fortune Teller",
+      "file": "track23.wav"
+    },
+    {
+      "track_number": 24,
+      "title": "Cave 2",
+      "file": "track24.wav"
+    },
+    {
+      "track_number": 25,
+      "title": "Princess Zelda's Rescue",
+      "file": "track25.wav",
+      "#notes": [
+        "Unused in ALttPR"
+      ]
+    },
+    {
+      "track_number": 26,
+      "title": "Crystal Get",
+      "#ost_title": "Meeting the Maidens",
+      "file": "track26.wav",
+      "#notes": [
+        "Full length plays in non-race ROMs",
+        "About 1s plays in race ROMs"
+      ]
+    },
+    {
+      "track_number": 27,
+      "title": "Fairy Fountain",
+      "file": "track27.wav",
+      "#ost_title": "The Goddess Appears"
+    },
+    {
+      "track_number": 28,
+      "title": "Agahnim's Theme",
+      "file": "track28.wav",
+      "#ost_title": "Priest of the Dark Order",
+      "#notes": [
+        "Agahnim Theme in Hyrule Castle Tower during 'cutscene' prior to boss fight arena"
+      ]
+    },
+    {
+      "track_number": 29,
+      "title": "Ganon Appears",
+      "file": "track29.wav",
+      "#ost_title": "Release of Ganon",
+      "#nonlooping": true,
+      "#notes": [
+        "After Agahnim 2",
+        "No loop"
+      ]
+    },
+    {
+      "track_number": 30,
+      "title": "Ganon's Theme",
+      "file": "track30.wav",
+      "#ost_title": "Ganon's Message",
+      "#notes": [
+        "Ganon's Monologue"
+      ]
+    },
+    {
+      "track_number": 31,
+      "title": "Ganon Fight",
+      "file": "track31.wav",
+      "#ost_title": "The Prince of Darkness"
+    },
+    {
+      "track_number": 32,
+      "title": "Triforce Room",
+      "file": "track32.wav",
+      "#ost_title": "Power of the Gods"
+    },
+    {
+      "track_number": 33,
+      "title": "Triumphant Return",
+      "file": "track33.wav",
+      "#ost_title": "Epilogue ~ Beautiful Hyrule",
+      "#nonlooping": true,
+      "#notes": [
+        "Should be 3:49",
+        "No loop"
+      ]
+    },
+    {
+      "track_number": 34,
+      "title": "Credits",
+      "file": "track34.wav",
+      "#ost_title": "Staff Roll",
+      "#nonlooping": true,
+      "#notes": [
+        "Should be 3:53",
+        "No loop"
+      ]
+    },
+    {
+      "track_number": 35,
+      "title": "Eastern Palace",
+      "file": "track35.wav",
+      "#fallback": 17
+    },
+    {
+      "track_number": 36,
+      "title": "Desert Palace",
+      "file": "track36.wav",
+      "#fallback": 17
+    },
+    {
+      "track_number": 37,
+      "title": "Agahnim's Tower",
+      "file": "track37.wav",
+      "#fallback": 16
+    },
+    {
+      "track_number": 38,
+      "title": "Swamp Palace",
+      "file": "track38.wav",
+      "#fallback": 22
+    },
+    {
+      "track_number": 39,
+      "title": "Palace of Darkness",
+      "file": "track39.wav",
+      "#fallback": 22
+    },
+    {
+      "track_number": 40,
+      "title": "Misery Mire",
+      "file": "track40.wav",
+      "#fallback": 22
+    },
+    {
+      "track_number": 41,
+      "title": "Skull Woods",
+      "file": "track41.wav",
+      "#fallback": 22
+    },
+    {
+      "track_number": 42,
+      "title": "Ice Palace",
+      "file": "track42.wav",
+      "#fallback": 22
+    },
+    {
+      "track_number": 43,
+      "title": "Tower of Hera",
+      "file": "track43.wav",
+      "#fallback": 17
+    },
+    {
+      "track_number": 44,
+      "title": "Thieves' Town",
+      "file": "track44.wav",
+      "#fallback": 22
+    },
+    {
+      "track_number": 45,
+      "title": "Turtle Rock",
+      "file": "track45.wav",
+      "#fallback": 22
+    },
+    {
+      "track_number": 46,
+      "title": "Ganon's Tower",
+      "file": "track46.wav",
+      "#fallback": 22
+    },
+    {
+      "track_number": 47,
+      "title": "Eastern Palace Boss",
+      "file": "track47.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 48,
+      "title": "Desert Palace Boss",
+      "file": "track48.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 49,
+      "title": "Agahnim's Tower Boss",
+      "file": "track49.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 50,
+      "title": "Swamp Palace Boss",
+      "file": "track50.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 51,
+      "title": "Palace of Darkness Boss",
+      "file": "track51.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 52,
+      "title": "Misery Mire Boss",
+      "file": "track52.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 53,
+      "title": "Skull Woods Boss",
+      "file": "track53.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 54,
+      "title": "Ice Palace Boss",
+      "file": "track54.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 55,
+      "title": "Tower of Hera Boss",
+      "file": "track55.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 56,
+      "title": "Thieves' Town Boss",
+      "file": "track56.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 57,
+      "title": "Turtle Rock Boss",
+      "file": "track57.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 58,
+      "title": "Ganon's Tower Boss",
+      "file": "track58.wav",
+      "#fallback": 21
+    },
+    {
+      "track_number": 59,
+      "title": "Ganon's Tower 2",
+      "file": "track59.wav",
+      "#fallback": 22,
+      "#notes": [
+        "Replaces track 46 for upstairs GT"
+      ]
+    },
+    {
+      "track_number": 60,
+      "title": "Light World 2",
+      "file": "track60.wav",
+      "#fallback": 2,
+      "#notes": [
+        "Replaces track 2 after the pedestal item has been collected",
+        "2: Light World Overworld"
+      ]
+    },
+    {
+      "track_number": 61,
+      "title": "Dark World 2",
+      "file": "track61.wav",
+      "#fallback": 9,
+      "#notes": [
+        "Replaces tracks 9, 13, 15 after obtaining all crystals",
+        "9: Dark World Overworld",
+        "13: Dark Death Mountain",
+        "15: Skull Woods Overworld"
+      ]
+    }
+  ],
+  "#src": "https://www.romhacking.net/hacks/2483/"
+}
