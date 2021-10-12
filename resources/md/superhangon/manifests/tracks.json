@@ -1,0 +1,49 @@
+{
+  "tracks": {
+    "basic": [
+      {
+        "num": 1,
+        "title": "Select Your Class"
+      },
+      {
+        "num": 2,
+        "title": "Outride a Crisis"
+      },
+      {
+        "num": 3,
+        "title": "Sprinter"
+      },
+      {
+        "num": 4,
+        "title": "Winning Run"
+      },
+      {
+        "num": 5,
+        "title": "Hard Road"
+      },
+      {
+        "num": 6,
+        "title": "Finished"
+      },
+      {
+        "num": 7,
+        "title": "Enter Your Name"
+      },
+      {
+        "num": 8,
+        "title": "Winner (Shop BGM)"
+      }
+    ],
+    "index": 0,
+    "longest": 17,
+    "src": "https://github.com/jvisser/msu-md-super-hang-on/releases",
+    "crc": {
+      "vanilla": {
+        "unheadered": "CB2201A3"
+      },
+      "patched": {
+        "unheadered": "6D0DC2EB"
+      }
+    }
+  }
+}
