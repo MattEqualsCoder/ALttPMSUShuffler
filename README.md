@@ -13,8 +13,9 @@ MSU-1 packs.
 1. MANUAL METHOD:
     1. Copy the ALttP Randomizer ROM (with background music enabled) to the same directory as this `Main.py` script. The script will rename the ROM to `"shuffled.sfc"`. The original ROM name and tracklist is printed to `"shuffled-msushuffleroutput.log"` (handy for retrieving spoilers). If you don't copy the ROM before running the script, you need to rename the ROM to `"shuffled.sfc"` yourself. The script will warn before overwriting `"shuffled.sfc"` if it already exists.
     1. Run `Main.py` to execute the script to delete any old pack in this directory and generate a new one. Track names picked will be saved in `"shuffled-msushuffleroutput.log"` (cleared on reruns)
-    1. LIVE RESHUFFLE METHOD (EXPERIMENTAL): Instead of simply running `Main.py`, run `LiveReshuffle.py` or run in the command line as `python Main.py --live 10` (or any other positive integer) to generate a new shuffled MSU pack every few seconds. Will skip replacing any tracks currently being played. Best if used without the `--realcopy` option, and best if the shuffled MSU pack and source packs are all on the same hard drive, to avoid excessive disk usage.
+    1. LIVE RESHUFFLE METHOD: Instead of simply running `Main.py`, run `LiveReshuffle.py` or run in the command line as `python Main.py --live 10` (or any other positive integer) to generate a new shuffled MSU pack every few seconds. Will skip replacing any tracks currently being played. Best if used without the `--realcopy` option, and best if the shuffled MSU pack and source packs are all on the same hard drive, to avoid excessive disk usage.
         Edit `LiveReshuffle.py` to set a different reshuffle interval than the 10 second default.
+    1. LIVE RESHUFFLE + NOW PLAYING VIEW (EXPERIMENTAL): Run the command line as `python Main.py --live 10 --nowplaying`" to run in live reshuffle mode (as described above) while polling qusb2snes for the currently playing MSU pack, printed to console and `nowplaying.txt` for use as an OBS streaming text source.
 
 1. Load the ROM in an MSU-compatible emulator (works well with Snes9x 1.60)
 
@@ -33,6 +34,9 @@ MSU-1 packs.
     - `"python Main.py --higan"` (along with any other options), the shuffled MSU pack is generated in a higan-friendly subdirectory `"./higan.sfc/"`
 
   - Searches the parent directory of the directory containing the script for all MSU packs to be included in the shuffler by default, but will skip any tracks with `"disabled"` (case-insensitive) in the directory name or file name; useful for keeping tracks hidden from the shuffler without needing to move them out of the collection entirely.
+
+  - Caches the track list in `./trackindex.pkl` to avoid reindexing the entire collection every time the script is run.  If run in the command line as `python Main.py --reindex`, it will regenerate the track index.  Use this
+  to pick up any new MSU packs for the shuffler.
 
 - Debugging options (not necessary for normal use):
   - `--realcopy`
@@ -65,4 +69,3 @@ MSU-1 packs.
   - `--verbose`
     - Adds some verbosity to logging
   - `--version`
-    - Output version of this app

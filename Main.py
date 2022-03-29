@@ -1,19 +1,23 @@
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
 import argparse
+import asyncio
 import datetime
-import logging
 import glob
 import json
+import logging
 import os
+import pickle
 import pprint
 import random
 import re
 import sched, time
 import shutil
 import sys
-from pathlib import Path
-from tempfile import TemporaryDirectory
+import websockets
 
-__version__ = '0.7.2'
+__version__ = '0.8.2'
 
 # Creates a shuffled MSU-1 pack for ALttP Randomizer from one or more source
 # MSU-1 packs.
@@ -47,7 +51,7 @@ __version__ = '0.7.2'
 #        directory and generate a new one.  Track names picked will be saved in
 #        "shuffled-msushuffleroutput.log" (cleared on reruns)
 #
-#     3) LIVE RESHUFFLE METHOD (EXPERIMENTAL): Instead of simply running
+#     3) LIVE RESHUFFLE METHOD: Instead of simply running
 #        **Main.py**, run **LiveReshuffle.py** or run in the command line as
 #        "python Main.py --live 10" (or any other positive integer) to
 #        generate a new shuffled MSU pack every few seconds.  Will skip
@@ -56,6 +60,12 @@ __version__ = '0.7.2'
 #        packs are all on the same hard drive, to avoid excessive disk usage.
 #        Edit **LiveReshuffle.py** to set a different reshuffle interval than
 #        the 10 second default.
+#
+#     4) LIVE RESHUFFLE + NOW PLAYING VIEW (EXPERIMENTAL): Run the command
+#        line as "python Main.py --live 10 --nowplaying" to run in live
+#        reshuffle mode (as described above) while polling qusb2snes for
+#        the currently playing MSU pack, printed to console and nowplaying.txt
+#        for use as an OBS streaming text source.
 #
 # 4) Load the ROM in an MSU-compatible emulator (works well with Snes9x 1.60)
 #
@@ -97,6 +107,11 @@ __version__ = '0.7.2'
 #   any tracks with "disabled" (case-insensitive) in the directory name or
 #   file name; useful for keeping tracks hidden from the shuffler without
 #   needing to move them out of the collection entirely.
+#
+# - Caches the track list in ./trackindex.pkl to avoid reindexing the entire
+#   collection every time the script is run.  If run in the command line as
+#   "python Main.py --reindex", it will regenerate the track index.  Use this
+#   to pick up any new MSU packs for the shuffler.
 #
 #  Debugging options (not necessary for normal use):
 #
@@ -385,9 +400,11 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
                 os.link(srcpath, tmpname)
 
             os.replace(tmpname, dstpath)
+            return True
         except PermissionError:
             if not live:
                 LOGGER.info(f"Failed to copy '{srcpath}' to '{dstpath}' during non-live update")
+            return False
 
 # Build a dictionary mapping each possible track number to all matching tracks
 # in the search directory; do this once, to avoid excess searching later.
@@ -400,11 +417,22 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
 # index[2] = ['../msu1/track-2.pcm', '../msu2/track-2.pcm']
 def build_index(args, game):
     global LOGGER
+    global trackindex
+
+
+    if os.path.exists('trackindex.pkl') and not args.reindex:
+        with open('trackindex.pkl', 'rb') as f:
+            try:
+                trackindex = pickle.load(f)
+            except Exception as e:
+                LOGGER.error("Failed to load track index")
+
+        if trackindex:
+            LOGGER.info("Reusing track index, run with --reindex to pick up any new packs.")
+            return
 
     LOGGER.info("Building index, this should take a few seconds.")
     buildstarttime = datetime.datetime.now()
-
-    global trackindex
 
     if (args.singleshuffle):
         searchdir = args.singleshuffle
@@ -467,8 +495,14 @@ def build_index(args, game):
     LOGGER.info("")
 
 # do the shuffle and write pcms
+# def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, nowplaying, cooldown, prevtrack):
 def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, gamepath, gameID):
     global LOGGER
+
+    with open('trackindex.pkl', 'wb') as f:
+        # Saving track index as plaintext instead of HIGHEST_PROTOCOL since
+        # this is only loaded once, and plaintext may be useful for debugging.
+        pickle.dump(trackindex, f, 0)
 
     #For all found non-looping tracks, pick a random track with a matching
     #track number from a random pack in the target directory.
@@ -478,41 +512,66 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
         LOGGER.info("")
         LOGGER.info("Non-looping tracks:")
 
-    with TemporaryDirectory(dir=os.path.join(".")) as tmpdir:
-        for i in nonloopingfoundtracks[gamepath]:
-            winner = random.choice(trackindex[gamepath][int(i)])
-            copy_track(winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID)
+    if cooldown == 0:
+        with TemporaryDirectory(dir='.') as tmpdir:
+            oldwinnerdict = {}
+            if os.path.exists('winnerdict.pkl'):
+                with open('winnerdict.pkl', 'rb') as f:
+                    try:
+                        oldwinnerdict = pickle.load(f)
+                    except Exception as e:
+                        LOGGER.error("Failed to load tracklist")
+            winnerdict = {}
+            for i in nonloopingfoundtracks:
+                winner = random.choice(trackindex[i])
+                winnerdict[i] = winner
+                copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
 
-        #For all found looping tracks, pick a random track from a random pack
-        #in the target directory, with a matching track number by default, or
-        #a shuffled different looping track number if fullshuffle or
-        #singleshuffle are enabled.
-        if not live:
-            LOGGER.info("")
-            LOGGER.info("Looping tracks:")
-        for i in loopingfoundtracks[gamepath]:
-            if (args.fullshuffle or args.singleshuffle):
-                dst = i
-                src = shuffledloopingfoundtracks[gamepath][loopingfoundtracks[gamepath].index(i)]
-            else:
-                dst = i
-                src = i
-            winner = random.choice(trackindex[gamepath][int(src)])
-            copy_track(winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID)
-    if live:
-        shuffletime = datetime.datetime.now() - shufflestarttime
-        LOGGER.info(
-            "Reshuffling MSU pack every%s second%s, press CTRL+C or close the window to stop reshuffling. (Shuffled in %d.%ds)"
-            %
-            (
-                " " + str(int(live)) if int(live) != 1 else "",
-                "s" if int(live) != 1 else "",
-                shuffletime.seconds,
-                shuffletime.microseconds
+            #For all found looping tracks, pick a random track from a random pack
+            #in the target directory, with a matching track number by default, or
+            #a shuffled different looping track number if fullshuffle or
+            #singleshuffle are enabled.
+            if not live:
+                logger.info("Looping tracks:")
+            for i in loopingfoundtracks:
+                if (args.fullshuffle or args.singleshuffle):
+                    dst = i
+                    src = shuffledloopingfoundtracks[loopingfoundtracks.index(i)]
+                else:
+                    dst = i
+                    src = i
+                winner = random.choice(trackindex[src])
+                copied = copy_track(logger, winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
+                # if copy failed, use OLD winner...
+                if copied:
+                    winnerdict[i] = winner
+                elif i in oldwinnerdict:
+                    winnerdict[i] = oldwinnerdict[i]
+
+            with open('winnerdict.pkl', 'wb') as f:
+                pickle.dump(winnerdict, f, pickle.HIGHEST_PROTOCOL)
+        if live:
+            cooldown = int(live)
+            if not nowplaying:
+                shuffletime = datetime.datetime.now() - shufflestarttime
+
+            LOGGER.info(
+                "Reshuffling MSU pack every%s second%s, press CTRL+C or close the window to stop reshuffling. (Shuffled in %d.%ds)"
+                %
+                (
+                    " " + str(int(live)) if int(live) != 1 else "",
+                    "s" if int(live) != 1 else "",
+                    shuffletime.seconds,
+                    shuffletime.microseconds
+                )
             )
-        )
+
+    if live:
+        if nowplaying:
+            newtrack = read_track(prevtrack)
+            prevtrack = newtrack
         s.enter(
-            int(live),
+            1,
             1,
             shuffle_all_tracks,
             argument=(
@@ -523,19 +582,125 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
                 higan,
                 forcerealcopy,
                 live,
-                game
+                nowplaying,
+                cooldown - 1,
+                prevtrack
             )
         )
 
-# create .msu
-def generate_shuffled_msu(args, rompath, gameID):
+async def recv_loop(ws, recv_queue):
+    try:
+        async for msg in ws:
+            recv_queue.put_nowait(msg)
+    finally:
+        await ws.close()
+
+# Print the track that's currently playing, and print its pack to
+# nowplaying.txt which can be used as a streaming text file source.
+def print_pack(path):
     global LOGGER
 
-    if (not os.path.exists(f'{rompath}.msu')) and not args.higan:
-        if args.dry_run:
-            LOGGER.info(f"DRY RUN MODE: Would create '{rompath}.msu'")
+    LOGGER.info(f"Now playing: {path}")
+    path_parts = list()
+    while True:
+        parts = os.path.split(path)
+        if parts[0] == path:
+            path_parts.insert(0, parts[0])
+            break
+        elif parts[1] == path:
+            path_parts.insert(0, parts[1])
+            break
         else:
-            LOGGER.info(f"'{rompath}.msu' doesn't exist, creating it.")
+            path = parts[0]
+            path_parts.insert(0, parts[1])
+    with open('nowplaying.txt', 'w') as f:
+        f.truncate(0)
+        LOGGER.info("MSU pack now playing:", file=f)
+        LOGGER.info(path_parts[1], file=f)
+
+async def query(prevtrack):
+    global LOGGER
+    addr = "ws://localhost:8080"
+    try:
+        ws = await websockets.connect(addr, ping_timeout=None, ping_interval=None)
+    except Exception as e:
+        LOGGER.error("Failed to connect to qusb2snes")
+        return 0
+
+    devlist = {
+        "Opcode": "DeviceList",
+        "Space": "SNES"
+    }
+    await ws.send(json.dumps(devlist))
+    reply = json.loads(await ws.recv())
+    devices = reply['Results'] if 'Results' in reply and len(reply['Results']) > 0 else None
+    if not devices:
+        LOGGER.error("Failed to connect to SNES through qusb2snes")
+        await ws.close()
+        return 0
+
+    device = devices[0]
+    attachreq = {
+        "Opcode": "Attach",
+        "Space": "SNES",
+        "Operands": [device]
+    }
+    await ws.send(json.dumps(attachreq))
+
+    recv_queue = asyncio.Queue()
+    recv_task = asyncio.create_task(recv_loop(ws, recv_queue))
+    WRAM_START = 0xF50000
+
+    # Current MSU is $010B, per https://github.com/KatDevsGames/z3randomizer/blob/master/msu.asm#L126
+    REG_CURRENT_MSU_TRACK = 0x010B
+
+    address = WRAM_START + REG_CURRENT_MSU_TRACK
+    size = 1
+    readreq = {
+        "Opcode": "GetAddress",
+        "Space": "SNES",
+        "Operands": [hex(address)[2:], hex(size)[2:]]
+    }
+    await ws.send(json.dumps(readreq))
+    data = bytes()
+    while len(data) < 1:
+        try:
+            data += await asyncio.wait_for(recv_queue.get(), 1)
+        except asyncio.TimeoutError:
+            break
+
+    track = 0
+    if len(data) != 1:
+        LOGGER.warning("Failed to query REG_CURRENT_MSU_TRACK")
+    else:
+        track = int(data[0])
+
+    if track != 0 and track != prevtrack:
+        if os.path.exists('winnerdict.pkl'):
+            winnerdict = {}
+            with open('winnerdict.pkl', 'rb') as f:
+                try:
+                    winnerdict = pickle.load(f)
+                    print_pack(str(winnerdict[track]))
+                except Exception as e:
+                    LOGGER.error("Failed to load tracklist")
+
+    await ws.close()
+    return track
+
+# Read the currently playing track over qusb2snes.
+# TODO: This currently opens up a new qusb2snes connection every second.
+# Eventually this should be smarter by keeping one connection alive instead.
+def read_track(prevtrack):
+    track = asyncio.get_event_loop().run_until_complete(query(prevtrack))
+    return track
+
+def generate_shuffled_msu(args, rompath):
+    global LOGGER
+
+    if (not os.path.exists(f'{rompath}.msu')):
+        LOGGER.info(f"'{rompath}.msu' doesn't exist, creating it.")
+        if (not args.dry_run):
             with open(f'{rompath}.msu', 'w'):
                 pass
 
@@ -582,7 +747,10 @@ def generate_shuffled_msu(args, rompath, gameID):
                 args.dry_run,
                 args.higan,
                 args.forcerealcopy,
-                args.live
+                args.live,
+                args.nowplaying,
+                int(args.live),
+                0
             )
         )
         s.run()
@@ -595,39 +763,38 @@ def generate_shuffled_msu(args, rompath, gameID):
             args.higan,
             args.forcerealcopy,
             args.live,
-            gamepath,
-            args.game
+            args.nowplaying,
+            0,
+            0
         )
-        LOGGER.info("")
         LOGGER.info('Done.')
 
 def main(args):
     if args.version:
         LOGGER.debug(f"ALttPMSUShuffler version {__version__}")
-        return
 
     games = [ args.game ]
     if args.game == "snes/z3m3":
-      games = [ "snes/metroid3", "snes/zelda3" ]
+        games = [ "snes/metroid3", "snes/zelda3" ]
 
     for gameID in games:
-      load_game(gameID, args.game)
-      build_index(args, gameID)
+        load_game(gameID, args.game)
+        build_index(args, gameID)
+        for rom in args.roms:
+            args.forcerealcopy = args.realcopy
+            try:
+                # determine if the supplied rom is ON the same drive as the script. If not, realcopy is mandatory.
+                os.path.commonpath([os.path.abspath(rom), os.path.abspath(__file__)])
+            except:
+                print(f"Failed to find common path between {os.path.abspath(rom)} and {os.path.abspath(__file__)}, forcing real copies.")
+                args.forcerealcopy = True
 
-      for rom in args.roms:
-          args.forcerealcopy = args.realcopy
-          try:
-              # determine if the supplied rom is ON the same drive as the script. If not, realcopy is mandatory.
-              os.path.commonpath([os.path.abspath(rom), __file__])
-          except:
-              args.forcerealcopy = True
+            if args.live and args.forcerealcopy:
+                LOGGER.warning("Live updates with real copies will cause a LOT of disk usage.")
 
-          if args.live and args.forcerealcopy:
-              LOGGER.warning("Live updates with real copies will cause a LOT of disk usage.")
-
-          if gameID == games[0]:
-              delete_old_msu(args, rom)
-          generate_shuffled_msu(args, rom, gameID)
+            if gameID == games[0]:
+                delete_old_msu(args, rom)
+            generate_shuffled_msu(args, rom, gameID)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -652,6 +819,8 @@ if __name__ == '__main__':
     parser.add_argument('--dry-run', help='Makes script print all filesystem commands that would be executed instead of actually executing them.', action='store_true', default=False)
     parser.add_argument('--verbose', help='Verbose output.', action='store_true', default=False)
     parser.add_argument('--live', help='The interval at which to re-shuffle the entire pack, in seconds; will skip tracks currently in use.')
+    parser.add_argument('--nowplaying', help='EXPERIMENTAL: During live reshuffling, connect to qusb2snes to print the currently playing MSU pack to console and nowplaying.txt', action='store_true', default=False)
+    parser.add_argument('--reindex', help='Rebuild the index of MSU packs, this must be run to pick up any new packs or moved/deleted files in existing packs!', action='store_true', default=False)
     parser.add_argument('--version', help='Print version number and exit.', action='store_true', default=False)
 
     romlist = list()
