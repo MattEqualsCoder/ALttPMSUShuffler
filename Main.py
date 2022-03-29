@@ -109,6 +109,11 @@ __version__ = '0.7.2'
 #   commands (deleting, creating, renaming files) it would have executed
 #   instead of executing them.
 
+global LOGGER
+LOGGER = None
+
+LJUST = 35
+
 titles = {} # hash
 higandir = ""
 trackdatapath = {} # string
@@ -226,19 +231,20 @@ def load_game(gamepath, gameID):
 # copy new game file
 # delete old pcms
 def delete_old_msu(args, rompath):
+    global LOGGER
+
     try:
         if os.path.exists(f"{rompath}-msushuffleroutput.log"):
             os.remove(f"{rompath}-msushuffleroutput.log")
     except PermissionError:
-        print(f"WARNING: Failed to clear old logfile {rompath}-msushuffleroutput.log")
+        LOGGER.warning(f"Failed to clear old logfile: '{rompath}-msushuffleroutput.log'")
 
-    logger = logging.getLogger('')
     output_file_handler = logging.FileHandler(f"{rompath}-msushuffleroutput.log")
-    logger.addHandler(output_file_handler)
+    LOGGER.addHandler(output_file_handler)
 
     if (args.dry_run):
-        logger.info("DRY RUN MODE: Printing instead of executing.")
-        logger.info("")
+        LOGGER.info("DRY RUN MODE: Printing instead of executing.")
+        LOGGER.info("")
 
     foundsrcrom = False
     foundshuffled = False
@@ -263,11 +269,11 @@ def delete_old_msu(args, rompath):
     if args.higan:
         if os.path.isdir(higandir):
             if args.dry_run:
-                logger.info("DRY RUN MODE: Would rmtree " + higandir)
+                LOGGER.info(f"DRY RUN MODE: Would rmtree: '{higandir}'")
             else:
                 shutil.rmtree(higandir)
         if args.dry_run:
-            logger.info("DRY RUN MODE: Would make " + os.path.join(higandir, "msu1.rom"))
+            LOGGER.info(f"DRY RUN MODE: Would make: '{os.path.join(higandir,'msu.rom')}'")
         else:
             os.mkdir(higandir)
             open(os.path.join(higandir, "msu1.rom"), 'a').close()
@@ -275,9 +281,14 @@ def delete_old_msu(args, rompath):
     if foundsrcrom or foundshuffled:
         if args.higan:
             if args.dry_run:
-                logger.info("DRY RUN MODE: Would copy " + os.path.basename(srcrom) + " to " + os.path.join(higandir, "program.rom"))
+                LOGGER.info(
+                    "DRY RUN MODE: Would copy: '%s' to '%s'"
+                    %
+                    os.path.basename(srcrom),
+                    os.path.join(higandir, "program.rom")
+                )
             else:
-                logger.info("Copying " + os.path.basename(srcrom) + " to " + os.path.join(higandir, "program.rom"))
+                LOGGER.info(f"Copying: {os.path.basename(srcrom)} to {os.path.join(higandir, 'program.rom')}")
                 shutil.copy(srcrom, os.path.join(higandir, "program.rom"))
                 shutil.copy(srcrom, os.path.join(higandir, "program.sfc"))
         else:
@@ -286,40 +297,55 @@ def delete_old_msu(args, rompath):
                 replace = "Y"
             if replace.upper() == "Y":
                 if (args.dry_run):
-                    logger.info("DRY RUN MODE: Would " + ("copy" if args.copy else "rename") + " '" + os.path.basename(srcrom) + "' to '" + rompath + ".sfc" + "'")
+                    LOGGER.info(
+                        "DRY RUN MODE: Would %s '%s' to '%s.sfc'"
+                        %
+                        ('copy' if args.copy else 'rename'),
+                        os.path.basename(srcrom),
+                        rompath
+                    )
                 else:
                     if args.copy:
-                        logger.info("Copying '" + os.path.basename(srcrom) + "' to '" + rompath + ".sfc" + "'")
-                        shutil.copy(srcrom, rompath + ".sfc")
-                    #else:
-                        #logger.info("Renaming '" + os.path.basename(srcrom) + "' to '" + rompath + ".sfc" + "'")
-                        #shutil.move(srcrom, rompath + ".sfc")
+                        LOGGER.info(f"Copying '{os.path.basename(srcrom)}' to '{rompath}.sfc'")
+                        shutil.copy(srcrom, f"{rompath}.sfc")
+                    else:
+                        LOGGER.info(f"Renaming '{os.path.basename(srcrom)}' to '{rompath}.sfc'")
+                        shutil.move(srcrom, f"{rompath}.sfc")
     else:
-        make_romless = str(input("No gamefile found at: " + rompath + ".sfc . Continue making pack? [Y/n]") or "Y")
+        make_romless = str(input(f"INPUT: No gamefile found at: '{rompath}.sfc' . Continue making pack? [y/n]") or "Y")
         if make_romless.upper() != "Y":
-            print("User selected to exit without making pack without gamefile.")
+            LOGGER.error("User selected to exit without making pack without gamefile.")
             sys.exit(1)
 
     if not args.higan:
         for path in glob.glob(f'{rompath}-*.pcm'):
             if (args.dry_run):
-                logger.info("DRY RUN MODE: Would remove " + str(path))
+                LOGGER.info(f"DRY RUN MODE: Would remove: '{str(path)}'")
             else:
                 try:
                     os.remove(str(path))
                 except PermissionError:
-                    logger.info(f"WARNING: Failed to remove {path}")
+                    LOGGER.warning(f"Failed to remove: '{path}'")
 
 # copy track
-def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID):
+def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID):
+    global LOGGER
+
     if higan:
-        dstpath = os.path.join(higandir, "track-" + str(dst) + ".pcm")
+        dstpath = os.path.join(higandir, f"track-{str(dst)}.pcm")
         if "z3m3" in gameID:
-            dstpath = os.path.join(higandir, "track-" + str(dst + 100) + ".pcm")
+            dstpath = os.path.join(higandir, f"track-{str(dst + 100)}.pcm")
     else:
         dstpath = f"{rompath}-{dst}.pcm"
         if "z3m3" in gameID and "zelda3" in gamepath:
-            dstpath = ("%s-%s.pcm" % (rompath, int(dst) + 100))
+            dstpath = (
+                "%s-%s.pcm"
+                %
+                (
+                    rompath,
+                    int(dst) + 100
+                )
+            )
 
     for match in re.finditer(r'\d+', os.path.basename(srcpath)):
         pass
@@ -345,7 +371,7 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
         msg = str(srctrack).rjust(3, '0') + " - " + (dsttitle + ': ' + shorttitle).ljust(longestTrackName[gamepath] + 8, ' ') + shortsrcpath
         if args.verbose:
             msg += " -> " + dstpath
-        #logger.info(msg)
+        LOGGER.info(msg)
 
     if not dry_run:
         try:
@@ -361,7 +387,7 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
             os.replace(tmpname, dstpath)
         except PermissionError:
             if not live:
-                logger.info(f"Failed to copy {srcpath} to {dstpath} during non-live update")
+                LOGGER.info(f"Failed to copy '{srcpath}' to '{dstpath}' during non-live update")
 
 # Build a dictionary mapping each possible track number to all matching tracks
 # in the search directory; do this once, to avoid excess searching later.
@@ -373,7 +399,9 @@ def copy_track(logger, srcpath, dst, rompath, dry_run, higan, forcerealcopy, liv
 # Index format:
 # index[2] = ['../msu1/track-2.pcm', '../msu2/track-2.pcm']
 def build_index(args, game):
-    #print("Building index, this should take a few seconds.")
+    global LOGGER
+
+    LOGGER.info("Building index, this should take a few seconds.")
     buildstarttime = datetime.datetime.now()
 
     global trackindex
@@ -388,15 +416,15 @@ def build_index(args, game):
         searchdir = os.path.join("..")
 
     gamepath = game
-    #print("Using manifest at:   " + trackdatapath[gamepath])
-    #print("Using gamefile at:   " + (args.gamefile if args.gamefile else "*.sfc"))
-    #print("Using collection at: " + searchdir)
+    LOGGER.info("Using manifest at:".ljust(LJUST) + trackdatapath[gamepath])
+    LOGGER.info("Using gamefile at:".ljust(LJUST) + (args.gamefile if args.gamefile else "*.sfc"))
+    LOGGER.info("Using collection at:".ljust(LJUST) + searchdir)
 
     if args.higan:
         args.outputprefix = "track"
-        #print("Outputting to:       " + os.path.join(higandir,args.outputprefix) + '*')
-    #else:
-        #print("Outputting to:       " + os.path.join(args.outputpath,args.outputprefix) + '*')
+        LOGGER.info("Outputting to:".ljust(LJUST) + os.path.join(higandir,args.outputprefix) + '*')
+    else:
+        LOGGER.info("Outputting to:".ljust(LJUST) + os.path.join(args.outputpath,args.outputprefix) + '*')
 
     #For all packs in the target directory, make a list of found track numbers.
     allpacks = list()
@@ -408,7 +436,7 @@ def build_index(args, game):
                 allpacks.append(pack)
 
     if not allpacks:
-        print("ERROR: Couldn't find any MSU packs in " + os.path.abspath(str(searchdir)))
+        LOGGER.error("Couldn't find any MSU packs in:".ljust(LJUST) + os.path.abspath(str(searchdir)))
         return
 
     for pack in allpacks:
@@ -435,32 +463,33 @@ def build_index(args, game):
     #pp.pprint(trackindex)
 
     buildtime = datetime.datetime.now() - buildstarttime
-    #print(f"Index build took {buildtime.seconds}.{buildtime.microseconds} seconds")
-    #print("")
+    LOGGER.info(f"Index build took {buildtime.seconds}.{buildtime.microseconds} seconds")
+    LOGGER.info("")
 
 # do the shuffle and write pcms
 def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, gamepath, gameID):
-    logger = logging.getLogger('')
+    global LOGGER
+
     #For all found non-looping tracks, pick a random track with a matching
     #track number from a random pack in the target directory.
     shufflestarttime = datetime.datetime.now()
 
-    #if not live:
-        #logger.info("")
-        #logger.info("Non-looping tracks:")
+    if not live:
+        LOGGER.info("")
+        LOGGER.info("Non-looping tracks:")
 
     with TemporaryDirectory(dir=os.path.join(".")) as tmpdir:
         for i in nonloopingfoundtracks[gamepath]:
             winner = random.choice(trackindex[gamepath][int(i)])
-            copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID)
+            copy_track(winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID)
 
         #For all found looping tracks, pick a random track from a random pack
         #in the target directory, with a matching track number by default, or
         #a shuffled different looping track number if fullshuffle or
         #singleshuffle are enabled.
-        #if not live:
-            #logger.info("")
-            #logger.info("Looping tracks:")
+        if not live:
+            LOGGER.info("")
+            LOGGER.info("Looping tracks:")
         for i in loopingfoundtracks[gamepath]:
             if (args.fullshuffle or args.singleshuffle):
                 dst = i
@@ -469,21 +498,44 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
                 dst = i
                 src = i
             winner = random.choice(trackindex[gamepath][int(src)])
-            copy_track(logger, winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID)
+            copy_track(winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID)
     if live:
         shuffletime = datetime.datetime.now() - shufflestarttime
-        print("Reshuffling MSU pack every%s second%s, press ctrl+c or close the window to stop reshuffling. (shuffled in %d.%ds)" %(" " + str(int(live)) if int(live) != 1 else "", "s" if int(live) != 1 else "", shuffletime.seconds, shuffletime.microseconds))
-        s.enter(int(live), 1, shuffle_all_tracks, argument=(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, game))
+        LOGGER.info(
+            "Reshuffling MSU pack every%s second%s, press CTRL+C or close the window to stop reshuffling. (Shuffled in %d.%ds)"
+            %
+            (
+                " " + str(int(live)) if int(live) != 1 else "",
+                "s" if int(live) != 1 else "",
+                shuffletime.seconds,
+                shuffletime.microseconds
+            )
+        )
+        s.enter(
+            int(live),
+            1,
+            shuffle_all_tracks,
+            argument=(
+                rompath,
+                fullshuffle,
+                singleshuffle,
+                dry_run,
+                higan,
+                forcerealcopy,
+                live,
+                game
+            )
+        )
 
 # create .msu
 def generate_shuffled_msu(args, rompath, gameID):
-    logger = logging.getLogger('')
+    global LOGGER
 
     if (not os.path.exists(f'{rompath}.msu')) and not args.higan:
         if args.dry_run:
-            logger.info(f"DRY RUN MODE: Would create '{rompath}.msu'")
+            LOGGER.info(f"DRY RUN MODE: Would create '{rompath}.msu'")
         else:
-            logger.info(f"'{rompath}.msu' doesn't exist, creating it.")
+            LOGGER.info(f"'{rompath}.msu' doesn't exist, creating it.")
             with open(f'{rompath}.msu', 'w'):
                 pass
 
@@ -519,16 +571,39 @@ def generate_shuffled_msu(args, rompath, gameID):
         shutil.copy(os.path.join(".","resources","meta","manifests","higan","higan-msu.txt"), readmepath)
 
     if args.live:
-        s.enter(1, 1, shuffle_all_tracks, argument=(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live))
+        s.enter(
+            1,
+            1,
+            shuffle_all_tracks,
+            argument=(
+                rompath,
+                args.fullshuffle,
+                args.singleshuffle,
+                args.dry_run,
+                args.higan,
+                args.forcerealcopy,
+                args.live
+            )
+        )
         s.run()
     else:
-        shuffle_all_tracks(rompath, args.fullshuffle, args.singleshuffle, args.dry_run, args.higan, args.forcerealcopy, args.live, gamepath, args.game)
-        #logger.info("")
-        #logger.info('Done.')
+        shuffle_all_tracks(
+            rompath,
+            args.fullshuffle,
+            args.singleshuffle,
+            args.dry_run,
+            args.higan,
+            args.forcerealcopy,
+            args.live,
+            gamepath,
+            args.game
+        )
+        LOGGER.info("")
+        LOGGER.info('Done.')
 
 def main(args):
     if args.version:
-        print("ALttPMSUShuffler version " + __version__)
+        LOGGER.debug(f"ALttPMSUShuffler version {__version__}")
         return
 
     games = [ args.game ]
@@ -548,7 +623,7 @@ def main(args):
               args.forcerealcopy = True
 
           if args.live and args.forcerealcopy:
-              print("WARNING: live updates with real copies will cause a LOT of disk usage.")
+              LOGGER.warning("Live updates with real copies will cause a LOT of disk usage.")
 
           if gameID == games[0]:
               delete_old_msu(args, rom)
@@ -556,6 +631,12 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    # CRITICAL: 50
+    # ERROR:    40
+    # WARNING:  30 <-- disable default logging
+    # INFO:     20 <-- default
+    # DEBUG:    10
+    # NOTSET:    0
     parser.add_argument('--loglevel', default='info', const='info', nargs='?', choices=['error', 'info', 'warning', 'debug'], help='Select level of logging for output.')
     parser.add_argument('--collection', default=os.path.join(".."), help='Point script at another directory to find root of MSU packs.')
     parser.add_argument('--game', default="snes/zelda3", help='Game Track List to load.')
@@ -578,7 +659,7 @@ if __name__ == '__main__':
 
     for rom in roms:
         if not os.path.exists(rom):
-            print(f"ERROR: Unknown argument {rom}")
+            LOGGER.error(f"Unknown argument {rom}")
             parser.print_help()
             sys.exit()
 
@@ -587,7 +668,7 @@ if __name__ == '__main__':
     if not romlist:
         if args.outputpath and args.outputprefix:
             if args.higan:
-                rompath = os.path.join(args.outputpath,"higan-" + args.outputprefix + ".sfc")
+                rompath = os.path.join(args.outputpath, f"higan-{args.outputprefix}.sfc")
                 higandir = rompath
             else:
                 rompath = os.path.join(args.outputpath,args.outputprefix)
@@ -598,7 +679,7 @@ if __name__ == '__main__':
 
     if args.gamefile != "":
         if not os.path.exists(args.gamefile):
-            print(os.path.join(args.gamefile) + " not found!")
+            LOGGER.error(f"'{os.path.join(args.gamefile)}' not found!")
             sys.exit()
         elif not romlist:
             romlist.append(os.path.splitext(args.gamefile)[0])
@@ -610,7 +691,7 @@ if __name__ == '__main__':
         sys.exit()
 
     if args.live and int(args.live) < 1:
-        print("WARNING, can't choose live updates shorter than 1 second, defaulting to 1 second")
+        LOGGER.warning("Can't choose live updates shorter than 1 second, defaulting to 1 second")
         args.live = 1
 
     # When shuffling a single pack, don't auto-extend non-extended packs.
@@ -619,6 +700,7 @@ if __name__ == '__main__':
 
     # set up logger
     loglevel = {'error': logging.ERROR, 'info': logging.INFO, 'warning': logging.WARNING, 'debug': logging.DEBUG}[args.loglevel]
-    logging.basicConfig(format='%(message)s', level=loglevel)
+    logging.basicConfig(format='%(levelname)s: %(message)s', level=loglevel)
+    LOGGER = logging.getLogger('')
 
     main(args)
