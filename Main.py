@@ -129,21 +129,22 @@ __version__ = '0.8.2'
 
 LJUST = 35
 
-meta = {} # hash
-titles = {} # hash
+meta = {}  # hash
+titles = {}  # hash
 higandir = ""
-trackdatapath = {} # string
-longestTrackName = {} # int
-nonloopingtracks = {} # array
-extendedmsutracks = {} # array
-extendedbackupdict = {} # hash
+trackdatapath = {}  # string
+longestTrackName = {}  # int
+nonloopingtracks = {}  # array
+extendedmsutracks = {}  # array
+extendedbackupdict = {}  # hash
 
-# get track list
-# get track titles
-# sort non/looping tracks
-# get extended tracks
-# get extended backup tracks
 def load_game(gamepath, gameID):
+    # get track list
+    # get track titles
+    # sort non/looping tracks
+    # get extended tracks
+    # get extended backup tracks
+
     global LOGGER
     global titles
     global trackdatapath
@@ -152,84 +153,84 @@ def load_game(gamepath, gameID):
     global extendedmsutracks
     global extendedbackupdict
 
-    console,game = gamepath.split('/')
+    console, game = gamepath.split('/')
 
     trackdatapath[gamepath] = os.path.join(".", "resources", console, game, "manifests", "tracks.json")
     trackdata = {}
     trackdata[gamepath] = {}
     if gamepath not in titles:
-      titles[gamepath] = {}
+        titles[gamepath] = {}
     if gamepath not in nonloopingtracks:
-      nonloopingtracks[gamepath] = []
+        nonloopingtracks[gamepath] = []
     if gamepath not in extendedmsutracks:
-      extendedmsutracks[gamepath] = []
+        extendedmsutracks[gamepath] = []
     if os.path.exists(trackdatapath[gamepath]):
-      with open(trackdatapath[gamepath]) as json_file:
-        trackdata[gamepath] = json.load(json_file)
-        meta[gamepath] = trackdata[gamepath]["meta"] if "meta" in trackdata[gamepath] else {}
+        with open(trackdatapath[gamepath]) as json_file:
+            trackdata[gamepath] = json.load(json_file)
+            meta[gamepath] = trackdata[gamepath]["meta"] if "meta" in trackdata[gamepath] else {}
 
     if "tracks" in trackdata[gamepath]:
-      i = trackdata[gamepath]["tracks"]["index"] if "index" in trackdata[gamepath]["tracks"] else 1
-      if "basic" in trackdata[gamepath]["tracks"]:
-        for track in trackdata[gamepath]["tracks"]["basic"]:
-          title = ""
-          if "unused" in track or "title" not in track:
-              title = "<Unused>"
-          elif "title" in track:
-              title = track["title"]
-          if "num" in track:
-              i = track["num"]
-          titles[gamepath][str(i)] = title
-          #Tracks that don't loop; this is used to prevent a non-looping track from
-          #being shuffled with a looping track (nobody wants the boss fanfare as
-          #light world overworld music)
-          if "nonlooping" in track:
-            if track["nonlooping"]:
-              nonloopingtracks[gamepath].append(str(i))
-          i += 1
-      if "extended" in trackdata[gamepath]["tracks"]:
-        for track in trackdata[gamepath]["tracks"]["extended"]:
-          title = ""
-          if "unused" in track or "title" not in track:
-              title = "<Unused>"
-          elif "title" in track:
-              title = track["title"]
-          if "num" in track:
-              i = track["num"]
-          titles[gamepath][str(i)] = title
-          #List of extended MSU dungeon-specific and boss-specific tracks.
-          extendedmsutracks[gamepath].append(str(i))
+        i = trackdata[gamepath]["tracks"]["index"] if "index" in trackdata[gamepath]["tracks"] else 1
+        if "basic" in trackdata[gamepath]["tracks"]:
+            for track in trackdata[gamepath]["tracks"]["basic"]:
+                title = ""
+                if "unused" in track or "title" not in track:
+                    title = "<Unused>"
+                elif "title" in track:
+                    title = track["title"]
+                if "num" in track:
+                    i = track["num"]
+                titles[gamepath][str(i)] = title
+                # Tracks that don't loop; this is used to prevent a non-looping track from
+                # being shuffled with a looping track (nobody wants the boss fanfare as
+                # light world overworld music)
+                if "nonlooping" in track:
+                    if track["nonlooping"]:
+                        nonloopingtracks[gamepath].append(str(i))
+                i += 1
+        if "extended" in trackdata[gamepath]["tracks"]:
+            for track in trackdata[gamepath]["tracks"]["extended"]:
+                title = ""
+                if "unused" in track or "title" not in track:
+                    title = "<Unused>"
+                elif "title" in track:
+                    title = track["title"]
+                if "num" in track:
+                    i = track["num"]
+                titles[gamepath][str(i)] = title
+                # List of extended MSU dungeon-specific and boss-specific tracks.
+                extendedmsutracks[gamepath].append(str(i))
 
-          #Since the presence of any dungeon/boss-specific track from an extended MSU
-          #pack overrides the generic pendant/crystal dungeon or generic boss music,
-          #a basic shuffle always picking track N as that same track N from a random
-          #pack will result in no boss/dungeon music from a non-extended pack ever
-          #being chosen if the user has a single extended pack.
-          #
-          #To allow dungeon/boss music to be played, the dungeon/boss-specific
-          #extended MSU tracks are shuffled differently; for each extended
-          #dungeon/boss-specific track, a pack is chosen randomly, then its
-          #corresponding dungeon/boss-specific track is chosen if present,
-          #otherwise, the generic dungeon/boss music from that pack is chosen.
-          #
-          #This means that a user that ONLY has non-extended packs won't be able to
-          #listen to dungeon music to determine crystal/pendant status in modes where
-          #that applies (since EP/DP/TH would always play light world music from a
-          #random pack regardless of pendant/crystal status).  To preserve that
-          #behavior, --basicshuffle can be used.
-          if gamepath not in extendedbackupdict:
-            extendedbackupdict[gamepath] = {}
-          if "fallback" in track:
-            extendedbackupdict[gamepath][i] = track["fallback"]
+                # Since the presence of any dungeon/boss-specific track from an extended MSU
+                # pack overrides the generic pendant/crystal dungeon or generic boss music,
+                # a basic shuffle always picking track N as that same track N from a random
+                # pack will result in no boss/dungeon music from a non-extended pack ever
+                # being chosen if the user has a single extended pack.
+                #
+                # To allow dungeon/boss music to be played, the dungeon/boss-specific
+                # extended MSU tracks are shuffled differently; for each extended
+                # dungeon/boss-specific track, a pack is chosen randomly, then its
+                # corresponding dungeon/boss-specific track is chosen if present,
+                # otherwise, the generic dungeon/boss music from that pack is chosen.
+                #
+                # This means that a user that ONLY has non-extended packs won't be able to
+                # listen to dungeon music to determine crystal/pendant status in modes where
+                # that applies (since EP/DP/TH would always play light world music from a
+                # random pack regardless of pendant/crystal status).  To preserve that
+                # behavior, --basicshuffle can be used.
+                if gamepath not in extendedbackupdict:
+                    extendedbackupdict[gamepath] = {}
+                if "fallback" in track:
+                    extendedbackupdict[gamepath][i] = track["fallback"]
 
-          i += 1
-      if "longest" in trackdata[gamepath]["tracks"]:
-          if gamepath not in longestTrackName:
-            longestTrackName[gamepath] = ""
-          longestTrackName[gamepath] = trackdata[gamepath]["tracks"]["longest"]
+                i += 1
+        if "longest" in trackdata[gamepath]["tracks"]:
+            if gamepath not in longestTrackName:
+                longestTrackName[gamepath] = ""
+            longestTrackName[gamepath] = trackdata[gamepath]["tracks"]["longest"]
 
     LOGGER.debug(f"Loading Game: {console}/{game}")
-    for k in ["basic","extended"]:
+    for k in ["basic", "extended"]:
         if k in trackdata[gamepath]:
             LOGGER.debug(f"{k.capitalize()} Tracks: {len(trackdata[gamepath]['tracks'][k])}")
 
@@ -250,11 +251,12 @@ def load_game(gamepath, gameID):
     shuffledloopingfoundtracks[gamepath] = {}
     s = sched.scheduler(time.time, time.sleep)
 
-# delete old log
-# delete old higan dir
-# copy new game file
-# delete old pcms
 def delete_old_msu(args, rompath):
+    # delete old log
+    # delete old higan dir
+    # copy new game file
+    # delete old pcms
+
     global LOGGER
 
     LOGGER.debug("Deleting old MSU")
@@ -293,7 +295,7 @@ def delete_old_msu(args, rompath):
                 )
             )
 
-    for path,romname in gamefiles:
+    for path, romname in gamefiles:
         if romname != "":
             if romname != "shuffled.sfc" and "higan" not in romname:
                 srcrom = romname
@@ -337,9 +339,9 @@ def delete_old_msu(args, rompath):
                         "DRY RUN MODE: Would %s '%s' to '%s.sfc'"
                         %
                         (
-                          ('copy' if args.copy else 'rename'),
-                          os.path.basename(srcrom),
-                          rompath
+                            ('copy' if args.copy else 'rename'),
+                            os.path.basename(srcrom),
+                            rompath
                         )
                     )
                 else:
@@ -365,8 +367,9 @@ def delete_old_msu(args, rompath):
                 except PermissionError:
                     LOGGER.warning(f"Failed to remove: '{path}'")
 
-# copy track
+
 def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID):
+    # copy track
     global LOGGER
 
     if higan:
@@ -403,10 +406,12 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
     if not live:
         shortsrcpath = srcpath
         if args.collection:
-            shortsrcpath = shortsrcpath.replace(args.collection,"")
+            shortsrcpath = shortsrcpath.replace(args.collection, "")
         if shortsrcpath[:1] == '\\':
             shortsrcpath = shortsrcpath[1:]
-        msg = str(srctrack).rjust(3, '0') + " - " + (dsttitle + ': ' + shorttitle).ljust(longestTrackName[gamepath] + 8, ' ') + shortsrcpath
+        msg = str(srctrack).rjust(3, '0') + " - " + \
+            (dsttitle + ': ' + shorttitle).ljust(longestTrackName[gamepath] + 8, ' ') + \
+            shortsrcpath
         if args.verbose:
             msg += " -> " + dstpath
         LOGGER.info(msg)
@@ -429,19 +434,19 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
                 LOGGER.info(f"Failed to copy '{srcpath}' to '{dstpath}' during non-live update")
             return False
 
-# Build a dictionary mapping each possible track number to all matching tracks
-# in the search directory; do this once, to avoid excess searching later.
-#
-# In default mode (non-basic/non-full), since we want non-extended MSU packs to
-# still have their dungeon/boss music represented in the shuffled pack, match
-# the generic backups for each of the extended MSU tracks.
-#
-# Index format:
-# index[2] = ['../msu1/track-2.pcm', '../msu2/track-2.pcm']
 def build_index(args, game):
+    # Build a dictionary mapping each possible track number to all matching tracks
+    # in the search directory; do this once, to avoid excess searching later.
+    #
+    # In default mode (non-basic/non-full), since we want non-extended MSU packs to
+    # still have their dungeon/boss music represented in the shuffled pack, match
+    # the generic backups for each of the extended MSU tracks.
+    #
+    # Index format:
+    # index[gamepath][2] = ['../msu1/track-2.pcm', '../msu2/track-2.pcm']
+
     global LOGGER
     global trackindex
-
 
     if os.path.exists('trackindex.pkl') and not args.reindex:
         with open('trackindex.pkl', 'rb') as f:
@@ -474,15 +479,15 @@ def build_index(args, game):
     LOGGER.info("Using gamepath at:".ljust(LJUST) + gamepath)
     LOGGER.info("Using manifest at:".ljust(LJUST) + trackdatapath[gamepath])
     LOGGER.info("Using gamefile at:".ljust(LJUST) + (args.gamefile if args.gamefile else "*.sfc"))
-    LOGGER.info("Using collection at:".ljust(LJUST) + os.path.join(searchdir,"*"))
+    LOGGER.info("Using collection at:".ljust(LJUST) + os.path.join(searchdir, "*"))
 
     if args.higan:
         args.outputprefix = "track"
-        LOGGER.info("Outputting to:".ljust(LJUST) + os.path.join(higandir,args.outputprefix) + '*')
+        LOGGER.info("Outputting to:".ljust(LJUST) + os.path.join(higandir, args.outputprefix) + '*')
     else:
-        LOGGER.info("Outputting to:".ljust(LJUST) + os.path.join(args.outputpath,args.outputprefix) + '*')
+        LOGGER.info("Outputting to:".ljust(LJUST) + os.path.join(args.outputpath, args.outputprefix) + '*')
 
-    #For all packs in the target directory, make a list of found track numbers.
+    # For all packs in the target directory, make a list of found track numbers.
     allpacks = list()
     for path in Path(searchdir).rglob('*.pcm'):
         pack = os.path.dirname(str(path))
@@ -503,7 +508,7 @@ def build_index(args, game):
                 if 'disabled' not in trackname.lower():
                     foundtracks.append(str(path))
 
-            #For extended MSU packs, use the backups
+            # For extended MSU packs, use the backups
             if not args.basicshuffle and not args.fullshuffle:
                 if not foundtracks and track in extendedmsutracks[gamepath] and track in extendedbackupdict[gamepath]:
                     backuptrack = extendedbackupdict[gamepath][track]
@@ -514,16 +519,17 @@ def build_index(args, game):
 
             trackindex[gamepath].setdefault(track, []).extend(foundtracks)
 
-    #Uncomment to print index for debugging
+    # Uncomment to print index for debugging
     #pp = pprint.PrettyPrinter()
-    #pp.pprint(trackindex)
+    # pp.pprint(trackindex)
 
     buildtime = datetime.datetime.now() - buildstarttime
     LOGGER.info(f"Index: Build took {buildtime.seconds}.{buildtime.microseconds} seconds.")
     LOGGER.info("")
 
-# do the shuffle and write pcms
+
 def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, nowplaying, cooldown, prevtrack, gamepath, gameID):
+    # do the shuffle and write pcms
     global LOGGER
 
     with open('trackindex.pkl', 'wb') as f:
@@ -531,8 +537,8 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
         # this is only loaded once, and plaintext may be useful for debugging.
         pickle.dump(trackindex, f, 0)
 
-    #For all found non-looping tracks, pick a random track with a matching
-    #track number from a random pack in the target directory.
+    # For all found non-looping tracks, pick a random track with a matching
+    # track number from a random pack in the target directory.
     shufflestarttime = datetime.datetime.now()
 
     if not live:
@@ -565,10 +571,10 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
                     gameID
                 )
 
-            #For all found looping tracks, pick a random track from a random pack
-            #in the target directory, with a matching track number by default, or
-            #a shuffled different looping track number if fullshuffle or
-            #singleshuffle are enabled.
+            # For all found looping tracks, pick a random track from a random pack
+            # in the target directory, with a matching track number by default, or
+            # a shuffled different looping track number if fullshuffle or
+            # singleshuffle are enabled.
             if not live:
                 LOGGER.info("")
                 LOGGER.info("Looping tracks:")
@@ -640,6 +646,7 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
             )
         )
 
+
 async def recv_loop(ws, recv_queue):
     try:
         async for msg in ws:
@@ -647,9 +654,10 @@ async def recv_loop(ws, recv_queue):
     finally:
         await ws.close()
 
-# Print the track that's currently playing, and print its pack to
-# nowplaying.txt which can be used as a streaming text file source.
+
 def print_pack(path):
+    # Print the track that's currently playing, and print its pack to
+    # nowplaying.txt which can be used as a streaming text file source.
     global LOGGER
 
     LOGGER.info(f"Now playing: {path}")
@@ -669,6 +677,7 @@ def print_pack(path):
         f.truncate(0)
         LOGGER.info("MSU pack now playing:", file=f)
         LOGGER.info(path_parts[1], file=f)
+
 
 async def query(prevtrack):
     global LOGGER
@@ -740,12 +749,13 @@ async def query(prevtrack):
     await ws.close()
     return track
 
-# Read the currently playing track over qusb2snes.
-# TODO: This currently opens up a new qusb2snes connection every second.
-# Eventually this should be smarter by keeping one connection alive instead.
 def read_track(prevtrack):
+    # Read the currently playing track over qusb2snes.
+    # TODO: This currently opens up a new qusb2snes connection every second.
+    # Eventually this should be smarter by keeping one connection alive instead.
     track = asyncio.get_event_loop().run_until_complete(query(prevtrack))
     return track
+
 
 def generate_shuffled_msu(args, rompath, gamepath, gameID):
     global LOGGER
@@ -767,8 +777,8 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
             foundtracks[gamepath].append(key)
     foundtracks[gamepath] = sorted(foundtracks[gamepath])
 
-    #Separate this list into looping tracks and non-looping tracks, and make a
-    #shuffled list of the found looping tracks.
+    # Separate this list into looping tracks and non-looping tracks, and make a
+    # shuffled list of the found looping tracks.
     for i in list(titles[gamepath].keys()):
         if int(i) in foundtracks[gamepath]:
             if str(i) in nonloopingtracks[gamepath]:
@@ -780,10 +790,10 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
     random.shuffle(shuffledloopingfoundtracks[gamepath])
 
     if args.higan:
-        readmepath = os.path.join(higandir,"readme")
+        readmepath = os.path.join(higandir, "readme")
         if not os.path.exists(readmepath):
             os.makedirs(readmepath)
-        shutil.copy(os.path.join(".","resources","meta","manifests","higan","higan-msu.txt"), readmepath)
+        shutil.copy(os.path.join(".", "resources", "meta", "manifests", "higan", "higan-msu.txt"), readmepath)
 
     if args.live:
         s.enter(
@@ -824,6 +834,7 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
         LOGGER.info("")
         LOGGER.info('Done.')
 
+
 def main(args):
     global LOGGER
 
@@ -831,10 +842,10 @@ def main(args):
     if args.version:
         exit(1)
 
-    gamepaths = [ args.game ]
+    gamepaths = [args.game]
     gameID = args.game
     if gameID == "snes/z3m3":
-        gamepaths = [ "snes/metroid3", "snes/zelda3" ]
+        gamepaths = ["snes/metroid3", "snes/zelda3"]
 
     for gamepath in gamepaths:
         load_game(gamepath, gameID)
@@ -845,7 +856,7 @@ def main(args):
                 # determine if the supplied rom is ON the same drive as the script. If not, realcopy is mandatory.
                 os.path.commonpath([os.path.abspath(rom), os.path.abspath(__file__)])
             except:
-                print(f"Failed to find common path between {os.path.abspath(rom)} and {os.path.abspath(__file__)}, forcing real copies.")
+                LOGGER.warning(f"Failed to find common path between {os.path.abspath(rom)} and {os.path.abspath(__file__)}, forcing real copies.")
                 args.forcerealcopy = True
 
             if args.live and args.forcerealcopy:
@@ -854,6 +865,7 @@ def main(args):
             if gamepath == gamepaths[0]:
                 delete_old_msu(args, rom)
             generate_shuffled_msu(args, rom, gamepath, gameID)
+
 
 if __name__ == '__main__':
     global LOGGER
@@ -866,30 +878,112 @@ if __name__ == '__main__':
     # INFO:     20 <-- default
     # DEBUG:    10
     # NOTSET:    0
-    parser.add_argument('--loglevel', default='info', const='info', nargs='?', choices=['error', 'info', 'warning', 'debug'], help='Select level of logging for output.')
-    parser.add_argument('--collection', default=os.path.join(".."), help='Point script at another directory to find root of MSU packs.')
-    parser.add_argument('--game', default="snes/zelda3", help='Game Track List to load.')
-    parser.add_argument('--gamefile', default="", help='Game File to load. Leave blank to auto-locate.')
-    parser.add_argument('--outputpath', default=os.path.join("."), help='Output path.')
-    parser.add_argument('--outputprefix', default='shuffled', help='Output prefix.')
-    parser.add_argument('--copy', action='store_true', default=False)
-    parser.add_argument('--fullshuffle', help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.", action='store_true', default=False)
-    parser.add_argument('--basicshuffle', help='Choose each track with the same track from a random pack.  If you have any extended packs, the dungeon/boss themes from non-extended packs will never be chosen in this mode.  If you only have non-extended packs, this preserves the ability to tell crystal/pendant dungeons by music.', action='store_true', default=False)
-    parser.add_argument('--singleshuffle', help='Choose each looping track randomly from all looping tracks from a single MSU pack.  Enter the path to a subfolder in the parent directory containing a single MSU pack.')
-    parser.add_argument('--higan', help='Creates files in higan-friendly directory structure.', action='store_true', default=False)
-    parser.add_argument('--realcopy', help='Creates real copies of the source tracks instead of hardlinks', action='store_true', default=False)
-    parser.add_argument('--dry-run', help='Makes script print all filesystem commands that would be executed instead of actually executing them.', action='store_true', default=False)
-    parser.add_argument('--verbose', help='Verbose output.', action='store_true', default=False)
-    parser.add_argument('--live', help='The interval at which to re-shuffle the entire pack, in seconds; will skip tracks currently in use.')
-    parser.add_argument('--nowplaying', help='EXPERIMENTAL: During live reshuffling, connect to qusb2snes to print the currently playing MSU pack to console and nowplaying.txt', action='store_true', default=False)
-    parser.add_argument('--reindex', help='Rebuild the index of MSU packs, this must be run to pick up any new packs or moved/deleted files in existing packs!', action='store_true', default=False)
-    parser.add_argument('--version', help='Print version number and exit.', action='store_true', default=False)
+    parser.add_argument(
+        '--loglevel',
+        default='info',
+        const='info',
+        nargs='?',
+        choices=['error', 'info', 'warning', 'debug'],
+        help='Select level of logging for output.'
+    )
+    parser.add_argument(
+        '--collection',
+        default=os.path.join(".."),
+        help='Point script at another directory to find root of MSU packs.'
+    )
+    parser.add_argument(
+        '--game',
+         default="snes/zelda3",
+         help='Game Track List to load.'
+    )
+    parser.add_argument(
+        '--gamefile',
+        default="",
+        help='Game File to load. Leave blank to auto-locate.'
+    )
+    parser.add_argument(
+        '--outputpath',
+        default=os.path.join("."),
+        help='Output path.'
+    )
+    parser.add_argument(
+        '--outputprefix',
+        default='shuffled',
+        help='Output prefix.'
+    )
+    parser.add_argument(
+        '--copy',
+         action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--fullshuffle',
+         help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.",
+         action='store_true',
+         default=False
+    )
+    parser.add_argument(
+        '--basicshuffle',
+        help='Choose each track with the same track from a random pack.  If you have any extended packs, the dungeon/boss themes from non-extended packs will never be chosen in this mode.  If you only have non-extended packs, this preserves the ability to tell crystal/pendant dungeons by music.',
+        action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--singleshuffle',
+        help='Choose each looping track randomly from all looping tracks from a single MSU pack.  Enter the path to a subfolder in the parent directory containing a single MSU pack.'
+    )
+    parser.add_argument(
+        '--higan',
+        help='Creates files in higan-friendly directory structure.',
+        action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--realcopy',
+        help='Creates real copies of the source tracks instead of hardlinks',
+        action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--dry-run',
+        help='Makes script print all filesystem commands that would be executed instead of actually executing them.',
+        action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--verbose',
+        help='Verbose output.',
+        action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--live',
+        help='The interval at which to re-shuffle the entire pack, in seconds; will skip tracks currently in use.'
+    )
+    parser.add_argument(
+        '--nowplaying',
+        help='EXPERIMENTAL: During live reshuffling, connect to qusb2snes to print the currently playing MSU pack to console and nowplaying.txt',
+        action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--reindex',
+        help='Rebuild the index of MSU packs, this must be run to pick up any new packs or moved/deleted files in existing packs!',
+        action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--version',
+        help='Print version number and exit.',
+        action='store_true',
+        default=False
+    )
 
     romlist = list()
     args, roms = parser.parse_known_args()
 
     # set up logger
-    loglevel = {'error': logging.ERROR, 'info': logging.INFO, 'warning': logging.WARNING, 'debug': logging.DEBUG}[args.loglevel]
+    loglevel = {'error': logging.ERROR, 'info': logging.INFO,'warning': logging.WARNING, 'debug': logging.DEBUG}[args.loglevel]
 
     logging.root.setLevel(loglevel)
     formatter = colorlog.ColoredFormatter(
@@ -902,11 +996,11 @@ if __name__ == '__main__':
             "CRITICAL": "bold_red"
         },
         secondary_log_colors={
-          "message": {
-            "WARNING": "yellow",
-            "ERROR": "red",
-            "CRITICAL": "bold_red"
-          }
+            "message": {
+                "WARNING": "yellow",
+                "ERROR": "red",
+                "CRITICAL": "bold_red"
+            }
         }
     )
     stream = logging.StreamHandler()
@@ -936,7 +1030,7 @@ if __name__ == '__main__':
                 rompath = os.path.join(args.outputpath, f"higan-{args.outputprefix}.sfc")
                 higandir = rompath
             else:
-                rompath = os.path.join(args.outputpath,args.outputprefix)
+                rompath = os.path.join(args.outputpath, args.outputprefix)
             romlist.append(rompath)
             parpath = os.path.dirname(rompath)
             if not os.path.exists(parpath):
