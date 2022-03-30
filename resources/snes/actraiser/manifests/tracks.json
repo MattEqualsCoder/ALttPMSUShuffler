@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "name": "ActRaiser"
+  },
   "tracks": {
     "basic": [
       {
@@ -56,9 +59,7 @@
       {
         "num": 15,
         "title": "Silence",
-        "notes": [
-          "Name of the track, not actual silence"
-        ],
+        "notes": ["Name of the track, not actual silence"],
         "nonlooping": true
       },
       {
@@ -72,9 +73,7 @@
       {
         "num": 21,
         "title": "Ending",
-        "notes": [
-          "Long track"
-        ]
+        "notes": ["Long track"]
       }
     ],
     "index": 0,

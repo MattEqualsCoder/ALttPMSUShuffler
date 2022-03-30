@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "name": "Super Mario World"
+  },
   "tracks": {
     "basic": [
       {

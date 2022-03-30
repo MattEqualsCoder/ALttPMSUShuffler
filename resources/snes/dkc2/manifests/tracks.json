@@ -1,17 +1,16 @@
 {
+  "meta": {
+    "name": "Donkey Kong Country 2: Diddy's Kong Quest"
+  },
   "tracks": {
     "basic": [
       {
         "title": "Welcome to Crocodile Isle",
-        "notes": [
-          "Island Map"
-        ]
+        "notes": ["Island Map"]
       },
       {
         "tltle": "K. Rool Returns",
-        "notes": [
-          "Main Theme"
-        ]
+        "notes": ["Main Theme"]
       },
       {
         "title": "Bayou Boogie"

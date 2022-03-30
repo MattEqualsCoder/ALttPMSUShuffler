@@ -1,6 +1,10 @@
 {
+  "meta": {
+    "name": "Mega Man 7"
+  },
   "tracks": {
-    "basic": [{
+    "basic": [
+      {
         "title": "Opening Part 1",
         "nonlooping": true
       },

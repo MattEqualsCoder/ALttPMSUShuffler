@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "name": "F-Zero"
+  },
   "tracks": {
     "basic": [
       {
@@ -80,10 +83,10 @@
       },
       "patched": {
         "basic": {
-          "unheadered" : "82F22D13"
+          "unheadered": "82F22D13"
         },
         "extended": {
-          "unheadered" : "DD60457F"
+          "unheadered": "DD60457F"
         }
       }
     }

@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "name": "Mega Man X"
+  },
   "tracks": {
     "basic": [
       {

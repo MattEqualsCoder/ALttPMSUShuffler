@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "name": "Rock n' Roll Racing"
+  },
   "tracks": {
     "basic": [
       {
