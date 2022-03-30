@@ -1,6 +1,7 @@
 *.log
 *.msu
 *.pcm
+*.pkl
 *.smc
 *.sfc
 *.swp

@@ -1,3 +1,6 @@
+import colorlog
+import websockets
+
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -12,10 +15,10 @@ import pickle
 import pprint
 import random
 import re
-import sched, time
+import sched
 import shutil
 import sys
-import websockets
+import time
 
 __version__ = '0.8.2'
 
@@ -124,11 +127,9 @@ __version__ = '0.8.2'
 #   commands (deleting, creating, renaming files) it would have executed
 #   instead of executing them.
 
-global LOGGER
-LOGGER = None
-
 LJUST = 35
 
+meta = {} # hash
 titles = {} # hash
 higandir = ""
 trackdatapath = {} # string
@@ -143,6 +144,7 @@ extendedbackupdict = {} # hash
 # get extended tracks
 # get extended backup tracks
 def load_game(gamepath, gameID):
+    global LOGGER
     global titles
     global trackdatapath
     global longestTrackName
@@ -151,7 +153,8 @@ def load_game(gamepath, gameID):
     global extendedbackupdict
 
     console,game = gamepath.split('/')
-    trackdatapath[gamepath] = os.path.join(".","resources",console,game,"manifests","tracks.json")
+
+    trackdatapath[gamepath] = os.path.join(".", "resources", console, game, "manifests", "tracks.json")
     trackdata = {}
     trackdata[gamepath] = {}
     if gamepath not in titles:
@@ -163,6 +166,7 @@ def load_game(gamepath, gameID):
     if os.path.exists(trackdatapath[gamepath]):
       with open(trackdatapath[gamepath]) as json_file:
         trackdata[gamepath] = json.load(json_file)
+        meta[gamepath] = trackdata[gamepath]["meta"] if "meta" in trackdata[gamepath] else {}
 
     if "tracks" in trackdata[gamepath]:
       i = trackdata[gamepath]["tracks"]["index"] if "index" in trackdata[gamepath]["tracks"] else 1
@@ -224,6 +228,11 @@ def load_game(gamepath, gameID):
             longestTrackName[gamepath] = ""
           longestTrackName[gamepath] = trackdata[gamepath]["tracks"]["longest"]
 
+    LOGGER.debug(f"Loading Game: {console}/{game}")
+    for k in ["basic","extended"]:
+        if k in trackdata[gamepath]:
+            LOGGER.debug(f"{k.capitalize()} Tracks: {len(trackdata[gamepath]['tracks'][k])}")
+
     # Globals used by the scheduled reshuffle in live mode (couldn't figure out
     # a better way to pass dicts/lists to shuffle_all_tracks when called by
     # the scheduler)
@@ -248,6 +257,8 @@ def load_game(gamepath, gameID):
 def delete_old_msu(args, rompath):
     global LOGGER
 
+    LOGGER.debug("Deleting old MSU")
+
     try:
         if os.path.exists(f"{rompath}-msushuffleroutput.log"):
             os.remove(f"{rompath}-msushuffleroutput.log")
@@ -267,10 +278,20 @@ def delete_old_msu(args, rompath):
     romname = args.gamefile if args.gamefile != "" else ""
 
     if romname != "":
-        gamefiles.append((os.path.dirname(romname), os.path.basename(romname)))
+        gamefiles.append(
+            (
+                os.path.dirname(romname),
+                os.path.basename(romname)
+            )
+        )
     else:
         for path in glob.glob('*.sfc'):
-            gamefiles.append((os.path.dirname(path), os.path.basename(path)))
+            gamefiles.append(
+                (
+                    os.path.dirname(path),
+                    os.path.basename(path)
+                )
+            )
 
     for path,romname in gamefiles:
         if romname != "":
@@ -315,9 +336,11 @@ def delete_old_msu(args, rompath):
                     LOGGER.info(
                         "DRY RUN MODE: Would %s '%s' to '%s.sfc'"
                         %
-                        ('copy' if args.copy else 'rename'),
-                        os.path.basename(srcrom),
-                        rompath
+                        (
+                          ('copy' if args.copy else 'rename'),
+                          os.path.basename(srcrom),
+                          rompath
+                        )
                     )
                 else:
                     if args.copy:
@@ -431,7 +454,7 @@ def build_index(args, game):
             LOGGER.info("Reusing track index, run with --reindex to pick up any new packs.")
             return
 
-    LOGGER.info("Building index, this should take a few seconds.")
+    LOGGER.info("Index: Building. This should take a few seconds.")
     buildstarttime = datetime.datetime.now()
 
     if (args.singleshuffle):
@@ -444,9 +467,14 @@ def build_index(args, game):
         searchdir = os.path.join("..")
 
     gamepath = game
+    if "name" in meta[gamepath]:
+        LOGGER.info("")
+        LOGGER.info(f"Processing MSU for {meta[gamepath]['name']}")
+    LOGGER.info("")
+    LOGGER.info("Using gamepath at:".ljust(LJUST) + gamepath)
     LOGGER.info("Using manifest at:".ljust(LJUST) + trackdatapath[gamepath])
     LOGGER.info("Using gamefile at:".ljust(LJUST) + (args.gamefile if args.gamefile else "*.sfc"))
-    LOGGER.info("Using collection at:".ljust(LJUST) + searchdir)
+    LOGGER.info("Using collection at:".ljust(LJUST) + os.path.join(searchdir,"*"))
 
     if args.higan:
         args.outputprefix = "track"
@@ -491,12 +519,11 @@ def build_index(args, game):
     #pp.pprint(trackindex)
 
     buildtime = datetime.datetime.now() - buildstarttime
-    LOGGER.info(f"Index build took {buildtime.seconds}.{buildtime.microseconds} seconds")
+    LOGGER.info(f"Index: Build took {buildtime.seconds}.{buildtime.microseconds} seconds.")
     LOGGER.info("")
 
 # do the shuffle and write pcms
-# def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, nowplaying, cooldown, prevtrack):
-def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, gamepath, gameID):
+def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, nowplaying, cooldown, prevtrack, gamepath, gameID):
     global LOGGER
 
     with open('trackindex.pkl', 'wb') as f:
@@ -522,26 +549,49 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
                     except Exception as e:
                         LOGGER.error("Failed to load tracklist")
             winnerdict = {}
-            for i in nonloopingfoundtracks:
-                winner = random.choice(trackindex[i])
+            for i in nonloopingfoundtracks[gamepath]:
+                winner = random.choice(list(trackindex[gamepath].values())[int(i)])
                 winnerdict[i] = winner
-                copy_track(logger, winner, i, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
+                copy_track(
+                    winner,
+                    i,
+                    rompath,
+                    dry_run,
+                    higan,
+                    forcerealcopy,
+                    live,
+                    tmpdir,
+                    gamepath,
+                    gameID
+                )
 
             #For all found looping tracks, pick a random track from a random pack
             #in the target directory, with a matching track number by default, or
             #a shuffled different looping track number if fullshuffle or
             #singleshuffle are enabled.
             if not live:
-                logger.info("Looping tracks:")
-            for i in loopingfoundtracks:
+                LOGGER.info("")
+                LOGGER.info("Looping tracks:")
+            for i in loopingfoundtracks[gamepath]:
                 if (args.fullshuffle or args.singleshuffle):
                     dst = i
-                    src = shuffledloopingfoundtracks[loopingfoundtracks.index(i)]
+                    src = shuffledloopingfoundtracks[loopingfoundtracks[gamepath].index(i)]
                 else:
                     dst = i
                     src = i
-                winner = random.choice(trackindex[src])
-                copied = copy_track(logger, winner, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir)
+                winner = random.choice(list(trackindex[gamepath].values())[int(src)])
+                copied = copy_track(
+                    winner,
+                    dst,
+                    rompath,
+                    dry_run,
+                    higan,
+                    forcerealcopy,
+                    live,
+                    tmpdir,
+                    gamepath,
+                    gameID
+                )
                 # if copy failed, use OLD winner...
                 if copied:
                     winnerdict[i] = winner
@@ -584,7 +634,9 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
                 live,
                 nowplaying,
                 cooldown - 1,
-                prevtrack
+                prevtrack,
+                gamepath,
+                gameID
             )
         )
 
@@ -695,16 +747,14 @@ def read_track(prevtrack):
     track = asyncio.get_event_loop().run_until_complete(query(prevtrack))
     return track
 
-def generate_shuffled_msu(args, rompath):
+def generate_shuffled_msu(args, rompath, gamepath, gameID):
     global LOGGER
 
     if (not os.path.exists(f'{rompath}.msu')):
-        LOGGER.info(f"'{rompath}.msu' doesn't exist, creating it.")
+        LOGGER.info(f"Dummy MSU '{rompath}.msu' doesn't exist, creating it.")
         if (not args.dry_run):
             with open(f'{rompath}.msu', 'w'):
                 pass
-
-    gamepath = gameID
 
     global nonloopingfoundtracks
     global loopingfoundtracks
@@ -750,7 +800,9 @@ def generate_shuffled_msu(args, rompath):
                 args.live,
                 args.nowplaying,
                 int(args.live),
-                0
+                0,
+                gamepath,
+                gameID
             )
         )
         s.run()
@@ -765,21 +817,28 @@ def generate_shuffled_msu(args, rompath):
             args.live,
             args.nowplaying,
             0,
-            0
+            0,
+            gamepath,
+            gameID
         )
+        LOGGER.info("")
         LOGGER.info('Done.')
 
 def main(args):
+    global LOGGER
+
+    LOGGER.debug(f"ALttPMSUShuffler version {__version__}")
     if args.version:
-        LOGGER.debug(f"ALttPMSUShuffler version {__version__}")
+        exit(1)
 
-    games = [ args.game ]
-    if args.game == "snes/z3m3":
-        games = [ "snes/metroid3", "snes/zelda3" ]
+    gamepaths = [ args.game ]
+    gameID = args.game
+    if gameID == "snes/z3m3":
+        gamepaths = [ "snes/metroid3", "snes/zelda3" ]
 
-    for gameID in games:
-        load_game(gameID, args.game)
-        build_index(args, gameID)
+    for gamepath in gamepaths:
+        load_game(gamepath, gameID)
+        build_index(args, gamepath)
         for rom in args.roms:
             args.forcerealcopy = args.realcopy
             try:
@@ -792,11 +851,14 @@ def main(args):
             if args.live and args.forcerealcopy:
                 LOGGER.warning("Live updates with real copies will cause a LOT of disk usage.")
 
-            if gameID == games[0]:
+            if gamepath == gamepaths[0]:
                 delete_old_msu(args, rom)
-            generate_shuffled_msu(args, rom, gameID)
+            generate_shuffled_msu(args, rom, gamepath, gameID)
 
 if __name__ == '__main__':
+    global LOGGER
+    LOGGER = None
+
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # CRITICAL: 50
     # ERROR:    40
@@ -825,6 +887,40 @@ if __name__ == '__main__':
 
     romlist = list()
     args, roms = parser.parse_known_args()
+
+    # set up logger
+    loglevel = {'error': logging.ERROR, 'info': logging.INFO, 'warning': logging.WARNING, 'debug': logging.DEBUG}[args.loglevel]
+
+    logging.root.setLevel(loglevel)
+    formatter = colorlog.ColoredFormatter(
+        "%(log_color)s%(levelname)s%(reset)s: %(message_log_color)s%(message)s",
+        log_colors={
+            "DEBUG": "thin_cyan",
+            "INFO": "thin_green",
+            "WARNING": "thin_yellow",
+            "ERROR": "thin_red",
+            "CRITICAL": "bold_red"
+        },
+        secondary_log_colors={
+          "message": {
+            "WARNING": "yellow",
+            "ERROR": "red",
+            "CRITICAL": "bold_red"
+          }
+        }
+    )
+    stream = logging.StreamHandler()
+    stream.setLevel(loglevel)
+    stream.setFormatter(formatter)
+    LOGGER = logging.getLogger('pythonConfig')
+    LOGGER.setLevel(loglevel)
+    LOGGER.addHandler(stream)
+
+    # LOGGER.debug("Debug")
+    # LOGGER.info("Info")
+    # LOGGER.warning("Warning")
+    # LOGGER.error("Error")
+    # LOGGER.critical("Critical")
 
     for rom in roms:
         if not os.path.exists(rom):
@@ -866,10 +962,5 @@ if __name__ == '__main__':
     # When shuffling a single pack, don't auto-extend non-extended packs.
     if (args.singleshuffle):
         args.basicshuffle = True
-
-    # set up logger
-    loglevel = {'error': logging.ERROR, 'info': logging.INFO, 'warning': logging.WARNING, 'debug': logging.DEBUG}[args.loglevel]
-    logging.basicConfig(format='%(levelname)s: %(message)s', level=loglevel)
-    LOGGER = logging.getLogger('')
 
     main(args)

@@ -59,3 +59,11 @@ Single Shuffle: `--singleshuffle`
 
 `--version`
 : Print Version for debug purposes
+
+Z3M3 assumes _A Link to the Past_ packs in `./zelda3` and _Super Metroid_ packs in `./metroid3`
+
+```
+py Main.py --game=snes/zelda3   --gamefile=zelda3-msu.sfc
+py Main.py --game=snes/metroid3 --gamefile=metroid3-msu.sfc
+py Main.py --game=snes/z3m3     --gamefile=z3m3-msu.sfc
+```
