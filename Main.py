@@ -141,7 +141,7 @@ nonloopingtracks = {}  # array
 extendedmsutracks = {}  # array
 extendedbackupdict = {}  # hash
 
-def load_game(gamepath, gameID):
+def load_tracklist(gamepath, gameID):
     # get track list
     # get track titles
     # sort non/looping tracks
@@ -277,10 +277,24 @@ def delete_old_msu(args, rompath):
         LOGGER.info("DRY RUN MODE: Printing instead of executing.")
         LOGGER.info("")
 
+    if not args.higan:
+        for path in glob.glob(f'{rompath}-*.pcm'):
+            if (args.dry_run):
+                LOGGER.info(f"DRY RUN MODE: Would remove: '{str(path)}'")
+            else:
+                try:
+                    os.remove(str(path))
+                except PermissionError:
+                    LOGGER.warning(f"Failed to remove: '{path}'")
+
+
+def copy_baserom(args, rompath):
+    romname = args.gamefile if args.gamefile != "" else ""
+
     foundsrcrom = False
     foundshuffled = False
+
     gamefiles = []
-    romname = args.gamefile if args.gamefile != "" else ""
 
     if romname != "":
         gamefiles.append(
@@ -360,16 +374,9 @@ def delete_old_msu(args, rompath):
             LOGGER.error("User selected to exit without making pack without gamefile.")
             sys.exit(1)
 
-    if not args.higan:
-        for path in glob.glob(f'{rompath}-*.pcm'):
-            if (args.dry_run):
-                LOGGER.info(f"DRY RUN MODE: Would remove: '{str(path)}'")
-            else:
-                try:
-                    os.remove(str(path))
-                except PermissionError:
-                    LOGGER.warning(f"Failed to remove: '{path}'")
-
+def new_slate(args, rompath):
+    delete_old_msu(args, rompath)
+    copy_baserom(args, rompath)
 
 def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID):
     # copy track
@@ -768,41 +775,42 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
         if (not args.dry_run):
             with open(f'{rompath}.msu', 'w'):
                 pass
-    # FCEUX
-    # Nestopia
-    # RetroArch:  .s[f|m]c -> .bin
-    # Snes9x:     .smc/.fig
-    # VBA:        .gba
-    # ZSNES
-    patched = False
-    for filext in [ "bps", "ips" ]:
-    # for filext in [ "ips", "bps" ]:
-        patchfile = os.path.join(".", "resources", gameID, f"{gameID.split('/')[1]}.{filext}")
-        if os.path.exists(patchfile) and not patched:
-            if (not os.path.exists(f'{rompath}.{filext}')):
-                LOGGER.info(f"Dummy {filext.upper()} '{rompath}.{filext}' doesn't exist, creating it.")
-                patched = True
-                if (not args.dry_run):
-                    if filext == "bps":
-                        with open(f'{rompath}.sfc', "rb") as source:
-                            shutil.copy(
-                                f'{rompath}.sfc',
-                                f'{rompath}-dummy.sfc'
-                            )
-                            with open(f'{rompath}-dummy.sfc', "wb") as target:
-                                with open(patchfile, "rb") as patch:
-                                    if not args.no_patch:
+
+    if not args.no_patch:
+        # FCEUX
+        # Nestopia
+        # RetroArch:  .s[f|m]c -> .bin
+        # Snes9x:     .smc/.fig
+        # VBA:        .gba
+        # ZSNES
+        patched = False
+        for filext in [ "bps", "ips" ]:
+        # for filext in [ "ips", "bps" ]:
+            patchfile = os.path.join(".", "resources", gameID, f"{gameID.split('/')[1]}.{filext}")
+            if os.path.exists(patchfile) and not patched:
+                if (not os.path.exists(f'{rompath}.{filext}')):
+                    LOGGER.info(f"Dummy {filext.upper()} '{rompath}.{filext}' doesn't exist, creating it.")
+                    patched = True
+                    if (not args.dry_run):
+                        if filext == "bps":
+                            with open(f'{rompath}.sfc', "rb") as source:
+                                shutil.copy(
+                                    f'{rompath}.sfc',
+                                    f'{rompath}-dummy.sfc'
+                                )
+                                with open(f'{rompath}-dummy.sfc', "wb") as target:
+                                    with open(patchfile, "rb") as patch:
                                         bps.apply.apply_to_files(patch, source, target)
-                        os.remove(f'{rompath}.sfc')
-                        os.rename(
-                            f'{rompath}-dummy.sfc',
-                            f'{rompath}.sfc'
-                        )
-                    else:
-                        shutil.copy(
-                            os.path.join(patchfile),
-                            f'{rompath}.{filext}'
-                        )
+                            os.remove(f'{rompath}.sfc')
+                            os.rename(
+                                f'{rompath}-dummy.sfc',
+                                f'{rompath}.sfc'
+                            )
+                        else:
+                            shutil.copy(
+                                os.path.join(patchfile),
+                                f'{rompath}.{filext}'
+                            )
 
     global nonloopingfoundtracks
     global loopingfoundtracks
@@ -886,7 +894,7 @@ def main(args):
         gamepaths = ["snes/metroid3", "snes/zelda3"]
 
     for gamepath in gamepaths:
-        load_game(gamepath, gameID)
+        load_tracklist(gamepath, gameID)
         build_index(args, gamepath)
         for rom in args.roms:
             args.forcerealcopy = args.realcopy
@@ -901,7 +909,7 @@ def main(args):
                 LOGGER.warning("Live updates with real copies will cause a LOT of disk usage.")
 
             if gamepath == gamepaths[0]:
-                delete_old_msu(args, rom)
+                new_slate(args, rom)
             generate_shuffled_msu(args, rom, gamepath, gameID)
 
 
