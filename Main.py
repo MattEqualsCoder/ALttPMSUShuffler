@@ -141,6 +141,7 @@ nonloopingtracks = {}  # array
 extendedmsutracks = {}  # array
 extendedbackupdict = {}  # hash
 
+
 def load_tracklist(gamepath, gameID):
     # get track list
     # get track titles
@@ -158,7 +159,14 @@ def load_tracklist(gamepath, gameID):
 
     console, game = gamepath.split('/')
 
-    trackdatapath[gamepath] = os.path.join(".", "resources", console, game, "manifests", "tracks.json")
+    trackdatapath[gamepath] = os.path.join(
+        ".",
+        "resources",
+        console,
+        game,
+        "manifests",
+        "tracks.json"
+    )
     trackdata = {}
     trackdata[gamepath] = {}
     if gamepath not in titles:
@@ -235,7 +243,14 @@ def load_tracklist(gamepath, gameID):
     LOGGER.debug(f"Loading Game: {console}/{game}")
     for k in ["basic", "extended"]:
         if k in trackdata[gamepath]:
-            LOGGER.debug(f"{k.capitalize()} Tracks: {len(trackdata[gamepath]['tracks'][k])}")
+            LOGGER.debug(
+                "%s Tracks: %s"
+                %
+                (
+                    k.capitalize(),
+                    len(trackdata[gamepath]["tracks"][k])
+                )
+            )
 
     # Globals used by the scheduled reshuffle in live mode (couldn't figure out
     # a better way to pass dicts/lists to shuffle_all_tracks when called by
@@ -254,6 +269,7 @@ def load_tracklist(gamepath, gameID):
     shuffledloopingfoundtracks[gamepath] = {}
     s = sched.scheduler(time.time, time.sleep)
 
+
 def delete_old_msu(args, rompath):
     # delete old log
     # delete old higan dir
@@ -268,9 +284,11 @@ def delete_old_msu(args, rompath):
         if os.path.exists(f"{rompath}-msushuffleroutput.log"):
             os.remove(f"{rompath}-msushuffleroutput.log")
     except PermissionError:
-        LOGGER.warning(f"Failed to clear old logfile: '{rompath}-msushuffleroutput.log'")
+        LOGGER.warning(
+            f"Failed to clear old logfile: '{rompath}-msushuffleroutput.log'")
 
-    output_file_handler = logging.FileHandler(f"{rompath}-msushuffleroutput.log")
+    output_file_handler = logging.FileHandler(
+        f"{rompath}-msushuffleroutput.log")
     LOGGER.addHandler(output_file_handler)
 
     if (args.dry_run):
@@ -328,7 +346,13 @@ def copy_baserom(args, rompath):
             else:
                 shutil.rmtree(higandir)
         if args.dry_run:
-            LOGGER.info(f"DRY RUN MODE: Would make: '{os.path.join(higandir,'msu.rom')}'")
+            LOGGER.info(
+                "DRY RUN MODE: Would make: '%s'"
+                %
+                (
+                    os.path.join(higandir, "msu.rom")
+                )
+            )
         else:
             os.mkdir(higandir)
             open(os.path.join(higandir, "msu1.rom"), 'a').close()
@@ -343,7 +367,14 @@ def copy_baserom(args, rompath):
                     os.path.join(higandir, "program.rom")
                 )
             else:
-                LOGGER.info(f"Copying: {os.path.basename(srcrom)} to {os.path.join(higandir, 'program.rom')}")
+                LOGGER.info(
+                    "Copying: '%s' to '%s'"
+                    %
+                    (
+                        os.path.baserom(srcrom),
+                        os.path.join(higandir, "program.rom")
+                    )
+                )
                 shutil.copy(srcrom, os.path.join(higandir, "program.rom"))
                 shutil.copy(srcrom, os.path.join(higandir, "program.sfc"))
         else:
@@ -363,20 +394,35 @@ def copy_baserom(args, rompath):
                     )
                 else:
                     if args.copy:
-                        LOGGER.info(f"Copying '{os.path.basename(srcrom)}' to '{rompath}.sfc'")
                         shutil.copy(srcrom, f"{rompath}.sfc")
                     else:
-                        LOGGER.info(f"Renaming '{os.path.basename(srcrom)}' to '{rompath}.sfc'")
                         shutil.move(srcrom, f"{rompath}.sfc")
+                    LOGGER.info(
+                        "%s '%s' to '%s.sfc'"
+                        %
+                        (
+                            "Copying" if args.copy else "Renaming",
+                            os.path.basename(srcrom),
+                            rompath
+                        )
+                    )
     else:
-        make_romless = str(input(f"INPUT: No gamefile found at: '{rompath}.sfc' . Continue making pack? [y/n]") or "Y")
+        make_romless = str(
+            input(
+                f"INPUT: No gamefile found at: '{rompath}.sfc' . Continue making pack? [y/n]"
+            )
+            or "Y"
+        )
         if make_romless.upper() != "Y":
-            LOGGER.error("User selected to exit without making pack without gamefile.")
+            LOGGER.error(
+                "User selected to exit without making pack without gamefile.")
             sys.exit(1)
+
 
 def new_slate(args, rompath):
     delete_old_msu(args, rompath)
     copy_baserom(args, rompath)
+
 
 def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID):
     # copy track
@@ -410,7 +456,15 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
     if "<Unused>" in srctitle:
         return
 
-    shorttitle = ('(' + srctitle[srctitle.find('-')+2:] + ") ") if int(srctrack) != int(dst) else ""
+    shorttitle = ""
+    if int(srctrack) != int(dst):
+        shorttitle = (
+            "(%s)"
+            %
+            (
+                srctitle[srctitle.find('-') + 2:]
+            )
+        )
     dsttitle = titles[gamepath][str(dst)]
 
     if not live:
@@ -441,8 +495,16 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
             return True
         except PermissionError:
             if not live:
-                LOGGER.info(f"Failed to copy '{srcpath}' to '{dstpath}' during non-live update")
+                LOGGER.info(
+                    "Failed to copy '%s' to '%s' during non-live update."
+                    %
+                    (
+                        srcpath,
+                        dstpath
+                    )
+                )
             return False
+
 
 def build_index(args, game):
     # Build a dictionary mapping each possible track number to all matching tracks
@@ -466,7 +528,8 @@ def build_index(args, game):
                 LOGGER.error("Failed to load track index")
 
         if trackindex:
-            LOGGER.info("Reusing track index, run with --reindex to pick up any new packs.")
+            LOGGER.info(
+                "Reusing track index, run with --reindex to pick up any new packs.")
             return
 
     LOGGER.info("Index: Building. This should take a few seconds.")
@@ -486,16 +549,34 @@ def build_index(args, game):
         LOGGER.info("")
         LOGGER.info(f"Processing MSU for {meta[gamepath]['name']}")
     LOGGER.info("")
-    LOGGER.info("Using gamepath at:".ljust(LJUST) + gamepath)
-    LOGGER.info("Using manifest at:".ljust(LJUST) + trackdatapath[gamepath])
-    LOGGER.info("Using gamefile at:".ljust(LJUST) + (args.gamefile if args.gamefile else "*.sfc"))
-    LOGGER.info("Using collection at:".ljust(LJUST) + os.path.join(searchdir, "*"))
+    LOGGER.info(
+        "Using gamepath at:".ljust(LJUST) +
+        gamepath
+    )
+    LOGGER.info(
+        "Using manifest at:".ljust(LJUST) +
+        trackdatapath[gamepath]
+    )
+    LOGGER.info(
+        "Using gamefile at:".ljust(LJUST) +
+        (args.gamefile if args.gamefile else "*.sfc")
+    )
+    LOGGER.info(
+        "Using collection at:".ljust(LJUST) +
+        os.path.join(searchdir, "*")
+    )
 
     if args.higan:
         args.outputprefix = "track"
-        LOGGER.info("Outputting to:".ljust(LJUST) + os.path.join(higandir, args.outputprefix) + '*')
+        LOGGER.info(
+            "Outputting to:".ljust(LJUST) +
+            os.path.join(higandir, args.outputprefix) + '*'
+        )
     else:
-        LOGGER.info("Outputting to:".ljust(LJUST) + os.path.join(args.outputpath, args.outputprefix) + '*')
+        LOGGER.info(
+            "Outputting to:".ljust(LJUST) +
+            os.path.join(args.outputpath, args.outputprefix) + '*'
+        )
 
     # For all packs in the target directory, make a list of found track numbers.
     allpacks = list()
@@ -507,7 +588,10 @@ def build_index(args, game):
                 allpacks.append(pack)
 
     if not allpacks:
-        LOGGER.error("Couldn't find any MSU packs in:".ljust(LJUST) + os.path.abspath(str(searchdir)))
+        LOGGER.error(
+            "Couldn't find any MSU packs in:".ljust(LJUST) +
+            os.path.abspath(str(searchdir))
+        )
         return
 
     for pack in allpacks:
@@ -534,7 +618,14 @@ def build_index(args, game):
     # pp.pprint(trackindex)
 
     buildtime = datetime.datetime.now() - buildstarttime
-    LOGGER.info(f"Index: Build took {buildtime.seconds}.{buildtime.microseconds} seconds.")
+    LOGGER.info(
+        "Index: Build took %s.%s seconds."
+        %
+        (
+            buildtime.seconds,
+            buildtime.microseconds
+        )
+    )
     LOGGER.info("")
 
 
@@ -566,7 +657,11 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
                         LOGGER.error("Failed to load tracklist")
             winnerdict = {}
             for i in nonloopingfoundtracks[gamepath]:
-                winner = random.choice(list(trackindex[gamepath].values())[int(i)])
+                winner = random.choice(
+                    list(
+                        trackindex[gamepath].values()
+                    )[int(i)]
+                )
                 winnerdict[i] = winner
                 copy_track(
                     winner,
@@ -591,11 +686,17 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
             for i in loopingfoundtracks[gamepath]:
                 if (args.fullshuffle or args.singleshuffle):
                     dst = i
-                    src = shuffledloopingfoundtracks[loopingfoundtracks[gamepath].index(i)]
+                    src = shuffledloopingfoundtracks[
+                        loopingfoundtracks[gamepath].index(i)
+                    ]
                 else:
                     dst = i
                     src = i
-                winner = random.choice(list(trackindex[gamepath].values())[int(src)])
+                winner = random.choice(
+                    list(
+                        trackindex[gamepath].values()
+                    )[int(src)]
+                )
                 copied = copy_track(
                     winner,
                     dst,
@@ -704,7 +805,9 @@ async def query(prevtrack):
     }
     await ws.send(json.dumps(devlist))
     reply = json.loads(await ws.recv())
-    devices = reply['Results'] if 'Results' in reply and len(reply['Results']) > 0 else None
+    devices = None
+    if "Results" in reply and len(reply["Results"]):
+        devices = reply["Results"]
     if not devices:
         LOGGER.error("Failed to connect to SNES through qusb2snes")
         await ws.close()
@@ -759,6 +862,7 @@ async def query(prevtrack):
     await ws.close()
     return track
 
+
 def read_track(prevtrack):
     # Read the currently playing track over qusb2snes.
     # TODO: This currently opens up a new qusb2snes connection every second.
@@ -784,12 +888,25 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
         # VBA:        .gba
         # ZSNES
         patched = False
-        for filext in [ "bps", "ips" ]:
-        # for filext in [ "ips", "bps" ]:
-            patchfile = os.path.join(".", "resources", gameID, f"{gameID.split('/')[1]}.{filext}")
+        for filext in ["bps", "ips"]:
+            # for filext in [ "ips", "bps" ]:
+            patchfile = os.path.join(
+                ".",
+                "resources",
+                gameID,
+                f"{gameID.split('/')[1]}.{filext}"
+            )
             if os.path.exists(patchfile) and not patched:
                 if (not os.path.exists(f'{rompath}.{filext}')):
-                    LOGGER.info(f"Dummy {filext.upper()} '{rompath}.{filext}' doesn't exist, creating it.")
+                    LOGGER.info(
+                        "Dummy %s '%s.%s' doesn't exist, creating it."
+                        %
+                        (
+                            filext.upper(),
+                            rompath,
+                            filext
+                        )
+                    )
                     patched = True
                     if (not args.dry_run):
                         if filext == "bps":
@@ -800,7 +917,11 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
                                 )
                                 with open(f'{rompath}-dummy.sfc', "wb") as target:
                                     with open(patchfile, "rb") as patch:
-                                        bps.apply.apply_to_files(patch, source, target)
+                                        bps.apply.apply_to_files(
+                                            patch,
+                                            source,
+                                            target
+                                        )
                             os.remove(f'{rompath}.sfc')
                             os.rename(
                                 f'{rompath}-dummy.sfc',
@@ -839,7 +960,17 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
         readmepath = os.path.join(higandir, "readme")
         if not os.path.exists(readmepath):
             os.makedirs(readmepath)
-        shutil.copy(os.path.join(".", "resources", "meta", "manifests", "higan", "higan-msu.txt"), readmepath)
+        shutil.copy(
+            os.path.join(
+                ".",
+                "resources",
+                "meta",
+                "manifests",
+                "higan",
+                "higan-msu.txt"
+            ),
+            readmepath
+        )
 
     if args.live:
         s.enter(
@@ -900,13 +1031,27 @@ def main(args):
             args.forcerealcopy = args.realcopy
             try:
                 # determine if the supplied rom is ON the same drive as the script. If not, realcopy is mandatory.
-                os.path.commonpath([os.path.abspath(rom), os.path.abspath(__file__)])
+                os.path.commonpath(
+                    [
+                        os.path.abspath(rom),
+                        os.path.abspath(__file__)
+                    ]
+                )
             except:
-                LOGGER.warning(f"Failed to find common path between {os.path.abspath(rom)} and {os.path.abspath(__file__)}, forcing real copies.")
+                LOGGER.warning(
+                    "Failed to find common path between '%s' as '%s', forcing real copies."
+                    %
+                    (
+                        os.path.abspath(rom),
+                        os.path.abspath(__file__)
+                    )
+                )
                 args.forcerealcopy = True
 
             if args.live and args.forcerealcopy:
-                LOGGER.warning("Live updates with real copies will cause a LOT of disk usage.")
+                LOGGER.warning(
+                    "Live updates with real copies will cause a LOT of disk usage."
+                )
 
             if gamepath == gamepaths[0]:
                 new_slate(args, rom)
@@ -917,7 +1062,9 @@ if __name__ == '__main__':
     global LOGGER
     LOGGER = None
 
-    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
     # CRITICAL: 50
     # ERROR:    40
     # WARNING:  30 <-- disable default logging
@@ -939,8 +1086,8 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--game',
-         default="snes/zelda3",
-         help='Game Track List to load.'
+        default="snes/zelda3",
+        help='Game Track List to load.'
     )
     parser.add_argument(
         '--gamefile',
@@ -959,14 +1106,14 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--copy',
-         action='store_true',
+        action='store_true',
         default=False
     )
     parser.add_argument(
         '--fullshuffle',
-         help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.",
-         action='store_true',
-         default=False
+        help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.",
+        action='store_true',
+        default=False
     )
     parser.add_argument(
         '--basicshuffle',
@@ -1035,7 +1182,12 @@ if __name__ == '__main__':
     args, roms = parser.parse_known_args()
 
     # set up logger
-    loglevel = {'error': logging.ERROR, 'info': logging.INFO,'warning': logging.WARNING, 'debug': logging.DEBUG}[args.loglevel]
+    loglevel = {
+        'error': logging.ERROR,
+        'info': logging.INFO,
+        'warning': logging.WARNING,
+        'debug': logging.DEBUG
+    }[args.loglevel]
 
     logging.root.setLevel(loglevel)
     formatter = colorlog.ColoredFormatter(
@@ -1079,7 +1231,10 @@ if __name__ == '__main__':
     if not romlist:
         if args.outputpath and args.outputprefix:
             if args.higan:
-                rompath = os.path.join(args.outputpath, f"higan-{args.outputprefix}.sfc")
+                rompath = os.path.join(
+                    args.outputpath,
+                    f"higan-{args.outputprefix}.sfc"
+                )
                 higandir = rompath
             else:
                 rompath = os.path.join(args.outputpath, args.outputprefix)
@@ -1102,7 +1257,9 @@ if __name__ == '__main__':
         sys.exit()
 
     if args.live and int(args.live) < 1:
-        LOGGER.warning("Can't choose live updates shorter than 1 second, defaulting to 1 second")
+        LOGGER.warning(
+            "Can't choose live updates shorter than 1 second, defaulting to 1 second."
+        )
         args.live = 1
 
     # When shuffling a single pack, don't auto-extend non-extended packs.
