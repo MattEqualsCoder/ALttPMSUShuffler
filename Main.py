@@ -1,3 +1,4 @@
+import bps
 import colorlog
 import websockets
 
@@ -6,6 +7,8 @@ from tempfile import TemporaryDirectory
 
 import argparse
 import asyncio
+import bps.apply
+import bps.io
 import datetime
 import glob
 import json
@@ -765,6 +768,41 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
         if (not args.dry_run):
             with open(f'{rompath}.msu', 'w'):
                 pass
+    # FCEUX
+    # Nestopia
+    # RetroArch:  .s[f|m]c -> .bin
+    # Snes9x:     .smc/.fig
+    # VBA:        .gba
+    # ZSNES
+    patched = False
+    for filext in [ "bps", "ips" ]:
+    # for filext in [ "ips", "bps" ]:
+        patchfile = os.path.join(".", "resources", gameID, f"{gameID.split('/')[1]}.{filext}")
+        if os.path.exists(patchfile) and not patched:
+            if (not os.path.exists(f'{rompath}.{filext}')):
+                LOGGER.info(f"Dummy {filext.upper()} '{rompath}.{filext}' doesn't exist, creating it.")
+                patched = True
+                if (not args.dry_run):
+                    if filext == "bps":
+                        with open(f'{rompath}.sfc', "rb") as source:
+                            shutil.copy(
+                                f'{rompath}.sfc',
+                                f'{rompath}-dummy.sfc'
+                            )
+                            with open(f'{rompath}-dummy.sfc', "wb") as target:
+                                with open(patchfile, "rb") as patch:
+                                    if not args.no_patch:
+                                        bps.apply.apply_to_files(patch, source, target)
+                        os.remove(f'{rompath}.sfc')
+                        os.rename(
+                            f'{rompath}-dummy.sfc',
+                            f'{rompath}.sfc'
+                        )
+                    else:
+                        shutil.copy(
+                            os.path.join(patchfile),
+                            f'{rompath}.{filext}'
+                        )
 
     global nonloopingfoundtracks
     global loopingfoundtracks
@@ -941,6 +979,12 @@ if __name__ == '__main__':
     parser.add_argument(
         '--realcopy',
         help='Creates real copies of the source tracks instead of hardlinks',
+        action='store_true',
+        default=False
+    )
+    parser.add_argument(
+        '--no-patch',
+        help='Ignore patching.',
         action='store_true',
         default=False
     )

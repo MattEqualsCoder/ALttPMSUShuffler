@@ -8,3 +8,4 @@
 *~
 
 resources/user/manifests/settings.json
+resources/user/snes/*-msu/*

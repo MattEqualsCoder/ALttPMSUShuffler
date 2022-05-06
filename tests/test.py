@@ -45,8 +45,19 @@ parser.add_argument(
     help='Game Track List to load.'
 )
 parser.add_argument(
+    '--gamefile',
+    default="",
+    help='Game File to load.'
+)
+parser.add_argument(
     '--reindex',
     help='Reindex.',
+    action='store_true',
+    default=False
+)
+parser.add_argument(
+    '--no-patch',
+    help='Ignore patching.',
     action='store_true',
     default=False
 )
@@ -98,6 +109,11 @@ switches = []
 if ("dry-run" in list(vars(args).keys()) and args.dry-run) or \
         ("dry_run" in list(vars(args).keys()) and args.dry_run):
     switches.append("--dry-run")
+if "gamefile" in list(vars(args).keys()) and args.gamefile:
+    switches.append(f"--gamefile={args.gamefile}")
+if ("no-patch" in list(vars(args).keys()) and args.no-patch) or \
+        ("no_patch" in list(vars(args).keys()) and args.no_patch):
+    switches.append("--no-patch")
 if "reindex" in list(vars(args).keys()) and args.reindex:
     switches.append("--reindex")
 if "verbose" in list(vars(args).keys()) and args.verbose:
@@ -109,9 +125,9 @@ if "version" in list(vars(args).keys()) and args.version:
 for kv in [
   ["--loglevel",    args.loglevel],
   ["--game",        f"{console}/{game}"],
-  ["--gamefile",    f"{game}-msu.{filext}"],
+  # ["--gamefile",    f"{game}-msu.{filext}"],
   ["--outputpath",  f"{os.path.join('.', 'resources', 'user', console, game + '-msu')}"],
-  ["--collection",  f"{os.path.join(collectionroot, console, game)}"],
+  ["--collection",  f"{os.path.join(collectionroot, console, game) if os.path.join(console, game) not in collectionroot else os.path.join(collectionroot)}"],
   ["--copy"],
 ]:
     switches.append("=".join(kv))
