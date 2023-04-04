@@ -1,0 +1,178 @@
+{
+  "meta": {
+    "name": "Final Fantasy - Mystic Quest"
+  },
+  "tracks": {
+    "basic": [
+      {
+        "num": 0,
+        "title": "Silence",
+        "notes": [
+          "Actual silence, not the name of the track"
+        ]
+      },
+      {
+        "num": 1,
+        "name": "Battle 1",
+        "notes": [
+          "For regular monsters"
+        ]
+      },
+      {
+        "num": 2,
+        "name": "Battle 2",
+        "notes": [
+          "For bosses"
+        ]
+      },
+      {
+        "num": 3,
+        "name": "Battle 3",
+        "notes": [
+          "For the final boss"
+        ]
+      },
+      {
+        "num": 4,
+        "name": "Victory Fanfare"
+      },
+      {
+        "num": 5,
+        "title": "Overworld Theme",
+        "name": "World",
+        "notes": [
+          "Plays on the overworld map, when choosing where to go"
+        ]
+      },
+      {
+        "num": 6,
+        "name": "Bone Dungeon",
+        "title": "Fossil Labyrinth"
+      },
+      {
+        "num": 7,
+        "name": "Ice Pyramid",
+        "title": "Dungeon of Ice"
+      },
+      {
+        "num": 8,
+        "title": "Lava Dome"
+      },
+      {
+        "num": 9,
+        "name": "Pazuzu's Tower",
+        "title": "Mountain Range of Whirlwinds"
+      },
+      {
+        "num": 10,
+        "title": "Dungeon and Waterfall",
+        "notes": [
+          "Plays in the Falls Basin and Mine."
+        ]
+      },
+      {
+        "num": 11,
+        "name": "Focus Tower",
+        "title": "Middle Tower"
+      },
+      {
+        "num": 12,
+        "name": "Doom Castle",
+        "title": "Last Castle"
+      },
+      {
+        "num": 13,
+        "name": "Level Forest",
+        "title": "Beautiful Forest"
+      },
+      {
+        "num": 14,
+        "title": "Shrine of Light",
+        "notes": [
+          "Phoebe"
+        ]
+      },
+      {
+        "num": 15,
+        "title": "City of Water ~ Aquaria"
+      },
+      {
+        "num": 16,
+        "title": "City of Nature ~ Foresta"
+      },
+      {
+        "num": 17,
+        "title": "City of Fire ~ Faeria",
+        "notes": [
+          "Giga Otomia has no idea why the OST calls Fireburg 'Faeria'. Probably something to do with the japanese version."
+        ]
+      },
+      {
+        "num": 18,
+        "title": "City of Wind ~ Windia",
+        "notes": [
+          "Also plays in Aquaria before using the Wakewater."
+        ]
+      },
+      {
+        "num": 19,
+        "name": "Tristam's Theme",
+        "title": "Rock Theme",
+        "notes": [
+          "Tristam's name in the Japanese version of Mystic Quest is Locke. Yes, like the Final Fantasy 6 Locke."
+        ]
+      },
+      {
+        "num": 20,
+        "title": "Rock 'n' Roll"
+      },
+      {
+        "num": 21,
+        "title": "Fanfare of Friendship",
+        "nonlooping": true
+      },
+      {
+        "num": 22,
+        "name": "Game Over",
+        "title": "Mystic Ballad"
+      },
+      {
+        "num": 23,
+        "name": "Hill of Destiny",
+        "title": "Hill of Fate"
+      },
+      {
+        "num": 24,
+        "name": "Title Theme",
+        "title": "Mystic Quest",
+        "notes": [
+          "Plays on the title screen and right after beating the final boss"
+        ]
+      },
+      {
+        "num": 25,
+        "name": "Ending Theme",
+        "title": "Ending",
+        "notes": [
+          "Plays during the credits"
+        ]
+      },
+      {
+        "num": 26,
+        "name": "The Crystal Appears",
+        "title": "The Crystal"
+      }
+    ],
+    "index": 0,
+    "longest": 30,
+    "src": "https://www.zeldix.net/t2045-final-fantasy-mystic-quest#33123",
+    "crc": {
+      "vanilla": {
+        "unheadered": "2C52C792"
+      },
+      "patched": {
+        "unheadered": "3B9BFD45"
+      }
+    }
+  }
+}
