@@ -141,6 +141,7 @@ nonloopingtracks = {}  # array
 extendedmsutracks = {}  # array
 extendedbackupdict = {}  # hash
 
+s = sched.scheduler(time.time, time.sleep)
 
 def load_tracklist(gamepath, gameID):
     # get track list
@@ -267,8 +268,6 @@ def load_tracklist(gamepath, gameID):
     global shuffledloopingfoundtracks
     shuffledloopingfoundtracks = {}
     shuffledloopingfoundtracks[gamepath] = {}
-    s = sched.scheduler(time.time, time.sleep)
-
 
 def delete_old_msu(args, rompath):
     # delete old log
@@ -467,7 +466,7 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
         )
     dsttitle = titles[gamepath][str(dst)]
 
-    if not live:
+    if not live or args.verbose:
         shortsrcpath = srcpath
         if args.collection:
             shortsrcpath = shortsrcpath.replace(args.collection, "")
