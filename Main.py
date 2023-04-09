@@ -472,8 +472,9 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
             shortsrcpath = shortsrcpath.replace(args.collection, "")
         if shortsrcpath[:1] == '\\':
             shortsrcpath = shortsrcpath[1:]
+        longestLJUST = longestTrackName[gamepath] if gamepath in longestTrackName else 30
         msg = str(srctrack).rjust(3, '0') + " - " + \
-            (dsttitle + ': ' + shorttitle).ljust(longestTrackName[gamepath] + 8, ' ') + \
+            (dsttitle + ': ' + shorttitle).ljust(longestLJUST + 8, ' ') + \
             shortsrcpath
         if args.verbose:
             msg += " -> " + dstpath
