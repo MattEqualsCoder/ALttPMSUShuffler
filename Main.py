@@ -1,21 +1,18 @@
-import bps
-import colorlog
-import websockets
-
+#pylint: disable=global-variable-not-assigned, global-variable-undefined, invalid-name, logging-fstring-interpolation, logging-not-lazy, redefined-outer-name
+'''
+Shuffle MSU packs for use with gamefiles
+'''
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import argparse
 import asyncio
-import bps.apply
-import bps.io
 import datetime
 import glob
 import json
 import logging
 import os
 import pickle
-import pprint
 import random
 import re
 import sched
@@ -23,7 +20,14 @@ import shutil
 import sys
 import time
 
-__version__ = '0.8.2'
+import bps
+import bps.apply
+import bps.io
+
+import colorlog
+import websockets
+
+__version__ = "0.8.3"
 
 # Creates a shuffled MSU-1 pack for ALttP Randomizer from one or more source
 # MSU-1 packs.
@@ -144,11 +148,13 @@ extendedbackupdict = {}  # hash
 s = sched.scheduler(time.time, time.sleep)
 
 def load_tracklist(gamepath, gameID):
+    '''
     # get track list
     # get track titles
     # sort non/looping tracks
     # get extended tracks
     # get extended backup tracks
+    '''
 
     global LOGGER
     global titles
@@ -158,7 +164,7 @@ def load_tracklist(gamepath, gameID):
     global extendedmsutracks
     global extendedbackupdict
 
-    console, game = gamepath.split('/')
+    console, game = gamepath.split("/")
 
     trackdatapath[gamepath] = os.path.join(
         ".",
@@ -177,12 +183,16 @@ def load_tracklist(gamepath, gameID):
     if gamepath not in extendedmsutracks:
         extendedmsutracks[gamepath] = []
     if os.path.exists(trackdatapath[gamepath]):
-        with open(trackdatapath[gamepath]) as json_file:
+        with open(trackdatapath[gamepath], "r", encoding="utf-8") as json_file:
             trackdata[gamepath] = json.load(json_file)
-            meta[gamepath] = trackdata[gamepath]["meta"] if "meta" in trackdata[gamepath] else {}
+            meta[gamepath] = trackdata[gamepath]["meta"] \
+                if "meta" in trackdata[gamepath] else \
+                {}
 
     if "tracks" in trackdata[gamepath]:
-        i = trackdata[gamepath]["tracks"]["index"] if "index" in trackdata[gamepath]["tracks"] else 1
+        i = trackdata[gamepath]["tracks"]["index"] \
+            if "index" in trackdata[gamepath]["tracks"] else \
+            1
         if "basic" in trackdata[gamepath]["tracks"]:
             for track in trackdata[gamepath]["tracks"]["basic"]:
                 title = ""
@@ -244,14 +254,8 @@ def load_tracklist(gamepath, gameID):
     LOGGER.debug(f"Loading Game: {console}/{game}")
     for k in ["basic", "extended"]:
         if k in trackdata[gamepath]:
-            LOGGER.debug(
-                "%s Tracks: %s"
-                %
-                (
-                    k.capitalize(),
-                    len(trackdata[gamepath]["tracks"][k])
-                )
-            )
+            msg = f"{k.capitalize()} Tracks: {len(trackdata[gamepath]['tracks'][k])}"
+            LOGGER.debug(msg)
 
     # Globals used by the scheduled reshuffle in live mode (couldn't figure out
     # a better way to pass dicts/lists to shuffle_all_tracks when called by
@@ -270,10 +274,12 @@ def load_tracklist(gamepath, gameID):
     shuffledloopingfoundtracks[gamepath] = {}
 
 def delete_old_msu(args, rompath):
+    '''
     # delete old log
     # delete old higan dir
     # copy new game file
     # delete old pcms
+    '''
 
     global LOGGER
 
@@ -284,19 +290,20 @@ def delete_old_msu(args, rompath):
             os.remove(f"{rompath}-msushuffleroutput.log")
     except PermissionError:
         LOGGER.warning(
-            f"Failed to clear old logfile: '{rompath}-msushuffleroutput.log'")
+            f"Failed to clear old logfile: '{rompath}-msushuffleroutput.log'"
+        )
 
     output_file_handler = logging.FileHandler(
         f"{rompath}-msushuffleroutput.log")
     LOGGER.addHandler(output_file_handler)
 
-    if (args.dry_run):
+    if args.dry_run:
         LOGGER.info("DRY RUN MODE: Printing instead of executing.")
         LOGGER.info("")
 
     if not args.higan:
-        for path in glob.glob(f'{rompath}-*.pcm'):
-            if (args.dry_run):
+        for path in glob.glob(f"{rompath}-*.pcm"):
+            if args.dry_run:
                 LOGGER.info(f"DRY RUN MODE: Would remove: '{str(path)}'")
             else:
                 try:
@@ -306,6 +313,9 @@ def delete_old_msu(args, rompath):
 
 
 def copy_baserom(args, rompath):
+    '''
+    Copy game file
+    '''
     romname = args.gamefile if args.gamefile != "" else ""
 
     foundsrcrom = False
@@ -321,7 +331,7 @@ def copy_baserom(args, rompath):
             )
         )
     else:
-        for path in glob.glob('*.sfc'):
+        for path in glob.glob("*.sfc"):
             gamefiles.append(
                 (
                     os.path.dirname(path),
@@ -345,35 +355,25 @@ def copy_baserom(args, rompath):
             else:
                 shutil.rmtree(higandir)
         if args.dry_run:
-            LOGGER.info(
-                "DRY RUN MODE: Would make: '%s'"
-                %
-                (
-                    os.path.join(higandir, "msu.rom")
-                )
-            )
+            msg = f"DRY RUN MODE: Would make: '{os.path.join(higandir, 'msu.rom')}'"
+            LOGGER.info(msg)
         else:
             os.mkdir(higandir)
-            open(os.path.join(higandir, "msu1.rom"), 'a').close()
+            with open(os.path.join(higandir, "msu1.rom"), "a", encoding="utf-8") as dummy:
+                pass
 
     if foundsrcrom or foundshuffled:
         if args.higan:
             if args.dry_run:
-                LOGGER.info(
-                    "DRY RUN MODE: Would copy: '%s' to '%s'"
-                    %
-                    os.path.basename(srcrom),
-                    os.path.join(higandir, "program.rom")
-                )
+                msg = "DRY RUN MODE: Would copy: " + \
+                    f"'{os.path.basename(srcrom)}' to " + \
+                    f"'{os.path.join(higandir, 'program.rom')}'"
+                LOGGER.info(msg)
             else:
-                LOGGER.info(
-                    "Copying: '%s' to '%s'"
-                    %
-                    (
-                        os.path.baserom(srcrom),
-                        os.path.join(higandir, "program.rom")
-                    )
-                )
+                msg = "Copying: " + \
+                    f"'{os.path.basename(srcrom)}' to " + \
+                    f"'{os.path.join(higandir, 'program.rom')}'"
+                LOGGER.info(msg)
                 shutil.copy(srcrom, os.path.join(higandir, "program.rom"))
                 shutil.copy(srcrom, os.path.join(higandir, "program.sfc"))
         else:
@@ -381,30 +381,21 @@ def copy_baserom(args, rompath):
             if foundshuffled:
                 replace = "Y"
             if replace.upper() == "Y":
-                if (args.dry_run):
-                    LOGGER.info(
-                        "DRY RUN MODE: Would %s '%s' to '%s.sfc'"
-                        %
-                        (
-                            ('copy' if args.copy else 'rename'),
-                            os.path.basename(srcrom),
-                            rompath
-                        )
-                    )
+                if args.dry_run:
+                    msg = "DRY RUN MODE: " + \
+                        f"Would {'copy' if args.copy else 'rename'} " + \
+                        f"'{os.path.basename(srcrom)}' to " + \
+                        f"'{rompath}.sfc'"
+                    LOGGER.info(msg)
                 else:
                     if args.copy:
                         shutil.copy(srcrom, f"{rompath}.sfc")
                     else:
                         shutil.move(srcrom, f"{rompath}.sfc")
-                    LOGGER.info(
-                        "%s '%s' to '%s.sfc'"
-                        %
-                        (
-                            "Copying" if args.copy else "Renaming",
-                            os.path.basename(srcrom),
-                            rompath
-                        )
-                    )
+                    msg = f"{'Copying' if args.copy else 'Renaming'} " + \
+                        f"'{os.path.basename(srcrom)}' " + \
+                        f"to '{rompath}.sfc'"
+                    LOGGER.info(msg)
     else:
         make_romless = str(
             input(
@@ -414,17 +405,34 @@ def copy_baserom(args, rompath):
         )
         if make_romless.upper() != "Y":
             LOGGER.error(
-                "User selected to exit without making pack without gamefile.")
+                "User selected to exit without making pack without gamefile."
+            )
             sys.exit(1)
 
 
 def new_slate(args, rompath):
+    '''
+    Nuke it from orbit and start over
+    '''
     delete_old_msu(args, rompath)
     copy_baserom(args, rompath)
 
 
-def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdir, gamepath, gameID):
+def copy_track(
+    srcpath,
+    dst,
+    rompath,
+    dry_run,
+    higan,
+    forcerealcopy,
+    live,
+    tmpdir,
+    gamepath,
+    gameID
+):
+    '''
     # copy track
+    '''
     global LOGGER
 
     if higan:
@@ -433,80 +441,65 @@ def copy_track(srcpath, dst, rompath, dry_run, higan, forcerealcopy, live, tmpdi
             dstpath = os.path.join(higandir, f"track-{str(dst + 100)}.pcm")
     else:
         dstpath = f"{rompath}-{dst}.pcm"
-        if "z3m3" in gameID and "zelda3" in gamepath:
-            dstpath = (
-                "%s-%s.pcm"
-                %
-                (
-                    rompath,
-                    int(dst) + 100
-                )
-            )
+        if "z3m3" in gameID and "metroid3" in gamepath:
+            dstpath = f"{rompath}-{int(dst) + 100}.pcm"
 
-    for match in re.finditer(r'\d+', os.path.basename(srcpath)):
+    match = None
+    for match in re.finditer(r"\d+", os.path.basename(srcpath)):
         pass
-    srctrack = int(match.group(0))
+    if match:
+        srctrack = int(match.group(0))
 
-    if str(srctrack) not in list(titles[gamepath].keys()):
-        return
-
-    srctitle = titles[gamepath][str(srctrack)]
-
-    if "<Unused>" in srctitle:
-        return
-
-    shorttitle = ""
-    if int(srctrack) != int(dst):
-        shorttitle = (
-            "(%s)"
-            %
-            (
-                srctitle[srctitle.find('-') + 2:]
-            )
-        )
-    dsttitle = titles[gamepath][str(dst)]
-
-    if not live or args.verbose:
-        shortsrcpath = srcpath
-        if args.collection:
-            shortsrcpath = shortsrcpath.replace(args.collection, "")
-        if shortsrcpath[:1] == '\\':
-            shortsrcpath = shortsrcpath[1:]
-        longestLJUST = longestTrackName[gamepath] if gamepath in longestTrackName else 30
-        msg = str(srctrack).rjust(3, '0') + " - " + \
-            (dsttitle + ': ' + shorttitle).ljust(longestLJUST + 8, ' ') + \
-            shortsrcpath
-        if args.verbose:
-            msg += " -> " + dstpath
-        LOGGER.info(msg)
-
-    if not dry_run:
-        try:
-            # Use a temporary file and os.replace to get around the fact that
-            # python doesn't have an atomic copy/hardlink with overwrite.
-            tmpname = os.path.join(tmpdir, f"tmp{os.path.basename(dstpath)}")
-
-            if (forcerealcopy):
-                shutil.copy(srcpath, tmpname)
-            else:
-                os.link(srcpath, tmpname)
-
-            os.replace(tmpname, dstpath)
-            return True
-        except PermissionError:
-            if not live:
-                LOGGER.info(
-                    "Failed to copy '%s' to '%s' during non-live update."
-                    %
-                    (
-                        srcpath,
-                        dstpath
-                    )
-                )
+        if str(srctrack) not in list(titles[gamepath].keys()):
             return False
+
+        srctitle = titles[gamepath][str(srctrack)]
+
+        if "<Unused>" in srctitle:
+            return False
+
+        shorttitle = ""
+        if int(srctrack) != int(dst):
+            shorttitle = f"({srctitle[srctitle.find('-') + 2:]})"
+        dsttitle = titles[gamepath][str(dst)]
+
+        if not live or args.verbose:
+            shortsrcpath = srcpath
+            if args.collection:
+                shortsrcpath = shortsrcpath.replace(args.collection, "")
+            if shortsrcpath[:1] == '\\':
+                shortsrcpath = shortsrcpath[1:]
+            longestLJUST = longestTrackName[gamepath] if gamepath in longestTrackName else 30
+            msg = str(srctrack).rjust(3, '0') + " - " + \
+                (dsttitle + ": " + shorttitle).ljust(longestLJUST + 8, ' ') + \
+                shortsrcpath
+            if args.verbose:
+                msg += " -> " + dstpath
+            LOGGER.info(msg)
+
+        if not dry_run:
+            try:
+                # Use a temporary file and os.replace to get around the fact that
+                # python doesn't have an atomic copy/hardlink with overwrite.
+                tmpname = os.path.join(tmpdir, f"tmp{os.path.basename(dstpath)}")
+
+                if forcerealcopy:
+                    shutil.copy(srcpath, tmpname)
+                else:
+                    os.link(srcpath, tmpname)
+
+                os.replace(tmpname, dstpath)
+                return True
+            except PermissionError:
+                if not live:
+                    msg = f"Failed to copy '{srcpath}' to '{dstpath}' during non-live update."
+                    LOGGER.info(msg)
+                return False
+    return False
 
 
 def build_index(args, game):
+    '''
     # Build a dictionary mapping each possible track number to all matching tracks
     # in the search directory; do this once, to avoid excess searching later.
     #
@@ -516,29 +509,31 @@ def build_index(args, game):
     #
     # Index format:
     # index[gamepath][2] = ['../msu1/track-2.pcm', '../msu2/track-2.pcm']
+    '''
 
     global LOGGER
     global trackindex
 
-    if os.path.exists('trackindex.pkl') and not args.reindex:
-        with open('trackindex.pkl', 'rb') as f:
+    if os.path.exists("trackindex.pkl") and not args.reindex:
+        with open("trackindex.pkl", "rb") as f:
             try:
                 trackindex = pickle.load(f)
             except Exception as e:
-                LOGGER.error("Failed to load track index")
+                LOGGER.error(f"Failed to load track index: {e}")
 
         if trackindex:
             LOGGER.info(
-                "Reusing track index, run with --reindex to pick up any new packs.")
+                "Reusing track index, run with --reindex to pick up any new packs."
+            )
             return
 
     LOGGER.info("Index: Building. This should take a few seconds.")
     buildstarttime = datetime.datetime.now()
 
-    if (args.singleshuffle):
+    if args.singleshuffle:
         searchdir = args.singleshuffle
     elif "z3m3" in args.game:
-        searchdir = args.collection.replace("snes\z3m3", game)
+        searchdir = args.collection.replace("snes\\z3m3", game)
     elif args.collection:
         searchdir = args.collection
     else:
@@ -579,10 +574,10 @@ def build_index(args, game):
         )
 
     # For all packs in the target directory, make a list of found track numbers.
-    allpacks = list()
-    for path in Path(searchdir).rglob('*.pcm'):
+    allpacks = []
+    for path in Path(searchdir).rglob("*.pcm"):
         pack = os.path.dirname(str(path))
-        if 'disabled' not in pack.lower():
+        if "disabled" not in pack.lower():
             name = os.path.basename(str(path))[:8]
             if pack not in allpacks and name != "shuffled":
                 allpacks.append(pack)
@@ -596,19 +591,21 @@ def build_index(args, game):
 
     for pack in allpacks:
         for track in list(range(0, int(list(titles[gamepath].keys())[-1]) + 1)):
-            foundtracks = list()
+            foundtracks = []
             for path in Path(pack).rglob(f"*-{track}.pcm"):
                 trackname = os.path.basename(str(path))
-                if 'disabled' not in trackname.lower():
+                if "disabled" not in trackname.lower():
                     foundtracks.append(str(path))
 
             # For extended MSU packs, use the backups
             if not args.basicshuffle and not args.fullshuffle:
-                if not foundtracks and track in extendedmsutracks[gamepath] and track in extendedbackupdict[gamepath]:
+                if not foundtracks and \
+                    track in extendedmsutracks[gamepath] and \
+                    track in extendedbackupdict[gamepath]:
                     backuptrack = extendedbackupdict[gamepath][track]
                     for path in Path(pack).rglob(f"*-{backuptrack}.pcm"):
                         trackname = os.path.basename(str(path))
-                        if 'disabled' not in trackname.lower():
+                        if "disabled" not in trackname.lower():
                             foundtracks.append(str(path))
 
             trackindex[gamepath].setdefault(track, []).extend(foundtracks)
@@ -618,22 +615,31 @@ def build_index(args, game):
     # pp.pprint(trackindex)
 
     buildtime = datetime.datetime.now() - buildstarttime
-    LOGGER.info(
-        "Index: Build took %s.%s seconds."
-        %
-        (
-            buildtime.seconds,
-            buildtime.microseconds
-        )
-    )
+    msg = f"Index: Build too {buildtime.seconds}.{buildtime.microseconds} seconds"
+    LOGGER.info(msg)
     LOGGER.info("")
 
 
-def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forcerealcopy, live, nowplaying, cooldown, prevtrack, gamepath, gameID):
+def shuffle_all_tracks(
+    rompath,
+    fullshuffle,
+    singleshuffle,
+    dry_run,
+    higan,
+    forcerealcopy,
+    live,
+    nowplaying,
+    cooldown,
+    prevtrack,
+    gamepath,
+    gameID
+):
+    '''
     # do the shuffle and write pcms
+    '''
     global LOGGER
 
-    with open('trackindex.pkl', 'wb') as f:
+    with open("trackindex.pkl", "wb") as f:
         # Saving track index as plaintext instead of HIGHEST_PROTOCOL since
         # this is only loaded once, and plaintext may be useful for debugging.
         pickle.dump(trackindex, f, 0)
@@ -647,14 +653,14 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
         LOGGER.info("Non-looping tracks:")
 
     if cooldown == 0:
-        with TemporaryDirectory(dir='.') as tmpdir:
+        with TemporaryDirectory(dir=".") as tmpdir:
             oldwinnerdict = {}
-            if os.path.exists('winnerdict.pkl'):
-                with open('winnerdict.pkl', 'rb') as f:
+            if os.path.exists("winnerdict.pkl"):
+                with open("winnerdict.pkl", "rb") as f:
                     try:
                         oldwinnerdict = pickle.load(f)
                     except Exception as e:
-                        LOGGER.error("Failed to load tracklist")
+                        LOGGER.error(f"Failed to load tracklist: {e}")
             winnerdict = {}
             for i in nonloopingfoundtracks[gamepath]:
                 winner = random.choice(
@@ -715,23 +721,19 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
                 elif i in oldwinnerdict:
                     winnerdict[i] = oldwinnerdict[i]
 
-            with open('winnerdict.pkl', 'wb') as f:
+            with open("winnerdict.pkl", "wb") as f:
                 pickle.dump(winnerdict, f, pickle.HIGHEST_PROTOCOL)
         if live:
             cooldown = int(live)
             if not nowplaying:
                 shuffletime = datetime.datetime.now() - shufflestarttime
 
-            LOGGER.info(
-                "Reshuffling MSU pack every%s second%s, press CTRL+C or close the window to stop reshuffling. (Shuffled in %d.%ds)"
-                %
-                (
-                    " " + str(int(live)) if int(live) != 1 else "",
-                    "s" if int(live) != 1 else "",
-                    shuffletime.seconds,
-                    shuffletime.microseconds
-                )
-            )
+            msg = "Reshuffling MSU pack " + \
+                f"every{' ' + str(int(live)) if int(live) != 1 else ''} " + \
+                f"second{'s' if int(live) != 1 else ''}, " + \
+                "press CTRL+C or close the window to stop reshuffling. " + \
+                f"(Shuffled in {shuffletime.seconds}.{shuffletime.microseconds}s)"
+            LOGGER.info(msg)
 
     if live:
         if nowplaying:
@@ -759,6 +761,9 @@ def shuffle_all_tracks(rompath, fullshuffle, singleshuffle, dry_run, higan, forc
 
 
 async def recv_loop(ws, recv_queue):
+    '''
+    Loop for receiving messages
+    '''
     try:
         async for msg in ws:
             recv_queue.put_nowait(msg)
@@ -767,12 +772,14 @@ async def recv_loop(ws, recv_queue):
 
 
 def print_pack(path):
+    '''
     # Print the track that's currently playing, and print its pack to
     # nowplaying.txt which can be used as a streaming text file source.
+    '''
     global LOGGER
 
     LOGGER.info(f"Now playing: {path}")
-    path_parts = list()
+    path_parts = []
     while True:
         parts = os.path.split(path)
         if parts[0] == path:
@@ -784,19 +791,26 @@ def print_pack(path):
         else:
             path = parts[0]
             path_parts.insert(0, parts[1])
-    with open('nowplaying.txt', 'w') as f:
+    with open("nowplaying.txt", "w", encoding="utf-8") as f:
         f.truncate(0)
         LOGGER.info("MSU pack now playing:", file=f)
         LOGGER.info(path_parts[1], file=f)
 
 
 async def query(prevtrack):
+    '''
+    Query USB2SNES
+    '''
     global LOGGER
     addr = "ws://localhost:8080"
     try:
-        ws = await websockets.connect(addr, ping_timeout=None, ping_interval=None)
+        ws = await websockets.connect(
+            addr,
+            ping_timeout=None,
+            ping_interval=None
+        )
     except Exception as e:
-        LOGGER.error("Failed to connect to qusb2snes")
+        LOGGER.error(f"Failed to connect to qusb2snes: {e}")
         return 0
 
     devlist = {
@@ -825,7 +839,8 @@ async def query(prevtrack):
     recv_task = asyncio.create_task(recv_loop(ws, recv_queue))
     WRAM_START = 0xF50000
 
-    # Current MSU is $010B, per https://github.com/KatDevsGames/z3randomizer/blob/master/msu.asm#L126
+    # Current MSU is $010B,
+    # per https://github.com/KatDevsGames/z3randomizer/blob/master/msu.asm#L126
     REG_CURRENT_MSU_TRACK = 0x010B
 
     address = WRAM_START + REG_CURRENT_MSU_TRACK
@@ -849,35 +864,40 @@ async def query(prevtrack):
     else:
         track = int(data[0])
 
-    if track != 0 and track != prevtrack:
-        if os.path.exists('winnerdict.pkl'):
+    if track not in [0, prevtrack]:
+        if os.path.exists("winnerdict.pkl"):
             winnerdict = {}
-            with open('winnerdict.pkl', 'rb') as f:
+            with open("winnerdict.pkl", "rb") as f:
                 try:
                     winnerdict = pickle.load(f)
                     print_pack(str(winnerdict[track]))
                 except Exception as e:
-                    LOGGER.error("Failed to load tracklist")
+                    LOGGER.error(f"Failed to load tracklist: {e}")
 
     await ws.close()
     return track
 
 
 def read_track(prevtrack):
+    '''
     # Read the currently playing track over qusb2snes.
     # TODO: This currently opens up a new qusb2snes connection every second.
     # Eventually this should be smarter by keeping one connection alive instead.
+    '''
     track = asyncio.get_event_loop().run_until_complete(query(prevtrack))
     return track
 
 
 def generate_shuffled_msu(args, rompath, gamepath, gameID):
+    '''
+    Do the thing!
+    '''
     global LOGGER
 
-    if (not os.path.exists(f'{rompath}.msu')):
+    if not os.path.exists(f"{rompath}.msu"):
         LOGGER.info(f"Dummy MSU '{rompath}.msu' doesn't exist, creating it.")
-        if (not args.dry_run):
-            with open(f'{rompath}.msu', 'w'):
+        if not args.dry_run:
+            with open(f"{rompath}.msu", "w", encoding="utf-8"):
                 pass
 
     if not args.no_patch:
@@ -897,40 +917,33 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
                 f"{gameID.split('/')[1]}.{filext}"
             )
             if os.path.exists(patchfile) and not patched:
-                if (not os.path.exists(f'{rompath}.{filext}')):
-                    LOGGER.info(
-                        "Dummy %s '%s.%s' doesn't exist, creating it."
-                        %
-                        (
-                            filext.upper(),
-                            rompath,
-                            filext
-                        )
-                    )
+                if not os.path.exists(f"{rompath}.{filext}"):
+                    msg = f"Dummy {filext.upper()} '{rompath}.{filext}' doesn't exist, creating it."
+                    LOGGER.info(msg)
                     patched = True
-                    if (not args.dry_run):
+                    if not args.dry_run:
                         if filext == "bps":
-                            with open(f'{rompath}.sfc', "rb") as source:
+                            with open(f"{rompath}.sfc", "rb") as source:
                                 shutil.copy(
-                                    f'{rompath}.sfc',
-                                    f'{rompath}-dummy.sfc'
+                                    f"{rompath}.sfc",
+                                    f"{rompath}-dummy.sfc"
                                 )
-                                with open(f'{rompath}-dummy.sfc', "wb") as target:
+                                with open(f"{rompath}-dummy.sfc", "wb") as target:
                                     with open(patchfile, "rb") as patch:
                                         bps.apply.apply_to_files(
                                             patch,
                                             source,
                                             target
                                         )
-                            os.remove(f'{rompath}.sfc')
+                            os.remove(f"{rompath}.sfc")
                             os.rename(
-                                f'{rompath}-dummy.sfc',
-                                f'{rompath}.sfc'
+                                f"{rompath}-dummy.sfc",
+                                f"{rompath}.sfc"
                             )
                         else:
                             shutil.copy(
                                 os.path.join(patchfile),
-                                f'{rompath}.{filext}'
+                                f"{rompath}.{filext}"
                             )
 
     global nonloopingfoundtracks
@@ -938,7 +951,7 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
     global shuffledloopingfoundtracks
 
     foundtracks = {}
-    foundtracks[gamepath] = list()
+    foundtracks[gamepath] = []
     for key in trackindex[gamepath]:
         if trackindex[gamepath][key]:
             foundtracks[gamepath].append(key)
@@ -1009,15 +1022,18 @@ def generate_shuffled_msu(args, rompath, gamepath, gameID):
             gameID
         )
         LOGGER.info("")
-        LOGGER.info('Done.')
+        LOGGER.info("Done.")
 
 
 def main(args):
+    '''
+    Start your engines!
+    '''
     global LOGGER
 
     LOGGER.debug(f"ALttPMSUShuffler version {__version__}")
     if args.version:
-        exit(1)
+        sys.exit(1)
 
     gamepaths = [args.game]
     gameID = args.game
@@ -1030,7 +1046,8 @@ def main(args):
         for rom in args.roms:
             args.forcerealcopy = args.realcopy
             try:
-                # determine if the supplied rom is ON the same drive as the script. If not, realcopy is mandatory.
+                # determine if the supplied rom is ON the same drive as the script.
+                # If not, realcopy is mandatory.
                 os.path.commonpath(
                     [
                         os.path.abspath(rom),
@@ -1038,14 +1055,11 @@ def main(args):
                     ]
                 )
             except:
-                LOGGER.warning(
-                    "Failed to find common path between '%s' as '%s', forcing real copies."
-                    %
-                    (
-                        os.path.abspath(rom),
-                        os.path.abspath(__file__)
-                    )
-                )
+                msg = "Failed to find common path between " + \
+                    f"'{os.path.abspath(rom)}' as " + \
+                    f"'{os.path.abspath(__file__)}', " + \
+                    "forcing real copies."
+                LOGGER.warning(msg)
                 args.forcerealcopy = True
 
             if args.live and args.forcerealcopy:
@@ -1058,7 +1072,7 @@ def main(args):
             generate_shuffled_msu(args, rom, gamepath, gameID)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     global LOGGER
     LOGGER = None
 
@@ -1072,121 +1086,121 @@ if __name__ == '__main__':
     # DEBUG:    10
     # NOTSET:    0
     parser.add_argument(
-        '--loglevel',
-        default='info',
-        const='info',
-        nargs='?',
-        choices=['error', 'info', 'warning', 'debug'],
-        help='Select level of logging for output.'
+        "--loglevel",
+        default="info",
+        const="info",
+        nargs="?",
+        choices=["error", "info", "warning", "debug"],
+        help="Select level of logging for output."
     )
     parser.add_argument(
-        '--collection',
+        "--collection",
         default=os.path.join(".."),
-        help='Point script at another directory to find root of MSU packs.'
+        help="Point script at another directory to find root of MSU packs."
     )
     parser.add_argument(
-        '--game',
+        "--game",
         default="snes/zelda3",
-        help='Game Track List to load.'
+        help="Game Track List to load."
     )
     parser.add_argument(
-        '--gamefile',
+        "--gamefile",
         default="",
-        help='Game File to load. Leave blank to auto-locate.'
+        help="Game File to load. Leave blank to auto-locate."
     )
     parser.add_argument(
-        '--outputpath',
+        "--outputpath",
         default=os.path.join("."),
-        help='Output path.'
+        help="Output path."
     )
     parser.add_argument(
-        '--outputprefix',
-        default='shuffled',
-        help='Output prefix.'
+        "--outputprefix",
+        default="shuffled",
+        help="Output prefix."
     )
     parser.add_argument(
-        '--copy',
-        action='store_true',
+        "--copy",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--fullshuffle',
+        "--fullshuffle",
         help="Choose each looping track randomly from all looping tracks from all packs, rather than the default behavior of only mixing track numbers for dungeon/boss-specific tracks.  Good if you like shop music in Ganon's Tower.",
-        action='store_true',
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--basicshuffle',
-        help='Choose each track with the same track from a random pack.  If you have any extended packs, the dungeon/boss themes from non-extended packs will never be chosen in this mode.  If you only have non-extended packs, this preserves the ability to tell crystal/pendant dungeons by music.',
-        action='store_true',
+        "--basicshuffle",
+        help="Choose each track with the same track from a random pack.  If you have any extended packs, the dungeon/boss themes from non-extended packs will never be chosen in this mode.  If you only have non-extended packs, this preserves the ability to tell crystal/pendant dungeons by music.",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--singleshuffle',
-        help='Choose each looping track randomly from all looping tracks from a single MSU pack.  Enter the path to a subfolder in the parent directory containing a single MSU pack.'
+        "--singleshuffle",
+        help="Choose each looping track randomly from all looping tracks from a single MSU pack.  Enter the path to a subfolder in the parent directory containing a single MSU pack."
     )
     parser.add_argument(
-        '--higan',
-        help='Creates files in higan-friendly directory structure.',
-        action='store_true',
+        "--higan",
+        help="Creates files in higan-friendly directory structure.",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--realcopy',
-        help='Creates real copies of the source tracks instead of hardlinks',
-        action='store_true',
+        "--realcopy",
+        help="Creates real copies of the source tracks instead of hardlinks",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--no-patch',
-        help='Ignore patching.',
-        action='store_true',
+        "--no-patch",
+        help="Ignore patching.",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--dry-run',
-        help='Makes script print all filesystem commands that would be executed instead of actually executing them.',
-        action='store_true',
+        "--dry-run",
+        help="Makes script print all filesystem commands that would be executed instead of actually executing them.",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--verbose',
-        help='Verbose output.',
-        action='store_true',
+        "--verbose",
+        help="Verbose output.",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--live',
-        help='The interval at which to re-shuffle the entire pack, in seconds; will skip tracks currently in use.'
+        "--live",
+        help="The interval at which to re-shuffle the entire pack, in seconds; will skip tracks currently in use."
     )
     parser.add_argument(
-        '--nowplaying',
-        help='EXPERIMENTAL: During live reshuffling, connect to qusb2snes to print the currently playing MSU pack to console and nowplaying.txt',
-        action='store_true',
+        "--nowplaying",
+        help="EXPERIMENTAL: During live reshuffling, connect to qusb2snes to print the currently playing MSU pack to console and nowplaying.txt",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--reindex',
-        help='Rebuild the index of MSU packs, this must be run to pick up any new packs or moved/deleted files in existing packs!',
-        action='store_true',
+        "--reindex",
+        help="Rebuild the index of MSU packs, this must be run to pick up any new packs or moved/deleted files in existing packs!",
+        action="store_true",
         default=False
     )
     parser.add_argument(
-        '--version',
-        help='Print version number and exit.',
-        action='store_true',
+        "--version",
+        help="Print version number and exit.",
+        action="store_true",
         default=False
     )
 
-    romlist = list()
+    romlist = []
     args, roms = parser.parse_known_args()
 
     # set up logger
     loglevel = {
-        'error': logging.ERROR,
-        'info': logging.INFO,
-        'warning': logging.WARNING,
-        'debug': logging.DEBUG
+        "error": logging.ERROR,
+        "info": logging.INFO,
+        "warning": logging.WARNING,
+        "debug": logging.DEBUG
     }[args.loglevel]
 
     logging.root.setLevel(loglevel)
@@ -1210,7 +1224,7 @@ if __name__ == '__main__':
     stream = logging.StreamHandler()
     stream.setLevel(loglevel)
     stream.setFormatter(formatter)
-    LOGGER = logging.getLogger('pythonConfig')
+    LOGGER = logging.getLogger("pythonConfig")
     LOGGER.setLevel(loglevel)
     LOGGER.addHandler(stream)
 
@@ -1252,7 +1266,8 @@ if __name__ == '__main__':
 
     args.roms = romlist
 
-    if ((args.fullshuffle and args.basicshuffle)) or (args.singleshuffle and (args.fullshuffle or args.basicshuffle)):
+    if ((args.fullshuffle and args.basicshuffle)) or \
+        (args.singleshuffle and (args.fullshuffle or args.basicshuffle)):
         parser.print_help()
         sys.exit()
 
@@ -1263,7 +1278,7 @@ if __name__ == '__main__':
         args.live = 1
 
     # When shuffling a single pack, don't auto-extend non-extended packs.
-    if (args.singleshuffle):
+    if args.singleshuffle:
         args.basicshuffle = True
 
     main(args)

@@ -1,14 +1,8 @@
 /-----------------\
 | M3 | Z3 | Z3M3  |
 |-----------------|
-|  1 |    |    1  |
-| 29 |    |   29  |
-|    |  1 |  101  |
-|    | 33 |  133  |
+|  1 |    |  101  |
+| 29 |    |  129  |
+|    |  1 |    1  |
+|    | 61 |   61  |
 \-----------------/
-
-Z3 Track 15/Z3M3 Track 115 not yet implemented
-Z3M3 Track 30: Super Metroid mission report and ending
-Z3M3 Track 99: Combo end credits
-
-https://www.zeldix.net/t2067-super-metroid-and-a-link-to-the-past-crossover-randomizer
