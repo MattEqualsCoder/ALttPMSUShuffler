@@ -1,0 +1,248 @@
+{
+    "meta": {
+      "name": "Donkey Kong Country"
+    },
+    "tracks": {
+      "basic": [
+        {
+          "title": "Jungle Hijinxs!",
+          "name": "DK Island Swing"
+        },
+        {
+          "title": "Reptile Rumble",
+          "name": "Cave Dweller Concert"
+        },
+        {
+          "title": "Stop & Go Station!",
+          "name": "Misty Menace"
+        },
+        {
+          "title": "Coral Capers!",
+          "name": "Aquatic Ambiance"
+        },
+        {
+          "title": "Mine Cart Carnage!",
+          "name": "Mine Cart Madness"
+        },
+        {
+          "title": "Snow Barrel Blast!",
+          "name": "Northern Hemispheres"
+        },
+        {
+          "title": "Millstone Mayhem!",
+          "name": "Voices of the Temple"
+        },
+        {
+          "title": "Oil Drum Alley!",
+          "name": "Fear Factory"
+        },
+        {
+          "title": "Winky's Walkway!",
+          "name": "Life in the Mines"
+        },
+        {
+          "title": "Title Screen"
+        },
+        {
+          "title": "Rare Logo"
+        },
+        {
+          "title": "Slipslide Ride!",
+          "name": "Ice Cave Chant"
+        },
+        {
+          "title": "Overworld Map #1",
+          "name": "Simian Segue"
+        },
+        {
+          "title": "Vulture Culture!",
+          "name": "Forest Frenzy"
+        },
+        {
+          "title": "Credits Concerto"
+        },
+        {
+          "title": "Game Over"
+        },
+        {
+          "title": "Bonus Round"
+        },
+        {
+          "title": "Victory Theme"
+        },
+        {
+          "title": "Life Lost"
+        },
+        {
+          "title": "Tree Top Town!",
+          "name": "Treetop Rock"
+        },
+        {
+          "title": "Funky's Fugue"
+        },
+        {
+          "title": "Very Gnawty's Lair",
+          "name": "Bad Boss Boogie"
+        },
+        {
+          "title": "Candy's Save Point"
+        },
+        {
+          "title": "Cranky's Theme"
+        },
+        {
+          "title": "Lose Bonus/Banana Stolen"
+        },
+        {
+          "title": "Gangplank Galleon"
+        },
+        {
+          "title": "Level Complete"
+        }
+      ],
+      "extended": [
+        {
+          "title": "Ropey Rampage!",
+          "name": "DK Island Swing"
+        },
+        {
+          "title": "Barrel Cannon Canyon!",
+          "name": "DK Island Swing"
+        },
+        {
+          "title": "Orang-utan Gang!",
+          "name": "DK Island Swing"
+        },
+        {
+          "title": "Bouncy Bonanza!",
+          "name": "Cave Dweller Concert"
+        },
+        {
+          "title": "Torchlight Trouble!",
+          "name": "Cave Dweller Concert"
+        },
+        {
+          "title": "Elevator Antics!",
+          "name": "Cave Dweller Concert"
+        },
+        {
+          "title": "Maniac Mincers!",
+          "name": "Cave Dweller Concert"
+        },
+        {
+          "title": "Misty Mine!",
+          "name": "Misty Menace"
+        },
+        {
+          "title": "Loopy Lights!",
+          "name": "Misty Menace"
+        },
+        {
+          "title": "Clam City!",
+          "name": "Aquatic Ambiance"
+        },
+        {
+          "title": "Croctopus Chase!",
+          "name": "Aquatic Ambiance"
+        },
+        {
+          "title": "Poison Pond!",
+          "name": "Aquatic Ambiance"
+        },
+        {
+          "title": "Mine Cart Madness!",
+          "name": "Mine Cart Madness"
+        },
+        {
+          "title": "Ice Age Alley!",
+          "name": "Northern Hemispheres"
+        },
+        {
+          "title": "Temple Tempest!",
+          "name": "Voices of the Temple"
+        },
+        {
+          "title": "Blackout Basement!",
+          "name": "Fear Factory"
+        },
+        {
+          "title": "Trick Track Trek!",
+          "name": "Life in the Mines"
+        },
+        {
+          "title": "Tanked Up Trouble!",
+          "name": "Life in the Mines"
+        },
+        {
+          "title": "Platform Perils!",
+          "name": "Life in the Mines"
+        },
+        {
+          "title": "Rope Bridge Rumble!",
+          "name": "Treetop Rock"
+        },
+        {
+          "title": "Necky's Nuts!",
+          "name": "Bad Boss Boogie"
+        },
+        {
+          "title": "Bumble B Rumble!",
+          "name": "Bad Boss Boogie"
+        },
+        {
+          "title": "Really Gnawty Rampage!",
+          "name": "Bad Boss Boogie"
+        },
+        {
+          "title": "Boss Dumb Drum!",
+          "name": "Bad Boss Boogie"
+        },
+        {
+          "title": "Necky's Revenge!",
+          "name": "Bad Boss Boogie"
+        },
+        {
+          "title": "Forest Frenzy!",
+          "name": "Forest Frenzy"
+        },
+        {
+          "title": "Overworld Map #2",
+          "name": "Simian Segue"
+        },
+        {
+          "title": "Overworld Map #3",
+          "name": "Simian Segue"
+        },
+        {
+          "title": "Overworld Map #4",
+          "name": "Simian Segue"
+        },
+        {
+          "title": "Overworld Map #5",
+          "name": "Simian Segue"
+        },
+        {
+          "title": "Overworld Map #6",
+          "name": "Simian Segue"
+        },
+        {
+          "title": "Overworld Map #7",
+          "name": "Simian Segue"
+        },
+        {
+          "title": "Overworld Map #8",
+          "name": "Simian Segue"
+        }
+      ],
+      "longest": 30,
+      "src": "https://www.zeldix.net/t2679-donkey-kong-country-msu-1-deluxe",
+      "crc": {
+        "vanilla": {
+          "unheadered": "762AF827"
+        },
+        "patched": {
+          "unheadered": ""
+        }
+      }
+    }
+}
