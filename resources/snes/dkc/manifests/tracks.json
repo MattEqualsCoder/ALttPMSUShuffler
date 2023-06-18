@@ -6,39 +6,48 @@
       "basic": [
         {
           "title": "Jungle Hijinxs!",
-          "name": "DK Island Swing"
+          "name": "DK Island Swing",
+          "notes": ["Level 1-1"]
         },
         {
           "title": "Reptile Rumble",
-          "name": "Cave Dweller Concert"
+          "name": "Cave Dweller Concert",
+          "notes": ["Level 1-3"]
         },
         {
           "title": "Stop & Go Station!",
-          "name": "Misty Menace"
+          "name": "Misty Menace",
+          "notes": ["Level 2-4"]
         },
         {
           "title": "Coral Capers!",
-          "name": "Aquatic Ambiance"
+          "name": "Aquatic Ambiance",
+          "notes": ["Level 1-4"]
         },
         {
           "title": "Mine Cart Carnage!",
-          "name": "Mine Cart Madness"
+          "name": "Mine Cart Madness",
+          "notes": ["Level 2-2"]
         },
         {
           "title": "Snow Barrel Blast!",
-          "name": "Northern Hemispheres"
+          "name": "Northern Hemispheres",
+          "notes": ["Level 4-1"]
         },
         {
           "title": "Millstone Mayhem!",
-          "name": "Voices of the Temple"
+          "name": "Voices of the Temple",
+          "notes": ["Level 2-5"]
         },
         {
           "title": "Oil Drum Alley!",
-          "name": "Fear Factory"
+          "name": "Fear Factory",
+          "notes": ["Level 5-1"]
         },
         {
           "title": "Winky's Walkway!",
-          "name": "Life in the Mines"
+          "name": "Life in the Mines",
+          "notes": ["Level 2-1"]
         },
         {
           "title": "Title Screen"
@@ -48,7 +57,8 @@
         },
         {
           "title": "Slipslide Ride!",
-          "name": "Ice Cave Chant"
+          "name": "Ice Cave Chant",
+          "notes": ["Level 4-2"]
         },
         {
           "title": "Overworld Map #1",
@@ -56,7 +66,8 @@
         },
         {
           "title": "Vulture Culture!",
-          "name": "Forest Frenzy"
+          "name": "Forest Frenzy",
+          "notes": ["Level 3-1"]
         },
         {
           "title": "Credits Concerto"
@@ -75,14 +86,16 @@
         },
         {
           "title": "Tree Top Town!",
-          "name": "Treetop Rock"
+          "name": "Treetop Rock",
+          "notes": ["Level 3-2"]
         },
         {
           "title": "Funky's Fugue"
         },
         {
           "title": "Very Gnawty's Lair",
-          "name": "Bad Boss Boogie"
+          "name": "Bad Boss Boogie",
+          "notes": ["Level 1 Boss"]
         },
         {
           "title": "Candy's Save Point"
@@ -94,7 +107,8 @@
           "title": "Lose Bonus/Banana Stolen"
         },
         {
-          "title": "Gangplank Galleon"
+          "title": "Gangplank Galleon",
+          "notes": ["Level 7-1, Level 7 Boss"]
         },
         {
           "title": "Level Complete"
@@ -103,107 +117,133 @@
       "extended": [
         {
           "title": "Ropey Rampage!",
-          "name": "DK Island Swing"
+          "name": "DK Island Swing",
+          "notes": ["Level 1-2"]
         },
         {
           "title": "Barrel Cannon Canyon!",
-          "name": "DK Island Swing"
+          "name": "DK Island Swing",
+          "notes": ["Level 1-5"]
         },
         {
           "title": "Orang-utan Gang!",
-          "name": "DK Island Swing"
+          "name": "DK Island Swing",
+          "notes": ["Level 3-5"]
         },
         {
           "title": "Bouncy Bonanza!",
-          "name": "Cave Dweller Concert"
+          "name": "Cave Dweller Concert",
+          "notes": ["Level 2-3"]
         },
         {
           "title": "Torchlight Trouble!",
-          "name": "Cave Dweller Concert"
+          "name": "Cave Dweller Concert",
+          "notes": ["Level 4-5"]
         },
         {
           "title": "Elevator Antics!",
-          "name": "Cave Dweller Concert"
+          "name": "Cave Dweller Concert",
+          "notes": ["Level 5-3"]
         },
         {
-          "title": "Maniac Mincers!",
-          "name": "Cave Dweller Concert"
+          "title": "Manic Mincers!",
+          "name": "Cave Dweller Concert",
+          "notes": ["Level 6-2"]
         },
         {
           "title": "Misty Mine!",
-          "name": "Misty Menace"
+          "name": "Misty Menace",
+          "notes": ["Level 6-3"]
         },
         {
           "title": "Loopy Lights!",
-          "name": "Misty Menace"
+          "name": "Misty Menace",
+          "notes": ["Level 6-4"]
         },
         {
           "title": "Clam City!",
-          "name": "Aquatic Ambiance"
+          "name": "Aquatic Ambiance",
+          "notes": ["Level 3-6"]
         },
         {
           "title": "Croctopus Chase!",
-          "name": "Aquatic Ambiance"
+          "name": "Aquatic Ambiance",
+          "notes": ["Level 4-4"]
         },
         {
           "title": "Poison Pond!",
-          "name": "Aquatic Ambiance"
+          "name": "Aquatic Ambiance",
+          "notes": ["Level 5-4"]
         },
         {
           "title": "Mine Cart Madness!",
-          "name": "Mine Cart Madness"
+          "name": "Mine Cart Madness",
+          "notes": ["Level 5-5"]
         },
         {
           "title": "Ice Age Alley!",
-          "name": "Northern Hemispheres"
+          "name": "Northern Hemispheres",
+          "notes": ["Level 4-3"]
         },
         {
           "title": "Temple Tempest!",
-          "name": "Voices of the Temple"
+          "name": "Voices of the Temple",
+          "notes": ["Level 3-4"]
         },
         {
           "title": "Blackout Basement!",
-          "name": "Fear Factory"
+          "name": "Fear Factory",
+          "notes": ["Level 5-6"]
         },
         {
           "title": "Trick Track Trek!",
-          "name": "Life in the Mines"
+          "name": "Life in the Mines",
+          "notes": ["Level 5-2"]
         },
         {
           "title": "Tanked Up Trouble!",
-          "name": "Life in the Mines"
+          "name": "Life in the Mines",
+          "notes": ["Level 6-1"]
         },
         {
           "title": "Platform Perils!",
-          "name": "Life in the Mines"
+          "name": "Life in the Mines",
+          "notes": ["Level 6-5"]
         },
         {
           "title": "Rope Bridge Rumble!",
-          "name": "Treetop Rock"
+          "name": "Treetop Rock",
+          "notes": ["Level 4-6"]
         },
         {
           "title": "Necky's Nuts!",
-          "name": "Bad Boss Boogie"
+          "name": "Bad Boss Boogie",
+          "notes": ["Level 2 Boss"]
         },
         {
-          "title": "Bumble B Rumble!",
-          "name": "Bad Boss Boogie"
+          "title": "Queen B Rumble!",
+          "name": "Bad Boss Boogie",
+          "notes": ["Level 3 Boss"]
         },
         {
           "title": "Really Gnawty Rampage!",
-          "name": "Bad Boss Boogie"
+          "name": "Bad Boss Boogie",
+          "notes": ["Level 4 Boss"]
         },
         {
           "title": "Boss Dumb Drum!",
-          "name": "Bad Boss Boogie"
+          "name": "Bad Boss Boogie",
+          "notes": ["Level 5 Boss"]
         },
         {
           "title": "Necky's Revenge!",
-          "name": "Bad Boss Boogie"
+          "name": "Bad Boss Boogie",
+          "notes": ["Level 6 Boss"]
         },
         {
           "title": "Forest Frenzy!",
-          "name": "Forest Frenzy"
+          "name": "Forest Frenzy",
+          "notes": ["Level 3-3"]
         },
         {
           "title": "Overworld Map #2",
