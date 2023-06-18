@@ -328,16 +328,16 @@
     ],
     "longest": 50,
     "src": "https://www.romhacking.net/hacks/2483/",
-    "msurando": {
-      "conversions": [
-        {
-          "msutype": "SMZ3 Combo Randomizer",
-          "msuid": "snes/z3m3",
-          "defmod": -100,
-          "mintracknum": 101,
-          "maxtracknum": 200
-        }
-      ]
-    }
+  },
+  "msurando": {
+    "conversions": [
+      {
+        "msutype": "SMZ3 Combo Randomizer",
+        "msuid": "snes/z3m3",
+        "defmod": -100,
+        "mintracknum": 101,
+        "maxtracknum": 200
+      }
+    ]
   }
 }

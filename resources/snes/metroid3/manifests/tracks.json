@@ -202,17 +202,17 @@
       "patched": {
         "unheadered": "2AB63C8"
       }
-    },
-    "msurando": {
-      "conversions": [
-        {
-          "msutype": "SMZ3 Combo Randomizer",
-          "msuid": "snes/z3m3",
-          "defmod": 0,
-          "mintracknum": 1,
-          "maxtracknum": 40
-        }
-      ]
     }
+  },
+  "msurando": {
+    "conversions": [
+      {
+        "msutype": "SMZ3 Combo Randomizer",
+        "msuid": "snes/z3m3",
+        "defmod": 0,
+        "mintracknum": 1,
+        "maxtracknum": 40
+      }
+    ]
   }
 }
