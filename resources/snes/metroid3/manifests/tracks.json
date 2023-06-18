@@ -15,10 +15,12 @@
         "title": "Item room"
       },
       {
-        "title": "Opening with intro"
+        "title": "Opening with intro",
+        "pair": 5
       },
       {
-        "title": "Opening without intro"
+        "title": "Opening without intro",
+        "pair": 4
       },
       {
         "title": "Crateria (First Landing Thunder)",
@@ -88,6 +90,7 @@
       },
       {
         "title": "Big Boss Battle 2",
+        "pair": 23,
         "notes": [
           "Boss Battle Theme",
           "Can be superceded by Expanded Soundtrack (32,34,38)",
@@ -96,6 +99,7 @@
       },
       {
         "title": "Tension / Hostile Incoming",
+        "pair": 22,
         "notes": [
           "Boss Incoming Theme",
           "Can be superceded by Expanded Soundtrack (31,33,37)",
@@ -133,39 +137,54 @@
     "extended": [
       {
         "title": "Kraid Incoming",
-        "fallback": 23
+        "pair": 32,
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Kraid Battle",
-        "fallback": 22
+        "pair": 31,
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Phantoon Incoming",
-        "fallback": 23
+        "pair": 34,
+        "fallback": 23,
+        "addIfMissing": true
       },
       {
         "title": "Phantoon Battle",
-        "fallback": 22
+        "pair": 33,
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Draygon Battle",
-        "fallback": 19
+        "fallback": 19,
+        "addIfMissing": true
       },
       {
         "title": "Ridley Battle",
-        "fallback": 19
+        "fallback": 19,
+        "addIfMissing": true
       },
       {
         "title": "Baby Incoming",
-        "fallback": 23
+        "pair": 38,
+        "fallback": 23,
+        "addIfMissing": true
       },
       {
         "title": "The Baby",
-        "fallback": 22
+        "pair": 37,
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Hyper Beam",
         "fallback": 10,
+        "addIfMissing": true,
         "notes": [
           "Mother Brain 3"
         ]
@@ -183,6 +202,17 @@
       "patched": {
         "unheadered": "2AB63C8"
       }
+    },
+    "msurando": {
+      "conversions": [
+        {
+          "msutype": "SMZ3 Combo Randomizer",
+          "msuid": "snes/z3m3",
+          "defmod": 0,
+          "mintracknum": 1,
+          "maxtracknum": 40
+        }
+      ]
     }
   }
 }
