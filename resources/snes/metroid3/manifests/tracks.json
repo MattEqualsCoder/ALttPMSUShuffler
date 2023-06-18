@@ -73,7 +73,12 @@
         "title": "Mother Brain Battle"
       },
       {
-        "title": "Big Boss Battle 1"
+        "title": "Big Boss Battle 1",
+        "notes": [
+          "Draygon & Ridley Battles",
+          "Can be superceded by Expanded Soundtrack (35/36)",
+          "This still applies to Bomb Torizo & Golden Torizo"
+        ]
       },
       {
         "title": "Mysterious Statue Chamber"
@@ -82,15 +87,25 @@
         "title": "Evacuation"
       },
       {
-        "title": "Big Boss Battle 2"
+        "title": "Big Boss Battle 2",
+        "notes": [
+          "Boss Battle Theme",
+          "Can be superceded by Expanded Soundtrack (32,34,38)",
+          "This still applies to Crocomire"
+        ]
       },
       {
-        "title": "Tension / Hostile Incoming"
+        "title": "Tension / Hostile Incoming",
+        "notes": [
+          "Boss Incoming Theme",
+          "Can be superceded by Expanded Soundtrack (31,33,37)",
+          "This still applies to Crocomire"
+        ]
       },
       {
         "title": "Plant Miniboss",
         "notes": [
-          "Sporespawn"
+          "Spore Spawn & Botwoon"
         ]
       },
       {
@@ -113,6 +128,50 @@
       },
       {
         "title": "Ending"
+      }
+    ],
+    "extended": [
+      {
+        "title": "Kraid Incoming",
+        "fallback": 23
+      },
+      {
+        "title": "Kraid Battle",
+        "fallback": 22
+      },
+      {
+        "title": "Phantoon Incoming",
+        "fallback": 23
+      },
+      {
+        "title": "Phantoon Battle",
+        "fallback": 22
+      },
+      {
+        "title": "Draygon Battle",
+        "fallback": 19
+      },
+      {
+        "title": "Ridley Battle",
+        "fallback": 19
+      },
+      {
+        "title": "Baby Incoming",
+        "fallback": 23
+      },
+      {
+        "title": "The Baby",
+        "fallback": 22
+      },
+      {
+        "title": "Hyper Beam",
+        "fallback": 10,
+        "notes": [
+          "Mother Brain 3"
+        ]
+      },
+      {
+        "title": "Game Over"
       }
     ],
     "longest": 37,
