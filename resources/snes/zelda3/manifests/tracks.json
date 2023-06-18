@@ -70,6 +70,8 @@
       {
         "title": "Dark World Lost Woods",
         "extended": true,
+        "remap": 13,
+        "addIfMissing": true,
         "notes": ["Skeleton Forest"]
       },
       {
@@ -178,103 +180,129 @@
     "extended": [
       {
         "title": "Eastern Palace",
-        "fallback": 17
+        "fallback": 17,
+        "addIfMissing": true
       },
       {
         "title": "Desert Palace",
-        "fallback": 17
+        "fallback": 17,
+        "addIfMissing": true
       },
       {
         "title": "Agahnim's Tower",
-        "fallback": 16
+        "fallback": 16,
+        "addIfMissing": true
       },
       {
         "title": "Swamp Palace",
-        "fallback": 22
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Palace of Darkness",
-        "fallback": 22
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Misery Mire",
-        "fallback": 22
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Skull Woods",
-        "fallback": 22
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Ice Palace",
-        "fallback": 22
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Tower of Hera",
-        "fallback": 17
+        "fallback": 17,
+        "addIfMissing": true
       },
       {
         "title": "Thieves' Town",
-        "fallback": 22
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Turtle Rock",
-        "fallback": 22
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Ganon's Tower",
-        "fallback": 22
+        "fallback": 22,
+        "addIfMissing": true
       },
       {
         "title": "Eastern Palace Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Desert Palace Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Agahnim's Tower Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Swamp Palace Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Palace of Darkness Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Misery Mire Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Skull Woods Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Ice Palace Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Tower of Hera Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Thieves' Town Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Turtle Rock Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Ganon's Tower Boss",
-        "fallback": 21
+        "fallback": 21,
+        "addIfMissing": true
       },
       {
         "title": "Ganon's Tower 2",
         "fallback": 22,
+        "remap": 46,
+        "addIfMissing": true,
         "notes": ["Replaces track 46 for upstairs GT"]
       },
       {
@@ -283,7 +311,8 @@
         "notes": [
           "Replaces track 2 after the pedestal item has been collected",
           "2: Light World Overworld"
-        ]
+        ],
+        "addIfMissing": true
       },
       {
         "title": "Dark World 2",
@@ -293,10 +322,17 @@
           "9: Dark World Overworld",
           "13: Dark Death Mountain",
           "15: Skull Woods Overworld"
-        ]
+        ],
+        "addIfMissing": true
       }
     ],
     "longest": 50,
-    "src": "https://www.romhacking.net/hacks/2483/"
+    "src": "https://www.romhacking.net/hacks/2483/",
+    "msurando": {
+      "msutype": "SMZ3 Combo Randomizer",
+      "defmod": -100,
+      "mintracknum": 101,
+      "maxtracknum": 200
+    }
   }
 }
