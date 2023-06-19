@@ -5,29 +5,20 @@
   "tracks": {
     "basic": [
       {
-        "num": 111,
-        "title": "Game Over Music",
-        "remap": 40,
-        "addIfMissing": true,
-        "note": [
-          "Z3 -> M3"
-        ]
+        "num": 99,
+        "title": "SMZ3 Credits",
+        "nonlooping": true
+      }
+    ],
+    "copy": [
+      {
+        "msu": "snes/zelda3",
+        "modifier": 0
       },
       {
-        "num": 134,
-        "title": "End Credits",
-        "remap": 99,
-        "addIfMissing": true,
-        "note": [
-          "Z3 -> SMZ3"
-        ]
+        "msu": "snes/metroid3",
+        "modifier": 100
       }
     ]
-  },
-  "msurando": {
-    "compatibility": {
-      "snes/zelda3": "A Link to the Past",
-      "snes/metroid3": "Super Metroid"
-    }
   }
 }
