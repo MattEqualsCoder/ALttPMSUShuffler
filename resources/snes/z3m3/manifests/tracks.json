@@ -9,16 +9,16 @@
         "title": "SMZ3 Credits",
         "nonlooping": true
       }
-    ],
-    "copy": [
-      {
-        "msu": "snes/zelda3",
-        "modifier": 0
-      },
-      {
-        "msu": "snes/metroid3",
-        "modifier": 100
-      }
     ]
-  }
+  },
+  "copy": [
+    {
+      "msu": "snes/zelda3",
+      "modifier": 0
+    },
+    {
+      "msu": "snes/metroid3",
+      "modifier": 100
+    }
+  ]
 }
