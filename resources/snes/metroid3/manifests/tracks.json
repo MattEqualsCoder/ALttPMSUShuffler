@@ -145,7 +145,10 @@
       },
       {
         "title": "Ending",
-        "nonlooping": true
+        "nonlooping": true,
+        "notes": [
+          "Mission Report and Ending"
+        ]
       }
     ],
     "extended": [
