@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "name": "Super Metroid / A Link to the Past Combination Randomizer Legacy"
+  },
+  "tracks": {
+    "basic": [
+      {
+        "num": 99,
+        "title": "SMZ3 Credits",
+        "nonlooping": true
+      }
+    ]
+  },
+  "copy": [
+    {
+      "msu": "snes/zelda3",
+      "modifier": 100,
+      "ignore": [ 101, 103, 106, 125, 134 ]
+    },
+    {
+      "msu": "snes/metroid3",
+      "modifier": 0,
+      "ignore": [ 2, 7, 25, 28 ]
+    }
+  ]
+}
