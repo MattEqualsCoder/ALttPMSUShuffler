@@ -15,7 +15,7 @@
     {
       "msu": "snes/zelda3",
       "modifier": 0,
-      "ignore": [ 1, 6, 25 ]
+      "ignore": [ 1, 6, 25, 34 ]
     },
     {
       "msu": "snes/metroid3",
