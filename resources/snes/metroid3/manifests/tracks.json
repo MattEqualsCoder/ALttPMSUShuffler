@@ -41,10 +41,17 @@
       },
       {
         "title": "Crateria Statue Room",
-        "name": "Statue Room"
+        "name": "Statue Room",
+        "notes": [
+          "G4 Statue Room"
+        ]
       },
       {
-        "title": "Samus' Ship"
+        "title": "Samus' Ship",
+        "name": "Theme of Samus Aran",
+        "notes": [
+          "Samus' Ship & East Crateria"
+        ]
       },
       {
         "title": "Brinstar with vegetation",
@@ -79,8 +86,8 @@
       {
         "title": "Big Boss Battle 1",
         "notes": [
-          "Draygon & Ridley Battles",
-          "Can be superceded by Expanded Soundtrack (35/36)",
+          "Bomb Torizo, Golden Torizo, Draygon & Ridley Battles",
+          "Can be superceded by Expanded Soundtrack (35: Draygon/36: Ridley)",
           "This still applies to Bomb Torizo & Golden Torizo"
         ]
       },
@@ -88,14 +95,16 @@
         "title": "Evacuation"
       },
       {
-        "title": "Mysterious Statue Chamber"
+        "title": "Mysterious Statue Chamber",
+        "name": "Chozo Statue Awakens"
       },
       {
         "title": "Big Boss Battle 2",
         "pair": 23,
         "notes": [
           "Boss Battle Theme",
-          "Can be superceded by Expanded Soundtrack (32,34,38)",
+          "Crocomire, Kraid, Phantoon, The Baby",
+          "Can be superceded by Expanded Soundtrack (32: Kraid, 34: Phantoon, 38: The Baby)",
           "This still applies to Crocomire"
         ]
       },
@@ -104,7 +113,8 @@
         "pair": 22,
         "notes": [
           "Boss Incoming Theme",
-          "Can be superceded by Expanded Soundtrack (31,33,37)",
+          "Crocomire intermission, pre-Kraid, pre-Phantoon, pre-The Baby",
+          "Can be superceded by Expanded Soundtrack (31: Kraid, 33: Phantoon, 37: The Baby)",
           "This still applies to Crocomire"
         ]
       },

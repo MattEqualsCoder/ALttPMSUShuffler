@@ -14,11 +14,13 @@
   "copy": [
     {
       "msu": "snes/zelda3",
-      "modifier": 0
+      "modifier": 0,
+      "ignore": [ 1, 6, 25 ]
     },
     {
       "msu": "snes/metroid3",
-      "modifier": 100
+      "modifier": 100,
+      "ignore": [ 102, 107, 125, 128 ]
     }
   ]
 }
