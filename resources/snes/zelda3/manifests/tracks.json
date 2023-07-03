@@ -32,7 +32,10 @@
         "name": "Seal of Seven Maidens"
       },
       {
-        "title": "Kakariko Village"
+        "title": "Kakariko Village",
+        "notes": [
+          "Link's House"
+        ]
       },
       {
         "title": "Mirror Portal",

@@ -14,7 +14,21 @@
         "nonlooping": true
       },
       {
-        "title": "Item room"
+        "title": "Item room",
+        "#notes": [
+          "Beta Power Bomb Room",
+          "Bomb Torizo Room",
+          "Brinstar/Kraid -> Norfair/West Elevator Room",
+          "Brinstar Reserve Tank Room",
+          "Crateria/Central -> Brinstar/Blue Elevator Room",
+          "Crateria/Central -> Brinstar/Red Elevator Room",
+          "Hi-Jump Boots Room",
+          "Kraid Dead: Kraid Room, Kriad Eye Door Room, Baby Kraid Room",
+          "Spore Spawn Super Room",
+          "Spazer Room",
+          "X-Ray Scope Room",
+          "Varia Suit Room"
+        ]
       },
       {
         "title": "Opening with intro",
@@ -36,7 +50,9 @@
         "title": "Crateria",
         "name": "The Space Pirates Appear",
         "notes": [
-          "Post Zebes Awake"
+          "Post Zebes Awake",
+          "Brinstar/Blue",
+          "Crateria/West"
         ]
       },
       {
@@ -50,19 +66,22 @@
         "title": "Samus' Ship",
         "name": "Theme of Samus Aran",
         "notes": [
-          "Samus' Ship & East Crateria"
+          "Samus' Ship",
+          "Crateria/Central",
+          "Crateria/East"
         ]
       },
       {
         "title": "Brinstar with vegetation",
         "notes": [
-          "Green Brinstar"
+          "Brinstar/Green",
+          "Big Pink"
         ]
       },
       {
         "title": "Brinstar Red Soil",
         "notes": [
-          "Red Brinstar"
+          "Brinstar/Red"
         ]
       },
       {
@@ -155,7 +174,11 @@
       {
         "title": "Kraid Incoming",
         "pair": 32,
-        "fallback": 22
+        "fallback": 22,
+        "notes": [
+          "Baby-Kraid Room",
+          "Kraid Eye Door Room"
+        ]
       },
       {
         "title": "Kraid Battle",
