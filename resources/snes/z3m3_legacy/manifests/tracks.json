@@ -1,6 +1,10 @@
 {
   "meta": {
-    "name": "Super Metroid / A Link to the Past Combination Randomizer Legacy"
+    "name": "Super Metroid / A Link to the Past Combination Randomizer Legacy",
+    "selectable": false,
+    "exactmatches": [
+      "snes/z3m3"
+    ]
   },
   "tracks": {
     "basic": [
