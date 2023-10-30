@@ -1,4 +1,4 @@
-name: Create bundle
+name: Create MSU Type Bundle
 
 on:
   push:
