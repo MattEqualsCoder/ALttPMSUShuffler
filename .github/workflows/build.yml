@@ -1,0 +1,24 @@
+name: .NET Build + Test + Publish
+
+on:
+  push:
+    branches: [ release ]
+  pull_request:
+    branches: [ release ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      shell: pwsh
+      run: |
+        .\CreateBundle.ps1
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        path: msu_types.json
+        name: msu_types.json

@@ -9,3 +9,4 @@
 
 resources/user/manifests/settings.json
 resources/user/snes/*-msu/*
+msu_types.json
