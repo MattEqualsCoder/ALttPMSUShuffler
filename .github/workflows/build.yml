@@ -22,3 +22,7 @@ jobs:
       with:
         path: msu_types.json
         name: msu_types.json
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "msu_types.json"
+        omitBody: true
