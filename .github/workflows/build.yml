@@ -14,6 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
+      id: build
       shell: pwsh
       run: |
         .\CreateBundle.ps1
@@ -21,8 +22,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         path: msu_types.json
-        name: msu_types.json
+        name: msu_types_${{ steps.build.outputs.tag }}
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "msu_types.json"
+        tag: ${{ steps.build.outputs.tag }}
         omitBody: true
