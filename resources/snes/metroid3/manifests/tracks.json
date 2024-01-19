@@ -147,7 +147,7 @@
           "Can be superceded by Expanded Soundtrack (32: Kraid, 34: Phantoon, 38: The Baby)",
           "This still applies to Crocomire"
         ],
-        "description": "Song played during the battle with Crocomire. If no extended tracks are present, it will also play for the Kraid and Phantoon battles and when the baby Metroid shows up"
+        "description": "Song played during the battle with Crocomire and when seeing the wall crumble and the Crocomire's skeleton. If no extended tracks are present, it will also play for the Kraid and Phantoon battles and when the baby Metroid shows up"
       },
       {
         "title": "Tension / Hostile Incoming",
@@ -158,7 +158,7 @@
           "Can be superceded by Expanded Soundtrack (31: Kraid, 33: Phantoon, 37: The Baby)",
           "This still applies to Crocomire"
         ],
-        "description": "Song played during both before the Crocomire battle and when he shows back up before his death. If no extended tracks are present, it will also play during the lead ups to Kraid, Phantoon, and the baby Metroid."
+        "description": "Song played between Crocomire falling into the lava and reappearing. If no extended tracks are present, it will also play during the lead ups to Kraid, Phantoon, and the baby Metroid."
       },
       {
         "title": "Plant Miniboss",
@@ -221,7 +221,7 @@
         "title": "Phantoon Incoming",
         "pair": 34,
         "fallback": 23,
-        "description": "Extended track that plays while Phantoon is appearing before the battle. If not present, the Tension / Hostile Incoming theme will be played."
+        "description": "Extended track that plays while Phantoon is appearing before the battle. Lasts about 10 seconds. If not present, the Tension / Hostile Incoming theme will be played."
       },
       {
         "title": "Phantoon Battle",
