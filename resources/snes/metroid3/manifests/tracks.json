@@ -7,11 +7,13 @@
       {
         "title": "File Start",
         "name": "Samus Aran's Appearance Fanfare",
-        "nonlooping": true
+        "nonlooping": true,
+        "description": "Song played when first starting at the ship or a save station before you can start moving. Does not loop and plays for about 8 seconds."
       },
       {
         "title": "Item Acquisition Fanfare",
-        "nonlooping": true
+        "nonlooping": true,
+        "description": "Song played when you retrieve an item. Does not loop and plays for 6-7 seconds. Not used in SMZ3."
       },
       {
         "title": "Item room",
@@ -28,23 +30,28 @@
           "Spazer Room",
           "X-Ray Scope Room",
           "Varia Suit Room"
-        ]
+        ],
+        "description": "Song played in rooms where you receive a major item as well as major elevators and after defeating a boss. Usually this song is not heard for a long period of time outside of the Chozo bowling alley."
       },
       {
         "title": "Opening with intro",
-        "pair": 5
+        "pair": 5,
+        "description": "Song played right when first booting up the game and continues into the game title screen if the player doesn't press any buttons. There are around 24 seconds before the game title appears."
       },
       {
         "title": "Opening without intro",
-        "pair": 4
+        "pair": 4,
+        "description": "Song played if the player presses any buttons to skip to the game title screen before it displays the title screen normally."
       },
       {
         "title": "Crateria (First Landing Thunder)",
-        "name": "Arrival on Crateria (with thunder FX)"
+        "name": "Arrival on Crateria (with thunder FX)",
+        "description": "Song played outside of the surface of Zebes by Samus's ship at the beginning. If you want thunder sound effects, they will need to be added yourself."
       },
       {
         "title": "Crateria (First Landing No Thunder)",
-        "name": "Arrival on Crateria (without thunder FX)"
+        "name": "Arrival on Crateria (without thunder FX)",
+        "description": "Song played in Blue Brinstar the first time before receiving the morph ball. After that, the Crateria Space Pirates Appear theme plays. Not used in SMZ3."
       },
       {
         "title": "Crateria",
@@ -53,14 +60,16 @@
           "Post Zebes Awake",
           "Brinstar/Blue",
           "Crateria/West"
-        ]
+        ],
+        "description": "Song played in West Crateria and Blue Brinstar after receiving the morph ball. This song is always played from the beginning of the game in SMZ3 when going to the west of Samus's ship."
       },
       {
         "title": "Crateria Statue Room",
         "name": "Statue Room",
         "notes": [
           "G4 Statue Room"
-        ]
+        ],
+        "description": "Song played in the Golden Four statue room on the way to Tourian to fight Mother Brain."
       },
       {
         "title": "Samus' Ship",
@@ -69,38 +78,47 @@
           "Samus' Ship",
           "Crateria/Central",
           "Crateria/East"
-        ]
+        ],
+        "description": "Song played on the surface by Samus's ship later in the game after receiving power bombs. Also played after getting the Hyper Beam from the baby Metroid when fighting Mother Brain if no extended Hyper Beam track is present."
       },
       {
         "title": "Brinstar with vegetation",
         "notes": [
           "Brinstar/Green",
           "Big Pink"
-        ]
+        ],
+        "description": "Song played in Green and Pink Brinstar."
       },
       {
         "title": "Brinstar Red Soil",
         "notes": [
           "Brinstar/Red"
-        ]
+        ],
+        "description": "Song played in Red Brinstar and Kraid's Lair."
       },
       {
-        "title": "Upper Norfair"
+        "title": "Upper Norfair",
+        "description": "Song played in Upper Norfair and the area below Crocomire."
       },
       {
-        "title": "Lower Norfair"
+        "title": "Lower Norfair",
+        "description": "Song played in Lower Norfair"
       },
       {
-        "title": "Upper Maridia"
+        "title": "Upper Maridia",
+        "description": "Song played in Upper/Inner Maridia where you fight Botwoon and Draygon."
       },
       {
-        "title": "Lower Maridia"
+        "title": "Lower Maridia",
+        "description": "Song that players in Lower/Outer Maridia with all of the greenery."
       },
       {
-        "title": "Tourian"
+        "title": "Tourian",
+        "description": "Song played in Tourian where all of the Metroids are and after leaving the room with the baby Metroid."
       },
       {
-        "title": "Mother Brain Battle"
+        "title": "Mother Brain Battle",
+        "description": "Song played in the Mother Brain battle after the first phase and before Mother Brain kills the baby Metroid."
       },
       {
         "title": "Big Boss Battle 1",
@@ -108,14 +126,17 @@
           "Bomb Torizo, Golden Torizo, Draygon & Ridley Battles",
           "Can be superceded by Expanded Soundtrack (35: Draygon/36: Ridley)",
           "This still applies to Bomb Torizo & Golden Torizo"
-        ]
+        ],
+        "description": "Song played during the Bomb Torizo and Golden Torizo battles. If no extended tracks are present, it will also play for the Draygon and Ridley battles."
       },
       {
-        "title": "Evacuation"
+        "title": "Evacuation",
+        "description": "Song played after defeating Mother Brain during the escape from Zebes. The game will add explosion sound effects, but not a siren if one is desired."
       },
       {
         "title": "Mysterious Statue Chamber",
-        "name": "Chozo Statue Awakens"
+        "name": "Chozo Statue Awakens",
+        "description": "Song played while Bomb Torizo is waking up. Plays for about 5.5 to 6 seconds unless someone pauses the game."
       },
       {
         "title": "Big Boss Battle 2",
@@ -125,7 +146,8 @@
           "Crocomire, Kraid, Phantoon, The Baby",
           "Can be superceded by Expanded Soundtrack (32: Kraid, 34: Phantoon, 38: The Baby)",
           "This still applies to Crocomire"
-        ]
+        ],
+        "description": "Song played during the battle with Crocomire and when seeing the wall crumble and the Crocomire's skeleton. If no extended tracks are present, it will also play for the Kraid and Phantoon battles and when the baby Metroid shows up"
       },
       {
         "title": "Tension / Hostile Incoming",
@@ -135,39 +157,47 @@
           "Crocomire intermission, pre-Kraid, pre-Phantoon, pre-The Baby",
           "Can be superceded by Expanded Soundtrack (31: Kraid, 33: Phantoon, 37: The Baby)",
           "This still applies to Crocomire"
-        ]
+        ],
+        "description": "Song played between Crocomire falling into the lava and reappearing. If no extended tracks are present, it will also play during the lead ups to Kraid, Phantoon, and the baby Metroid."
       },
       {
         "title": "Plant Miniboss",
         "notes": [
           "Spore Spawn & Botwoon"
-        ]
+        ],
+        "description": "Song played during the Spore Spawn and Botwoon battles."
       },
       {
-        "title": "Ceres Station"
+        "title": "Ceres Station",
+        "description": "Song played in the intro area of the game where you go to initially fight Ridley. Not used in SMZ3."
       },
       {
-        "title": "Wrecked Ship Power Off"
+        "title": "Wrecked Ship Power Off",
+        "description": "Song use plays in the Wrecked Ship before fighting Phantoon."
       },
       {
         "title": "Wrecked Ship Power On",
         "notes": [
           "After defeating Phantoon"
-        ]
+        ],
+        "description": "Song played in the Wrecked Ship after fighting Phantoon."
       },
       {
-        "title": "Theme of Super Metroid"
+        "title": "Theme of Super Metroid",
+        "description": "Song played over the opening cutscene after selecting a new file. Not used in SMZ3."
       },
       {
         "title": "Death Cry",
-        "nonlooping": true
+        "nonlooping": true,
+        "description": "Song played during Samus's death animation. Lasts about 4 seconds long with 2 seconds for Samus to power down and the rest to explode. Does not loop."
       },
       {
         "title": "Ending",
         "nonlooping": true,
         "notes": [
           "Mission Report and Ending"
-        ]
+        ],
+        "description": "Song played after leaving Zebes that starts when you see Samus flying away from the explosion and then fades into the credits. The entire duration is around 3:35 with Samus appearing at 2:35. In SMZ3, only around 22 seconds are played until the SMZ3 credits appear. Does not loop."
       }
     ],
     "extended": [
@@ -178,50 +208,60 @@
         "notes": [
           "Baby-Kraid Room",
           "Kraid Eye Door Room"
-        ]
+        ],
+        "description": "Extended track that plays in the rooms that lead up to fighting Kraid where you run into the Mini-Kraid. If not present, the Tension / Hostile Incoming theme will be played."
       },
       {
         "title": "Kraid Battle",
         "pair": 31,
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended track that plays during the Kraid battle. If not present, the Big Boss Battle 2 theme will be played."
       },
       {
         "title": "Phantoon Incoming",
         "pair": 34,
-        "fallback": 23
+        "fallback": 23,
+        "description": "Extended track that plays while Phantoon is appearing before the battle. Lasts about 10 seconds. If not present, the Tension / Hostile Incoming theme will be played."
       },
       {
         "title": "Phantoon Battle",
         "pair": 33,
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended track that plays during the Phantoon battle. If not present, the Big Boss Battle 2 theme will be played."
       },
       {
         "title": "Draygon Battle",
-        "fallback": 19
+        "fallback": 19,
+        "description": "Extended track that plays during the Draygon battle. If not present, the Big Boss Battle 1 theme will be played."
       },
       {
         "title": "Ridley Battle",
-        "fallback": 19
+        "fallback": 19,
+        "description": "Extended track that plays during the Ridley battle. If not present, the Big Boss Battle 1 theme will be played."
       },
       {
         "title": "Baby Incoming",
         "pair": 38,
-        "fallback": 23
+        "fallback": 23,
+        "description": "Extended track that plays in the rooms that lead up to seeing the baby Metroid. If not present, the Tension / Hostile Incoming theme will be played."
       },
       {
         "title": "The Baby",
         "pair": 37,
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended track that plays when the baby Metroid shows up to drain Samus of her health. If not present, the Big Boss Battle 2 theme will be played."
       },
       {
         "title": "Hyper Beam",
         "fallback": 10,
         "notes": [
           "Mother Brain 3"
-        ]
+        ],
+        "description": "Extended track that plays during the Mother Brain battle after receiving the Hyper Beam from the baby Metroid. If not present, the Theme of Samus Aran will be played."
       },
       {
-        "title": "Game Over"
+        "title": "Game Over",
+        "description": "Extended track that plays after the Samus Death Cry before loading from the last save point. If not present, ambient noise will be played."
       }
     ],
     "longest": 37,
