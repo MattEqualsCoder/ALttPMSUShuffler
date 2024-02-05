@@ -8,11 +8,13 @@
         "title": "File Start",
         "name": "Samus Aran's Appearance Fanfare",
         "nonlooping": true,
+        "special_track": true,
         "description": "Song played when first starting at the ship or a save station before you can start moving. Does not loop and plays for about 8 seconds."
       },
       {
         "title": "Item Acquisition Fanfare",
         "nonlooping": true,
+        "special_track": true,
         "description": "Song played when you retrieve an item. Does not loop and plays for 6-7 seconds. Not used in SMZ3."
       },
       {
@@ -35,12 +37,16 @@
       },
       {
         "title": "Opening with intro",
-        "pair": 5,
+        "paired_tracks": [
+          5
+        ],
         "description": "Song played right when first booting up the game and continues into the game title screen if the player doesn't press any buttons. There are around 24 seconds before the game title appears."
       },
       {
         "title": "Opening without intro",
-        "pair": 4,
+        "paired_tracks": [
+          4
+        ],
         "description": "Song played if the player presses any buttons to skip to the game title screen before it displays the title screen normally."
       },
       {
@@ -140,7 +146,9 @@
       },
       {
         "title": "Big Boss Battle 2",
-        "pair": 23,
+        "paired_tracks": [
+          23
+        ],
         "notes": [
           "Boss Battle Theme",
           "Crocomire, Kraid, Phantoon, The Baby",
@@ -151,7 +159,9 @@
       },
       {
         "title": "Tension / Hostile Incoming",
-        "pair": 22,
+        "paired_tracks": [
+          22
+        ],
         "notes": [
           "Boss Incoming Theme",
           "Crocomire intermission, pre-Kraid, pre-Phantoon, pre-The Baby",
@@ -189,6 +199,7 @@
       {
         "title": "Death Cry",
         "nonlooping": true,
+        "special_track": true,
         "description": "Song played during Samus's death animation. Lasts about 4 seconds long with 2 seconds for Samus to power down and the rest to explode. Does not loop."
       },
       {
@@ -203,7 +214,9 @@
     "extended": [
       {
         "title": "Kraid Incoming",
-        "pair": 32,
+        "paired_tracks": [
+          32
+        ],
         "fallback": 23,
         "notes": [
           "Baby-Kraid Room",
@@ -213,19 +226,25 @@
       },
       {
         "title": "Kraid Battle",
-        "pair": 31,
+        "paired_tracks": [
+          31
+        ],
         "fallback": 22,
         "description": "Extended track that plays during the Kraid battle. If not present, the Big Boss Battle 2 theme will be played."
       },
       {
         "title": "Phantoon Incoming",
-        "pair": 34,
+        "paired_tracks": [
+          34
+        ],
         "fallback": 23,
         "description": "Extended track that plays while Phantoon is appearing before the battle. Lasts about 10 seconds. If not present, the Tension / Hostile Incoming theme will be played."
       },
       {
         "title": "Phantoon Battle",
-        "pair": 33,
+        "paired_tracks": [
+          33
+        ],
         "fallback": 22,
         "description": "Extended track that plays during the Phantoon battle. If not present, the Big Boss Battle 2 theme will be played."
       },
@@ -241,13 +260,17 @@
       },
       {
         "title": "Baby Incoming",
-        "pair": 38,
+        "paired_tracks": [
+          38
+        ],
         "fallback": 23,
         "description": "Extended track that plays in the rooms that lead up to seeing the baby Metroid. If not present, the Tension / Hostile Incoming theme will be played."
       },
       {
         "title": "The Baby",
-        "pair": 37,
+        "paired_tracks": [
+          37
+        ],
         "fallback": 22,
         "description": "Extended track that plays when the baby Metroid shows up to drain Samus of her health. If not present, the Big Boss Battle 2 theme will be played."
       },
