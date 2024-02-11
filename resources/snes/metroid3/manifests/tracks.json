@@ -128,6 +128,9 @@
       },
       {
         "title": "Big Boss Battle 1",
+        "paired_tracks": [
+          21
+        ],
         "notes": [
           "Bomb Torizo, Golden Torizo, Draygon & Ridley Battles",
           "Can be superceded by Expanded Soundtrack (35: Draygon/36: Ridley)",
@@ -142,6 +145,9 @@
       {
         "title": "Mysterious Statue Chamber",
         "name": "Chozo Statue Awakens",
+        "paired_tracks": [
+          19
+        ],
         "description": "Song played while Bomb Torizo is waking up. Plays for about 5.5 to 6 seconds unless someone pauses the game."
       },
       {
