@@ -7,7 +7,8 @@
       {
         "num": 99,
         "title": "SMZ3 Credits",
-        "nonlooping": true
+        "nonlooping": true,
+        "description": "Song played for the SMZ3 credits after either the ALttP epilogue or the first 22 seconds of the Super Metroid ending theme. It takes about 2:40 to get to the end of the credits, but can go longer. Does not loop."
       }
     ]
   },
@@ -15,7 +16,7 @@
     {
       "msu": "snes/zelda3",
       "modifier": 0,
-      "ignore": [ 1, 6, 25, 34 ]
+      "ignore": [ 1, 3, 6, 25, 34 ]
     },
     {
       "msu": "snes/metroid3",

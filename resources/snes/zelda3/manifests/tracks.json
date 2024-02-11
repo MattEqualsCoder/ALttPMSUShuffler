@@ -8,43 +8,52 @@
         "title": "Opening Theme",
         "name": "Link to the Past",
         "notes": ["Game Startup", "Should be 16 seconds"],
-        "nonlooping": true
+        "nonlooping": true,
+        "description": "Song played when first booting up the game after the three Triforce pieces start flying in and goes into the title screen. Lasts for about 16.5 seconds and does not loop. Not used in SMZ3."
       },
       {
         "title": "Light World Overworld",
-        "name": "Hyrule Field"
+        "name": "Hyrule Field",
+        "description": "Song played in the Light World Hyrule Field. Once you get the item from the Master Sword pedestal, the extended track Light World 2 will play instead if available."
       },
       {
         "title": "Rain State Overworld",
         "name": "Time of Falling Rain",
-        "notes": ["Rain SFX is overlaid by game engine"]
+        "notes": ["Rain SFX is overlaid by game engine"],
+        "description": "Song played at the beginning of the game when going to rescue Zelda. The rain sound effects are added automatically by the game. Only used with some ALttPR settings and not used in SMZ3."
       },
       {
         "title": "Bunny Overworld",
-        "name": "The Silly Pink Rabbit"
+        "name": "The Silly Pink Rabbit",
+        "description": "Song played in the Dark World overworld before you have the Moon Pearl."
       },
       {
         "title": "Light World Lost Woods",
-        "name": "Forest of Mystery"
+        "name": "Forest of Mystery",
+        "description": "Song played in the Lost Woods before getting the item from the Master Sword pedestal. After that, the Light World 2 theme will play if available or the Light World Overworld theme if not."
       },
       {
         "title": "Opening Story Credits",
-        "name": "Seal of Seven Maidens"
+        "name": "Seal of Seven Maidens",
+        "description": "Song played over the prologue if you stay on the title screen. Starts to fade to black around 1:52 seconds, but plays for about 1:57.5 seconds in total. Does not loop and is not used in SMZ3."
       },
       {
         "title": "Kakariko Village",
         "notes": [
           "Link's House"
-        ]
+        ],
+        "description": "Song played in Kakariko and Link's house until the item from the Master Sword pedestal is received. After pulling the pedestal, the Light World 2 theme will play if available or the Light World Overworld theme if not."
       },
       {
         "title": "Mirror Portal",
         "name": "Dimensional Shift",
-        "nonlooping": true
+        "nonlooping": true,
+        "description": "Sound effect when using the mirror in the overworld. Lasts for 4-5 seconds depending on quick warp or not. Does not loop."
       },
       {
         "title": "Dark World Overworld",
-        "name": "Dark Golden Land"
+        "name": "Dark Golden Land",
+        "description": "Song played in the Dark World when you have the Moon Pearl. Once you get all crystals, the extended track Dark World 2 will play instead if available."
       },
       {
         "title": "Pedestal Pull Sequence",
@@ -53,33 +62,40 @@
           "Pulling the Pedestal with 3 pendants",
           "Should be 11 seconds"
         ],
-        "nonlooping": true
+        "nonlooping": true,
+        "description": "Song played when receiving the item from the Master Sword pedestal. The sword will appear around 7.5 seconds, and the song lasts for around 11 seconds. Does not loop."
       },
       {
         "title": "File Select/Game Over",
-        "name": "Beginning of the Journey"
+        "name": "Beginning of the Journey",
+        "description": "Song played on the file select screen in ALttPR and in the game over theme in both ALttPR and SMZ3."
       },
       {
         "title": "Kakariko Guards Summoned",
-        "name": "Soldiers of Kakariko Village"
+        "name": "Soldiers of Kakariko Village",
+        "description": "Song played when someone in Kakariko Village summons the guards on you until you enter an open house or leave Kakariko."
       },
       {
         "title": "Dark Death Mountain",
-        "name": "Black Mist"
+        "name": "Black Mist",
+        "description": "Song played on Dark Death Mountain. Once you get all crystals, the extended track Dark World 2 will play instead if available."
       },
       {
-        "title": "Money Making Game"
+        "title": "Money Making Game",
+        "description": "Song played during the minigames such as the chest game, digging game, and arrow game."
       },
       {
         "title": "Dark World Lost Woods",
         "extended": true,
         "remap": 13,
-        "notes": ["Skeleton Forest"]
+        "notes": ["Skeleton Forest"],
+        "description": "Song played in the woods around Skull Woods. If not present, the Dark Death Mountain theme will be used instead."
       },
       {
         "title": "Hyrule Castle",
         "name": "Majestic Castle",
-        "notes": ["Hyrule Castle", "Hyrule Castle Escape"]
+        "notes": ["Hyrule Castle", "Hyrule Castle Escape"],
+        "description": "Song played inside of Hyrule Castle. In the castle tower past the magic barrier, the track Agahnim's Tower will play instead if available."
       },
       {
         "title": "Generic Light World Dungeon",
@@ -88,26 +104,31 @@
           "ALttPR uses this for Pendant dungeons",
           "Keysanity randomizes between this and #22",
           "Expanded Soundtrack takes priority"
-        ]
+        ],
+        "description": "Song played in the Light World dungeons in vanilla ALttP, but used in the pendant dungeons in LttPR and SMZ3 if no specific extended dungeon theme is available. Keysanity mode will randomize between this and the Dark World Dungeon theme."
       },
       {
         "title": "Cave",
-        "name": "Dank Dungeons"
+        "name": "Dank Dungeons",
+        "description": "Song played in the vast majority of the caves. Go to http://alttp.mymm1.com/wiki/Soundtrack to view a list of all caves and which cave track they use."
       },
       {
         "title": "Boss Victory",
         "name": "Great Victory!",
         "nonlooping": true,
-        "notes": ["Should be 10 seconds"]
+        "notes": ["Should be 10 seconds"],
+        "description": "Song played after defeating a boss, including Ganon. Should be 10.5 seconds as that's how long ALttPR will play no matter the length of the song. In non-race seeds, it will play until the end of the song. Does not loop."
       },
       {
         "title": "Sanctuary",
-        "name": "Safety in the Sanctuary"
+        "name": "Safety in the Sanctuary",
+        "description": "Song played in the sanctuary you get to after the escape sequence in ALttP."
       },
       {
         "title": "Generic Boss Battle",
         "name": "Anger of the Guardians",
-        "notes": ["Can be superceded by Expanded Soundtrack (47-58)"]
+        "notes": ["Can be superceded by Expanded Soundtrack (47-58)"],
+        "description": "Song played for all bosses excluding Ganon unless an extended track for that boss is present."
       },
       {
         "title": "Generic Dark World Dungeon",
@@ -116,17 +137,21 @@
           "ALttPR uses this for Crystal dungeons",
           "Keysanity randomizes between this and #17",
           "Expanded Soundtrack takes priority"
-        ]
+        ],
+        "description": "Song played in the Dark World dungeons in vanilla ALttP, but used in the crystal dungeons in LttPR and SMZ3 if no specific extended dungeon theme is available. Keysanity mode will randomize between this and the Light World Dungeon theme."
       },
       {
-        "title": "Shop/Fortune Teller"
+        "title": "Shop/Fortune Teller",
+        "description": "Song used in both the shop and fortune teller."
       },
       {
-        "title": "Cave 2"
+        "title": "Cave 2",
+        "description": "Song used in some of the caves. Go to http://alttp.mymm1.com/wiki/Soundtrack to view a list of all caves and which cave track they use."
       },
       {
         "title": "Princess Zelda's Rescue",
-        "notes": ["Unused in ALttPR"]
+        "notes": ["Unused in ALttPR"],
+        "description": "Song played when talking to Zelda when rescuing her. Not used in ALttPR and SMZ3."
       },
       {
         "title": "Crystal Get",
@@ -134,153 +159,187 @@
         "notes": [
           "Full length plays in non-race ROMs",
           "About 1s plays in race ROMs"
-        ]
+        ],
+        "description": "Song played after the Boss Victory theme when getting a crystal. Loops in vanilla ALttP, but starts to fade out after 1-2 seconds and will play for 7.25 seconds in ALttPR and SMZ3."
       },
       {
         "title": "Fairy Fountain",
-        "name": "The Goddess Appears"
+        "name": "The Goddess Appears",
+        "description": "Song used in fairy fountains, Lumberjack cave, and Ice Rod cave."
       },
       {
         "title": "Agahnim's Theme",
         "name": "Priest of the Dark Order",
         "notes": [
           "Agahnim Theme in Hyrule Castle Tower during 'cutscene' prior to boss fight arena"
-        ]
+        ],
+        "description": "Song played on the top floor of Castle Tower in the rooms before Agahnim. Also played in the pyramid basement when you fall from Ganon."
       },
       {
         "title": "Ganon Appears",
         "name": "Release of Ganon",
         "nonlooping": true,
-        "notes": ["After Agahnim 2"]
+        "notes": ["After Agahnim 2"],
+        "description": "Song played after killing Aga 2. The full song plays for about 13 seconds before transitioning to the Dark World theme, but Ganon turns into a bat around 4 seconds in and Link plays the Ocarina at 8 seconds in. Does not loop."
       },
       {
         "title": "Ganon's Theme",
         "name": "Ganon's Message",
-        "notes": ["Ganon's Monologue"]
+        "notes": ["Ganon's Monologue"],
+        "description": "Song played when Ganon talks with you before the final fight."
       },
       {
         "title": "Ganon Fight",
-        "name": "The Prince of Darkness"
+        "name": "The Prince of Darkness",
+        "description": "Song played while fighting Ganon."
       },
       {
         "title": "Triforce Room",
-        "name": "Power of the Gods"
+        "name": "Power of the Gods",
+        "description": "Song played in the triforce room after defeating Ganon."
       },
       {
         "title": "Triumphant Return",
         "name": "Epilogue ~ Beautiful Hyrule",
         "nonlooping": true,
-        "notes": ["Should be 3:49"]
+        "notes": ["Should be 3:49"],
+        "description": "Song played in the epilogue where it goes over all of the characters before the credits roll. At 2.3 seconds Link picks up the Triforce with a white fade out between 4.75 to 6 seconds. Epilogue actually starts at 10.5 seconds, and the pedestal fadeout finishes around 3:50. Does not loop."
       },
       {
         "title": "Credits",
         "name": "Staff Roll",
         "nonlooping": true,
-        "notes": ["Should be 3:53"]
+        "notes": ["Should be 3:53"],
+        "description": "Song played during the ALttPR credits. The song lasts for 3:50 with the important stats showing up around 2:40."
       }
     ],
     "extended": [
       {
         "title": "Eastern Palace",
-        "fallback": 17
+        "fallback": 17,
+        "description": "Extended theme for Eastern Palace. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Desert Palace",
-        "fallback": 17
+        "fallback": 17,
+        "description": "Extended theme for Desert Palace. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Agahnim's Tower",
-        "fallback": 16
+        "fallback": 16,
+        "description": "Extended theme for Agahnim's Tower. If not present, the Hyrule Castle theme will be played."
       },
       {
         "title": "Swamp Palace",
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended theme for Swamp Palace. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Palace of Darkness",
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended theme for Palace of Darkness. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Misery Mire",
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended theme for Misery Mire. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Skull Woods",
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended theme for Skull Woods. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Ice Palace",
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended theme for Ice Palace. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Tower of Hera",
-        "fallback": 17
+        "fallback": 17,
+        "description": "Extended theme for Tower of Hera. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Thieves' Town",
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended theme for Thieves' Town. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Turtle Rock",
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended theme for Turtle Rock. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Ganon's Tower",
-        "fallback": 22
+        "fallback": 22,
+        "description": "Extended theme for Ganon's Tower. If not present, the generic Dark World dungeon theme will be played."
       },
       {
         "title": "Eastern Palace Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for the Armos Knights. If not present, the generic boss theme will be played."
       },
       {
         "title": "Desert Palace Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Lanmolas. If not present, the generic boss theme will be played."
       },
       {
         "title": "Agahnim's Tower Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Agahnim 1. If not present, the generic boss theme will be played."
       },
       {
         "title": "Swamp Palace Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Arrghus. If not present, the generic boss theme will be played."
       },
       {
         "title": "Palace of Darkness Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for the Helmasaur King. If not present, the generic boss theme will be played."
       },
       {
         "title": "Misery Mire Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Vitreous. If not present, the generic boss theme will be played."
       },
       {
         "title": "Skull Woods Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Mothula. If not present, the generic boss theme will be played."
       },
       {
         "title": "Ice Palace Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Kholdstare. If not present, the generic boss theme will be played."
       },
       {
         "title": "Tower of Hera Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Moldorm. If not present, the generic boss theme will be played."
       },
       {
         "title": "Thieves' Town Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Blind. If not present, the generic boss theme will be played."
       },
       {
         "title": "Turtle Rock Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Trinexx. If not present, the generic boss theme will be played."
       },
       {
         "title": "Ganon's Tower Boss",
-        "fallback": 21
+        "fallback": 21,
+        "description": "Extended theme for Agahnim 2. If not present, the generic boss theme will be played."
       },
       {
         "title": "Ganon's Tower 2",
         "fallback": 22,
         "remap": 46,
-        "notes": ["Replaces track 46 for upstairs GT"]
+        "notes": ["Replaces track 46 for upstairs GT"],
+        "description": "Extended theme that plays when heading upstairs in Ganon's Tower after obtaining the big key. If not present, it will fall back to either the Ganon's Tower theme or the generic Dark World theme if the GT theme is not present."
       },
       {
         "title": "Light World 2",
@@ -288,7 +347,8 @@
         "notes": [
           "Replaces track 2 after the pedestal item has been collected",
           "2: Light World Overworld"
-        ]
+        ],
+        "description": "Extended theme that replaces the Light World 2 theme after the Master Sword pedestal item has been retrieved."
       },
       {
         "title": "Dark World 2",
@@ -298,7 +358,8 @@
           "9: Dark World Overworld",
           "13: Dark Death Mountain",
           "15: Skull Woods Overworld"
-        ]
+        ],
+        "description": "Extended theme that replaces all of the Dark World music after collecting all crystals, including the Dark Death Mountain and Dark World Lost Woods themes."
       }
     ],
     "longest": 50,
