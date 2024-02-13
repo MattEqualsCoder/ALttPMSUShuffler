@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "name": "Metroid"
+  },
+  "tracks": {
+    "basic": [
+      {
+        "title": "Title BGM",
+        "description": "Song played when first booting up the game."
+      },
+      {
+        "title": "Samus Appears Jingle",
+        "nonlooping": true,
+        "description": "Song played when first appearing on-screen after starting a file or after a death, before you can start moving. Does not loop and plays for about 6 seconds."
+      },
+      {
+        "title": "Brinstar"
+      },
+      {
+        "title": "Mini Boss Room 1",
+        "description": "Song played within Kraid's Lair."
+      },
+      {
+        "title": "Norfair"
+      },
+      {
+        "title": "Mini Boss Room 2",
+        "description": "Song played within Ridley's Lair."
+      },
+      {
+        "title": "Silence",
+        "description": "Song played in rooms where you receive a major item."
+      },
+      {
+        "title": "Get Item Jingle",
+        "nonlooping": true,
+        "description": "Song played when you retrieve an item. Does not loop and plays for 4 seconds."
+      },
+      {
+        "title": "Tourian"
+      },
+      {
+        "title": "Zebetite",
+        "description": "Song played in Mother Brain's Room where the Zebetites reside."
+      },
+      {
+        "title": "Escape",
+        "description": "Song played after defeating Mother Brain, during the self-destruct sequence, racing to the end of the game."
+      },
+      {
+        "title": "Ending"
+      }
+    ]
+  },
+  "src": "https://archive.org/details/metroid-snes_20231214"
+}
