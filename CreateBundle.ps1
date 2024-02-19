@@ -7,7 +7,21 @@ foreach ($file in Get-ChildItem "$PSScriptRoot\resources\snes"  -Recurse -Filter
     $output += $data
 }
 $output | ConvertTo-Json -Depth 10 | Out-File -FilePath "$PSScriptRoot\msu_types.json"
-$output = git tag | Select-Object -last 1 | Out-String
-$output = [int]($output -replace "[^0-9\.]", "")
-$output = $output + 1
-Write-Output "tag=v$output.0" >> $env:GITHUB_OUTPUT
+
+$prevVersion = 0.0
+
+$tags = git tag
+foreach ($tag in $tags)
+{
+    $culture = Get-Culture
+    $version = [decimal]::Parse(($tag -replace "[^0-9\.]", ""))
+
+    if ($version -gt $prevVersion)
+    {
+        $prevVersion = $version
+    }
+
+}
+
+$newVersion = "v$($prevVersion + 1)"
+Write-Output "tag=$newVersion" >> $env:GITHUB_OUTPUT
