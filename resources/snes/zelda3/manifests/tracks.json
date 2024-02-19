@@ -48,6 +48,7 @@
         "title": "Mirror Portal",
         "name": "Dimensional Shift",
         "nonlooping": true,
+        "special_track": true,
         "description": "Sound effect when using the mirror in the overworld. Lasts for 4-5 seconds depending on quick warp or not. Does not loop."
       },
       {
@@ -63,6 +64,7 @@
           "Should be 11 seconds"
         ],
         "nonlooping": true,
+        "special_track": true,
         "description": "Song played when receiving the item from the Master Sword pedestal. The sword will appear around 7.5 seconds, and the song lasts for around 11 seconds. Does not loop."
       },
       {
@@ -117,7 +119,8 @@
         "name": "Great Victory!",
         "nonlooping": true,
         "notes": ["Should be 10 seconds"],
-        "description": "Song played after defeating a boss, including Ganon. Should be 10.5 seconds as that's how long ALttPR will play no matter the length of the song. In non-race seeds, it will play until the end of the song. Does not loop."
+        "special_track": true,
+        "description": "Song played after defeating a boss, including Ganon. Should be 10.5 seconds as that's how long ALttPR will play no in race seeds. In non-race seeds, it will play until the end of the song. Does not loop."
       },
       {
         "title": "Sanctuary",
@@ -179,18 +182,25 @@
         "title": "Ganon Appears",
         "name": "Release of Ganon",
         "nonlooping": true,
+        "special_track": true,
         "notes": ["After Agahnim 2"],
         "description": "Song played after killing Aga 2. The full song plays for about 13 seconds before transitioning to the Dark World theme, but Ganon turns into a bat around 4 seconds in and Link plays the Ocarina at 8 seconds in. Does not loop."
       },
       {
         "title": "Ganon's Theme",
         "name": "Ganon's Message",
+        "paired_tracks": [
+          32
+        ],
         "notes": ["Ganon's Monologue"],
         "description": "Song played when Ganon talks with you before the final fight."
       },
       {
         "title": "Ganon Fight",
         "name": "The Prince of Darkness",
+        "paired_tracks": [
+          31
+        ],
         "description": "Song played while fighting Ganon."
       },
       {
@@ -217,127 +227,205 @@
       {
         "title": "Eastern Palace",
         "fallback": 17,
+        "paired_tracks": [
+          47
+        ],
         "description": "Extended theme for Eastern Palace. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Desert Palace",
         "fallback": 17,
+        "paired_tracks": [
+          48
+        ],
         "description": "Extended theme for Desert Palace. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Agahnim's Tower",
         "fallback": 16,
+        "paired_tracks": [
+          49
+        ],
         "description": "Extended theme for Agahnim's Tower. If not present, the Hyrule Castle theme will be played."
       },
       {
         "title": "Swamp Palace",
         "fallback": 22,
+        "paired_tracks": [
+          50
+        ],
         "description": "Extended theme for Swamp Palace. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Palace of Darkness",
         "fallback": 22,
+        "paired_tracks": [
+          51
+        ],
         "description": "Extended theme for Palace of Darkness. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Misery Mire",
         "fallback": 22,
+        "paired_tracks": [
+          52
+        ],
         "description": "Extended theme for Misery Mire. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Skull Woods",
         "fallback": 22,
+        "paired_tracks": [
+          53
+        ],
         "description": "Extended theme for Skull Woods. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Ice Palace",
         "fallback": 22,
+        "paired_tracks": [
+          54
+        ],
         "description": "Extended theme for Ice Palace. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Tower of Hera",
         "fallback": 17,
+        "paired_tracks": [
+          55
+        ],
         "description": "Extended theme for Tower of Hera. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Thieves' Town",
         "fallback": 22,
+        "paired_tracks": [
+          56
+        ],
         "description": "Extended theme for Thieves' Town. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Turtle Rock",
         "fallback": 22,
+        "paired_tracks": [
+          57
+        ],
         "description": "Extended theme for Turtle Rock. If not present, either the generic Light World or Dark World dungeon theme will play based off of the dungeon reward and game setting."
       },
       {
         "title": "Ganon's Tower",
         "fallback": 22,
+        "paired_tracks": [
+          58,
+          59
+        ],
         "description": "Extended theme for Ganon's Tower. If not present, the generic Dark World dungeon theme will be played."
       },
       {
         "title": "Eastern Palace Boss",
         "fallback": 21,
+        "paired_tracks": [
+          35
+        ],
         "description": "Extended theme for the Armos Knights. If not present, the generic boss theme will be played."
       },
       {
         "title": "Desert Palace Boss",
         "fallback": 21,
+        "paired_tracks": [
+          36
+        ],
         "description": "Extended theme for Lanmolas. If not present, the generic boss theme will be played."
       },
       {
         "title": "Agahnim's Tower Boss",
         "fallback": 21,
+        "paired_tracks": [
+          37
+        ],
         "description": "Extended theme for Agahnim 1. If not present, the generic boss theme will be played."
       },
       {
         "title": "Swamp Palace Boss",
         "fallback": 21,
+        "paired_tracks": [
+          38
+        ],
         "description": "Extended theme for Arrghus. If not present, the generic boss theme will be played."
       },
       {
         "title": "Palace of Darkness Boss",
         "fallback": 21,
+        "paired_tracks": [
+          39
+        ],
         "description": "Extended theme for the Helmasaur King. If not present, the generic boss theme will be played."
       },
       {
         "title": "Misery Mire Boss",
         "fallback": 21,
+        "paired_tracks": [
+          40
+        ],
         "description": "Extended theme for Vitreous. If not present, the generic boss theme will be played."
       },
       {
         "title": "Skull Woods Boss",
         "fallback": 21,
+        "paired_tracks": [
+          41
+        ],
         "description": "Extended theme for Mothula. If not present, the generic boss theme will be played."
       },
       {
         "title": "Ice Palace Boss",
         "fallback": 21,
+        "paired_tracks": [
+          42
+        ],
         "description": "Extended theme for Kholdstare. If not present, the generic boss theme will be played."
       },
       {
         "title": "Tower of Hera Boss",
         "fallback": 21,
+        "paired_tracks": [
+          43
+        ],
         "description": "Extended theme for Moldorm. If not present, the generic boss theme will be played."
       },
       {
         "title": "Thieves' Town Boss",
         "fallback": 21,
+        "paired_tracks": [
+          44
+        ],
         "description": "Extended theme for Blind. If not present, the generic boss theme will be played."
       },
       {
         "title": "Turtle Rock Boss",
         "fallback": 21,
+        "paired_tracks": [
+          45
+        ],
         "description": "Extended theme for Trinexx. If not present, the generic boss theme will be played."
       },
       {
         "title": "Ganon's Tower Boss",
         "fallback": 21,
+        "paired_tracks": [
+          46,
+          59
+        ],
         "description": "Extended theme for Agahnim 2. If not present, the generic boss theme will be played."
       },
       {
         "title": "Ganon's Tower 2",
         "fallback": 22,
         "remap": 46,
+        "paired_tracks": [
+          46,
+          58
+        ],
         "notes": ["Replaces track 46 for upstairs GT"],
         "description": "Extended theme that plays when heading upstairs in Ganon's Tower after obtaining the big key. If not present, it will fall back to either the Ganon's Tower theme or the generic Dark World theme if the GT theme is not present."
       },
