@@ -120,7 +120,10 @@
         "nonlooping": true,
         "notes": ["Should be 10 seconds"],
         "special_track": true,
-        "description": "Song played after defeating a boss, including Ganon. Should be 10.5 seconds as that's how long ALttPR will play no in race seeds. In non-race seeds, it will play until the end of the song. Does not loop."
+        "description": "Song played after defeating a boss, including Ganon. Should be 10.5 seconds as that's how long ALttPR will play no in race seeds. In non-race seeds, it will play until the end of the song. Does not loop.",
+        "paired_tracks": [
+          26
+        ]
       },
       {
         "title": "Sanctuary",
@@ -163,7 +166,10 @@
           "Full length plays in non-race ROMs",
           "About 1s plays in race ROMs"
         ],
-        "description": "Song played after the Boss Victory theme when getting a crystal. Loops in vanilla ALttP, but starts to fade out after 1-2 seconds and will play for 7.25 seconds in ALttPR and SMZ3."
+        "description": "Song played after the Boss Victory theme when getting a crystal. Loops in vanilla ALttP, but starts to fade out after 1-2 seconds and will play for 7.25 seconds in ALttPR and SMZ3.",
+        "paired_tracks": [
+          19
+        ]
       },
       {
         "title": "Fairy Fountain",
@@ -190,7 +196,7 @@
         "title": "Ganon's Theme",
         "name": "Ganon's Message",
         "paired_tracks": [
-          32
+          31
         ],
         "notes": ["Ganon's Monologue"],
         "description": "Song played when Ganon talks with you before the final fight."
@@ -199,7 +205,7 @@
         "title": "Ganon Fight",
         "name": "The Prince of Darkness",
         "paired_tracks": [
-          31
+          30
         ],
         "description": "Song played while fighting Ganon."
       },
