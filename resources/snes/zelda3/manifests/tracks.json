@@ -9,6 +9,7 @@
         "name": "Link to the Past",
         "notes": ["Game Startup", "Should be 16 seconds"],
         "nonlooping": true,
+        "special_track": true,
         "description": "Song played when first booting up the game after the three Triforce pieces start flying in and goes into the title screen. Lasts for about 16.5 seconds and does not loop. Not used in SMZ3."
       },
       {
