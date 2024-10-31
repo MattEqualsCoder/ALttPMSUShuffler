@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "name": "The Legend of Zelda"
+  },
+  "tracks": {
+    "basic": [
+      {
+        "title": "Title/Story",
+        "description": "Song played when first booting up the game."
+      },
+      {
+        "title": "Outworld",
+        "description": "Song played in Hyrule Field."
+      },
+      {
+        "title": "ALttP Caves",
+        "#notes": [
+          "Empty caves",
+          "IT'S DANGEROUS TO GO ALONE! TAKE THIS.",
+          "MASTER USING IT AND YOU CAN HAVE THIS.",
+          "TAKE ANY ROAD YOU WANT.",
+          "SECRET IS IN THE TREE AT THE DEAD-END",
+          "PAY ME FOR THE DOOR REPAIR CHARGE.",
+          "SHOW THIS TO THE OLD WOMAN.",
+          "MEET THE OLD MAN AT THE GRAVE.",
+          "TAKE ANY ONE YOU WANT.",
+          "IT'S A SECRET TO EVERYBODY"
+        ]
+      },
+      {
+        "title": "ALttP Treasure Game",
+        "#notes": [
+          "LET'S PLAY MONEY MAKING GAME."
+        ]
+      },
+      {
+        "title": "ALttP Fortune",
+        "#notes": [
+          "PAY ME AND I'LL TALK."
+        ]
+      },
+      {
+        "title": "OoT Fortune"
+      },
+      {
+        "title": "OoT Shop",
+        "#notes": [
+          "BUY SOMETHIN' WILL YA!",
+          "BOY, THIS IS REALLY EXPENSIVE!"
+        ]
+      },
+      {
+        "title": "Level 1"
+      },
+      {
+        "title": "Level 9"
+      },
+      {
+        "title": "Ganon"
+      },
+      {
+        "title": "Triforce"
+      },
+      {
+        "title": "Zelda Rescued"
+      },
+      {
+        "title": "Level 2"
+      },
+      {
+        "title": "Level 3"
+      },
+      {
+        "title": "ALttP Ending"
+      },
+      {
+        "title": "Level 4"
+      },
+      {
+        "title": "8-bit Soundtrack Select",
+        "description": "On Soundtrack Selection, with SPC tracks selected"
+      },
+      {
+        "title": "Animated Series Dungeon Soundtrack Select",
+        "description": "On Soundtrack Selection, with MSU tracks selected"
+      },
+      {
+        "title": "BotW Fairy",
+        "description": "Song played on the file select screen"
+      },
+      {
+        "title": "Silent"
+      },
+      {
+        "title": "Level 5"
+      },
+      {
+        "title": "Level 6"
+      },
+      {
+        "title": "Level 7"
+      },
+      {
+        "title": "Level 8"
+      }
+    ]
+  },
+  "src": "https://archive.org/details/the-legend-of-zelda-snes_202307"
+}
