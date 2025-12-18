@@ -9,7 +9,7 @@
         "name": "Samus Aran's Appearance Fanfare",
         "nonlooping": true,
         "special_track": true,
-        "description": "Song played when first starting at the ship or a save station before you can start moving. Does not loop and plays for about 8 seconds."
+        "description": "Song played when first starting at the ship or a save station before you can start moving. Does not loop and plays for about 6 seconds."
       },
       {
         "title": "Item Acquisition Fanfare",
